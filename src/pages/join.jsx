@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 // 스타일 선언 
 const Container = styled.div`
@@ -36,6 +37,8 @@ const Button = styled.button`
 `;
 
 const Join = () => {
+
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -52,11 +55,17 @@ const Join = () => {
     console.log('비밀번호:', password);
     console.log('이메일:', email);
     alert('회원가입이 완료되었습니다!');
+
+    // 가입 완료 후 로그인 페이지로 이동
+    navigate('/');
   };
 
   //TODO: 아이디, 비밀번호 형식 지정하고 이메일 정규식 넣기
   return (
     <Container>
+    <Button onClick={ () => {
+      navigate(-1);
+       } }>뒤로가기</Button>
       <Input
         type="text"
         placeholder="ID"
