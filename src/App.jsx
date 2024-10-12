@@ -1,13 +1,16 @@
 import React from 'react';
-import '../src/App.css'
-import Login from './pages/login'; // 로그인 컴포넌트 가져오기
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './pages/login';
+import Join from './pages/join';
 
 const App = () => {
-  return (
-    <div>
-      <Login />
-    </div>
+  return(
+  <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/join" element={<Join />} />
+      </Routes>
+    </Router>
   );
 };
 
