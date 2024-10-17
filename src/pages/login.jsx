@@ -1,64 +1,8 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
+import { Container, Input, Button, KakaoButton, JoinButton } from "../components/StyledComponents/AuthStyles"
 import Join from "./join"
-
-// 스타일 선언 (Styled-Components)
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 40px;
-    background-color: #fff;
-    height: 100vh;
-`
-
-const Input = styled.input`
-    height: 50px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 100%;
-`
-
-const Button = styled.button`
-    background-color: #007bff;
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-
-    &:hover {
-        background-color: #0056b3;
-    }
-`
-
-const KakaoButton = styled(Button)`
-    margin-top: 20px;
-    background-color: #fee500;
-    color: #3c1e1e;
-    font-weight: bold;
-
-    &:hover {
-        background-color: #3c1e1e;
-        color: #fee500;
-    }
-`
-const JoinButton = styled(Button)`
-    margin-top: 20px;
-    background-color: transparent;
-    color: #616161;
-    font-weight: bold;
-
-    &:hover {
-        background-color: transparent;
-        color: #515151;
-    }
-`
 
 const Login = () => {
     const [username, setUsername] = useState("")
