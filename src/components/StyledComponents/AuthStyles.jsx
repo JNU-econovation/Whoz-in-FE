@@ -66,4 +66,27 @@ export const JoinButton = styled(Button)`
         background-color: transparent;
         color: #515151;
     }
-`;
+`
+
+export const BackButton = styled.button`
+position: absolute;
+top: 40px;
+left: 40px;
+display: flex;
+align-items: center;
+background-color: transparent;
+border: none;
+font-size: 16px;
+color: #7c7c7c;
+cursor: pointer;
+
+&:hover {
+    color: #0056b3;
+}
+
+svg {
+    margin-right: 8px;
+    font-size: 30px;
+}
+`
+;

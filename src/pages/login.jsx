@@ -1,8 +1,6 @@
 import React, { useState } from "react"
-import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import { Container, Input, Button, KakaoButton, JoinButton } from "../components/StyledComponents/AuthStyles"
-import Join from "./join"
 
 const Login = () => {
     const [username, setUsername] = useState("")
