@@ -12,6 +12,7 @@ const Login = () => {
         console.log("ID:", username)
         console.log("비밀번호:", password)
         // TODO: 로그인 성공 시 메인 페이지로 이동
+        navigate("/main")
     }
 
     const handleKakaoLogin = () => {

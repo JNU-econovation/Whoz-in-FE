@@ -70,13 +70,12 @@ export const JoinButton = styled(Button)`
 
 export const BackButton = styled.button`
 position: absolute;
-top: 40px;
-left: 40px;
+top: 3rem;
+left: 1rem;
 display: flex;
 align-items: center;
 background-color: transparent;
 border: none;
-font-size: 16px;
 color: #7c7c7c;
 cursor: pointer;
 
