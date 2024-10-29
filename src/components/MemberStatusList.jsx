@@ -13,13 +13,15 @@ const ActiveStatus = styled.div `
 const ListContainer = styled.div`
     display:flex ;
     flex-direction: column;
-    gap: 2rem;
+    gap: 3rem;
     padding: 4rem;
+
 `;
 
 const MemberItem = styled.div`
   display: flex;
-  align-items: center
+  align-items: center;
+  font-size: 1.2rem;
 
 `;
 

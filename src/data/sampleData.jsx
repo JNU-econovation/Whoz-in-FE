@@ -2,13 +2,61 @@
 
 const members = [
     {
-      name: "최규민",
+      name: "최규민1",
       generation: "26",
       isActive: true,
       lastActiveTime: null,
     },
     {
-      name: "윤석호",
+      name: "윤석호1",
+      generation: "26",
+      isActive: true,
+      lastActiveTime: null,
+    },
+    {
+      name: "최규민2",
+      generation: "26",
+      isActive: true,
+      lastActiveTime: null,
+    },
+    {
+      name: "윤석호2",
+      generation: "26",
+      isActive: true,
+      lastActiveTime: null,
+    },
+    {
+      name: "최규민3",
+      generation: "26",
+      isActive: true,
+      lastActiveTime: null,
+    },
+    {
+      name: "윤석호3",
+      generation: "26",
+      isActive: true,
+      lastActiveTime: null,
+    },
+    {
+      name: "최규민4",
+      generation: "26",
+      isActive: true,
+      lastActiveTime: null,
+    },
+    {
+      name: "윤석호4",
+      generation: "26",
+      isActive: true,
+      lastActiveTime: null,
+    },
+    {
+      name: "최규민5",
+      generation: "26",
+      isActive: true,
+      lastActiveTime: null,
+    },
+    {
+      name: "윤석호5ㄴ",
       generation: "26",
       isActive: true,
       lastActiveTime: null,
