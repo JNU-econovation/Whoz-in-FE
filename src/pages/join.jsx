@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { FaAngleLeft } from "react-icons/fa" // react-icons 패키지 사용
-import { Input, Button, Container, BackButton } from "../components/StyledComponents/AuthStyles"
+import { Input, Button, Container } from "../components/StyledComponents/AuthStyles"
 // 스타일 선언
 
 
@@ -31,13 +31,6 @@ const Join = () => {
     //TODO: 아이디, 비밀번호 형식 지정하고 이메일 정규식 넣기
     return (
         <Container>
-            <BackButton
-                onClick={() => {
-                    navigate(-1)
-                }}
-            >
-                <FaAngleLeft />{" "}
-            </BackButton>
 
        
                 <Input type="text" placeholder="ID" value={username} onChange={(e) => setUsername(e.target.value)} />
