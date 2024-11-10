@@ -4,9 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const BackButton = styled.button` // 뒤로가기
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
   display: flex;
   align-items: center;
   background-color: transparent;
@@ -25,12 +22,24 @@ const BackButton = styled.button` // 뒤로가기
 `;
 
 const HeaderContainer = styled.header` // 헤더 스타일
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   padding: 1rem;
-  text-align: center;
+  margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: bold;
   border-bottom: 0.1rem gray solid;
+`;
+
+const BackButtonWrapper = styled.div` // 버튼 래퍼
+  position: absolute;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  opacity: ${({ show }) => (show ? 1 : 0)};
+  pointer-events: ${({ show }) => (show ? "auto" : "none")}; // 버튼 클릭 비활성화
 `;
 
 function Header() {
@@ -42,17 +51,12 @@ function Header() {
 
   return (
     <HeaderContainer>
-      {showBackButton && (
-        <BackButton
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
+      <BackButtonWrapper show={showBackButton}>
+        <BackButton onClick={() => navigate(-1)}>
           <FaAngleLeft />
-        
         </BackButton>
-      )}
-      <div>WhozIn</div> 
+      </BackButtonWrapper>
+      <div>WhozIn</div>
     </HeaderContainer>
   );
 }
