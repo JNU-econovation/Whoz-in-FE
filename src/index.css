@@ -9,3 +9,24 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+
+@font-face {
+    font-family: 'UDOnGothic-Regular'; 
+    src: url('./fonts/KoddiUDOnGothic-Regular.ttf') format("truetype"); 
+  }
+
+
+  @font-face {
+    font-family: 'UDOnGothic-Bold'; 
+    src: url('./fonts/KoddiUDOnGothic-Bold.ttf') format("truetype"); 
+  }
+  
+@font-face {
+    font-family: 'UDOnGothic-ExtraBold'; 
+    src: url('./fonts/KoddiUDOnGothic-ExtraBold.ttf') format("truetype"); 
+  }
+  
+  body {
+    font-family: "UDOnGothic-Regular";
+  }
