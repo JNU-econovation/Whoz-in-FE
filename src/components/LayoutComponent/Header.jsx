@@ -42,6 +42,8 @@ const BackButtonWrapper = styled.div` // 버튼 래퍼
   pointer-events: ${({ show }) => (show ? "auto" : "none")}; // 버튼 클릭 비활성화
 `;
 
+// TODO: 뒤로가기 버튼 유무에 따라 중앙 후즈인 텍스트가 움직이는 오류 고쳐야됨
+
 function Header() {
   const location = useLocation();
   const navigate = useNavigate();

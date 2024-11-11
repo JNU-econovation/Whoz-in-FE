@@ -4,6 +4,7 @@ import Login from "./pages/login";
 import Join from "./pages/join";
 import Main from "./pages/main";
 import Header from "./components/LayoutComponent/Header";
+import BottomNav from "./components/LayoutComponent/BottomNav";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/join" element={<Join />} />
           <Route path="/main" element={<Main />} />
         </Routes>
+        <BottomNav />
       </BrowserRouter>
     </div>
   );
