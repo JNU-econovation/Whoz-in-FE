@@ -5,6 +5,7 @@ import Join from "./pages/join";
 import Main from "./pages/main";
 import Header from "./components/LayoutComponent/Header";
 import BottomNav from "./components/LayoutComponent/BottomNav";
+import MyPage from "./pages/mypage";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/join" element={<Join />} />
           <Route path="/main" element={<Main />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Routes>
         <BottomNav />
       </BrowserRouter>

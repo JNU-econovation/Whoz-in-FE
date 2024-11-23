@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import MemberStatusList from '../components/MemberStatusList';
 import members from '../data/sampleData'
 
-function Main() {
+const Main = () => {
   return (
     <div>
       <MemberStatusList members={members} />
