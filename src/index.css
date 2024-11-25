@@ -10,7 +10,7 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-
+/*
 @font-face {
     font-family: 'UDOnGothic-Regular'; 
     src: url('./fonts/KoddiUDOnGothic-Regular.ttf') format("truetype"); 
@@ -30,3 +30,5 @@ code {
   body {
     font-family: "UDOnGothic-Regular";
   }
+
+  */
