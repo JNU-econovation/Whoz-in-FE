@@ -1,20 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // useNavigate 가져오기
+
 import styled from 'styled-components';
-import { Link, Outlet } from 'react-router-dom';
+import { ListContainer, ListItem } from '../components/StyledComponents/LayoutStyles';
 
 const MyPage = () => {
+    const navigate = useNavigate(); // navigate 함수 선언
+
     return (
         <div>
-            <h1>마이페이지</h1>
-            <nav>
-                
-            <Link to="MyProfile">프로필</Link>
-            <Link to="ManageDevice">기기 관리</Link>
-            <Link to="setting">설정</Link>
-                
-            </nav>
-            {/* 하위 라우트가 표시될 위치 */}
-            <Outlet />
+            <ListContainer>
+                <ListItem onClick={() => navigate('/MyProfile')}>프로필</ListItem>
+                <ListItem onClick={() => navigate('/ManageDevice')}>내 기기 관리</ListItem>
+                <ListItem onClick={() => navigate('/Setting')}>앱 설정</ListItem>           
+                 </ListContainer>
         </div>
     );
 };

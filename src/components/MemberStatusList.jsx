@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import { ListContainer, ListItem} from "./StyledComponents/LayoutStyles";
 // 활동 상태 초록불
 const ActiveStatus = styled.div `
   width: 1rem;
@@ -10,20 +10,7 @@ const ActiveStatus = styled.div `
   margin-left: auto;
 `;
 
-const ListContainer = styled.div`
-    display:flex ;
-    flex-direction: column;
-    gap: 3rem;
-    padding: 4rem;
 
-`;
-
-const MemberItem = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 1.2rem;
-
-`;
 
 const MemberStatusList = ({members}) => {
   // 동방에 있는 회원 / 나머지 회원 (+ 최근에 접속 안 한)
@@ -41,10 +28,10 @@ const sortedMembers = [...nowActiveMembers, ...recentActiveMembers, ...otherMemb
 return (
   <ListContainer>
     {sortedMembers.map((member, index) => (
-      <MemberItem key={index}>
+      <ListItem key={index}>
         {member.generation}기 {member.name}
         <ActiveStatus isActive={member.isActive} />
-      </MemberItem>
+      </ListItem>
     ))}
   </ListContainer>
 );
