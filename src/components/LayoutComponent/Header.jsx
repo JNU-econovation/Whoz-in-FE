@@ -31,6 +31,7 @@ const HeaderContainer = styled.header` // 헤더 스타일
   font-size: 1.5rem;
   font-weight: bold;
   border-bottom: 0.1rem gray solid;
+  border-radius: 0 0 2rem 2rem;
 `;
 
 const BackButtonWrapper = styled.div` // 버튼 래퍼

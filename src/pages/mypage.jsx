@@ -13,7 +13,7 @@ const MyPage = () => {
                 <ListItem onClick={() => navigate('/MyProfile')}>프로필</ListItem>
                 <ListItem onClick={() => navigate('/ManageDevice')}>내 기기 관리</ListItem>
                 <ListItem onClick={() => navigate('/Setting')}>앱 설정</ListItem>           
-                 </ListContainer>
+             </ListContainer>
         </div>
     );
 };

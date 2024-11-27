@@ -23,13 +23,13 @@ const NavContainer = styled.nav`
 const NavButton = styled.button`
   display: flex;
   flex-direction: column;
-  margin-left: 3rem;
-  margin-right: 3rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
   align-items: center;
   background: none;
   border: none;
   color: #007bff;
-  font-size: 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
 
   &:hover {
