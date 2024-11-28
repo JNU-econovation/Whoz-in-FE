@@ -9,9 +9,14 @@ const ActiveStatus = styled.div `
   background-color: ${({ isActive }) => (isActive ? 'green' : 'gray')};
   margin-left: auto;
 `;
+const UpperMessage = styled.div `
+  font-size: 1.2rem;
+  font-weight: bold;
+`
 
-
-
+const CountNumber = styled.span`
+  color: blue;
+`
 const MemberStatusList = ({members}) => {
   // 동방에 있는 회원 / 나머지 회원 (+ 최근에 접속 안 한)
   const nowActiveMembers = members.filter(member => member.isActive);
@@ -27,6 +32,7 @@ const sortedMembers = [...nowActiveMembers, ...recentActiveMembers, ...otherMemb
 
 return (
   <ListContainer>
+    <UpperMessage> 현재 동방에 <CountNumber>{nowActiveMembers.length}</CountNumber>명 있습니다.</UpperMessage>
     {sortedMembers.map((member, index) => (
       <ListItem key={index}>
         {member.generation}기 {member.name}

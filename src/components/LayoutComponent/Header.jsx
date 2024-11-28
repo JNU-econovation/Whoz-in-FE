@@ -59,7 +59,7 @@ function Header() {
           <FaAngleLeft />
         </BackButton>
       </BackButtonWrapper>
-      <div>WhozIn</div>
+      <div>헤더... 아직 디자인 안 함</div>
     </HeaderContainer>
   );
 }

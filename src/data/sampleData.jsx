@@ -20,14 +20,14 @@ const members = [
       lastActiveTime: null,
     },
     {
-      name: "윤석호2",
-      generation: "26",
+      name: "강명덕",
+      generation: "27",
       isActive: true,
       lastActiveTime: null,
     },
     {
-      name: "최규민3",
-      generation: "26",
+      name: "정승현",
+      generation: "27",
       isActive: true,
       lastActiveTime: null,
     },
