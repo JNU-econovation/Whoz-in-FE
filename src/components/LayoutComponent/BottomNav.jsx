@@ -53,7 +53,7 @@ function BottomNav() {
       </NavButton>
       <NavButton onClick={() => navigate("/mypage")}>
         <FaUser /> 
-        마이페이지
+        마이페이지   
       </NavButton>
     </NavContainer>
   );

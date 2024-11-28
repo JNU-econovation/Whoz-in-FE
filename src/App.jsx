@@ -16,15 +16,14 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <Routes>
-
-
+          
           <Route path="/join" element={<Join />} />
           <Route path="/main" element={<Main />} />
-          <Route path="/mypage" element={<MyPage />}>
-                    <Route path="profile" element={<MyProfile />} />
-                    <Route path="device-management" element={<ManageDevice />} />
-                    <Route path="setting" element={<Setting />} />
-                </Route>
+          <Route path="/mypage" element={<MyPage />}/>
+          <Route path="/mypage/profile" element={<MyProfile />} />
+          <Route path="/mypage/device-management" element={<ManageDevice />} />
+          <Route path="/mypage/setting" element={<Setting />} />
+          
         </Routes>
         <BottomNav />
       </BrowserRouter>
