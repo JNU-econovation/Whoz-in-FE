@@ -28,12 +28,12 @@ const NavButton = styled.button`
   align-items: center;
   background: none;
   border: none;
-  color: #007bff;
+  color: #808080;
   font-size: 1rem;
   cursor: pointer;
 
   &:hover {
-    color: #0056b3;
+    color: #6a6a6a;
   }
   
   svg {

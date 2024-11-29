@@ -65,13 +65,13 @@ const members = [
       name: "서영우",
       generation: "26",
       isActive: false,
-      lastActiveTime: "2023-10-25T14:30:00",
+      lastActiveTime: "2024-11-25T14:30:00",
     },
     {
       name: "최규민1",
       generation: "25",
       isActive: false,
-      lastActiveTime: "2023-10-24T12:00:00",
+      lastActiveTime: "2024-11-24T12:00:00",
     },
     {
       name: "윤석호1",
@@ -83,7 +83,7 @@ const members = [
       name: "김종민1",
       generation: "23",
       isActive: false,
-      lastActiveTime: "2023-10-20T09:15:00",
+      lastActiveTime: "2024-11-20T09:15:00",
     },
     {
       name: "서영우1",

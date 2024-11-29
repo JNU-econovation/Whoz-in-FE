@@ -30,7 +30,8 @@ const HeaderContainer = styled.header` // 헤더 스타일
   margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: bold;
-  border-bottom: 0.1rem gray solid;
+  background-color: whitesmoke;
+  // border-bottom: 0.1rem gray solid;
   border-radius: 0 0 2rem 2rem;
 `;
 
