@@ -1,15 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { FaBars, FaUser } from "react-icons/fa"; // 필요한 아이콘을 가져옵니다.
+import { useNavigate, useLocation } from "react-router-dom";
 
 const NavContainer = styled.nav`
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 1rem;
-
+  padding: 1.4rem;
+  padding-bottom: 2.4rem;
   display: flex;
   justify-content: space-between; /* 버튼을 양쪽 끝에 배치 */
   align-items: center;
@@ -28,31 +27,36 @@ const NavButton = styled.button`
   align-items: center;
   background: none;
   border: none;
-  color: #808080;
+  color: ${({ isActive }) => (isActive ? "#1F2024" : "#808080")}; /* 활성화된 탭은 검정색, 비활성화된 탭은 회색 */
   font-size: 1rem;
   cursor: pointer;
+  font-weight: ${({ isActive }) => (isActive ? "bold" : "normal")}; /* 활성화된 탭은 볼드체, 비활성화된 탭은 일반체 */
+`;
 
-  &:hover {
-    color: #6a6a6a;
-  }
-  
-  svg {
-    font-size: 1.5rem; 
-    margin-bottom: 4px; 
-    }
+const NavIcon = styled.div`
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background-color: ${({ isActive }) => (isActive ? "#006FFD" : "#D4D6DD")}; /* 파란색은 선택된 탭, 회색은 아닌 탭 */
+  margin-bottom: 6px;
 `;
 
 function BottomNav() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 현재 경로에 맞춰 활성화된 탭을 결정
+  const isMainActive = location.pathname === "/main";
+  const isMypageActive = location.pathname === "/mypage";
 
   return (
     <NavContainer>
-      <NavButton onClick={() => navigate("/main")}>
-        <FaBars /> 
-        메인
+      <NavButton onClick={() => navigate("/main")} isActive={isMainActive}>
+        <NavIcon isActive={isMainActive} />
+        동방 현황
       </NavButton>
-      <NavButton onClick={() => navigate("/mypage")}>
-        <FaUser /> 
+      <NavButton onClick={() => navigate("/mypage")} isActive={isMypageActive}>
+        <NavIcon isActive={isMypageActive} />
         마이페이지   
       </NavButton>
     </NavContainer>
