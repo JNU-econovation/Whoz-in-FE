@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ListContainer, ListItem} from "./StyledComponents/LayoutStyles";
+
 // 활동 상태 초록불
 const ActiveStatus = styled.div `
   width: 1rem;
@@ -9,14 +10,28 @@ const ActiveStatus = styled.div `
   background-color: ${({ isActive }) => (isActive ? 'green' : 'gray')};
   margin-left: auto;
 `;
+const HeaderWrapper = styled.div`
+  width: 100%;
+  padding-top: 0.231rem;
+  padding-bottom: 11.011rem;
+  background: linear-gradient(107deg, #b5d8f6 0%, #dab5f6 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const UpperMessage = styled.div `
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 2rem;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 400;
+  color: black;
+  word-wrap: break-word;
 `
 
-const CountNumber = styled.span`
-  color: blue;
-`
+const MemberListContainer = styled(ListContainer)`
+ border-radius: 30rem 30rem;
+`;
+
 const MemberStatusList = ({members}) => {
   // 동방에 있는 회원 / 나머지 회원 (+ 최근에 접속 안 한)
   const nowActiveMembers = members.filter(member => member.isActive);
@@ -31,15 +46,23 @@ const otherMembers = members
 const sortedMembers = [...nowActiveMembers, ...recentActiveMembers, ...otherMembers];
 
 return (
-  <ListContainer>
-    <UpperMessage> 현재 동방에 <CountNumber>{nowActiveMembers.length}</CountNumber>명 있습니다.</UpperMessage>
-    {sortedMembers.map((member, index) => (
-      <ListItem key={index}>
-        {member.generation}기 {member.name}
-        <ActiveStatus isActive={member.isActive} />
-      </ListItem>
-    ))}
-  </ListContainer>
+  <>
+    <HeaderWrapper>
+      <UpperMessage>
+        현재 동방에
+        <br />
+        <b>{nowActiveMembers.length}</b>명 있습니다.
+      </UpperMessage>
+    </HeaderWrapper>
+    <MemberListContainer>
+      {sortedMembers.map((member, index) => (
+        <ListItem key={index}>
+          {member.generation}기 {member.name}
+          <ActiveStatus isActive={member.isActive} />
+        </ListItem>
+      ))}
+    </MemberListContainer>
+  </>
 );
 };
 

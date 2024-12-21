@@ -6,7 +6,7 @@ import members from '../data/sampleData'
 const Main = () => {
   return (
     <div>
-            <MemberStatusList members={members} />
+      <MemberStatusList members={members} />
     </div>
   );
 };

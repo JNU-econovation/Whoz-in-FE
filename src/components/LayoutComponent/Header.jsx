@@ -23,6 +23,11 @@ const BackButton = styled.button` // 뒤로가기
 
 const HeaderContainer = styled.header` // 헤더 스타일
   display: flex;
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index: 1000;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -32,7 +37,7 @@ const HeaderContainer = styled.header` // 헤더 스타일
   font-weight: bold;
   background-color: whitesmoke;
   // border-bottom: 0.1rem gray solid;
-  border-radius: 0 0 2rem 2rem;
+  min-height: 1rem;
 `;
 
 const BackButtonWrapper = styled.div` // 버튼 래퍼
@@ -60,7 +65,7 @@ function Header() {
           <FaAngleLeft />
         </BackButton>
       </BackButtonWrapper>
-      <div>헤더... 아직 디자인 안 함</div>
+ 
     </HeaderContainer>
   );
 }

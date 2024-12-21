@@ -5,6 +5,7 @@ display: flex ;
 flex-direction: column;
 gap: 3rem;
 padding: 3rem;
+background-color: white;
 `;
 
 export const ListItem = styled.div`
