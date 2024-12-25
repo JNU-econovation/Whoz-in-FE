@@ -10,7 +10,7 @@ const ScrollContainer = styled.div`
     flex-direction: column;
     overflow: hidden;
     transition: all 0.7s ease;
-    transform: ${({ showSecondStep }) => (showSecondStep ? "translateY(-100%)" : "translateY(0)")}; /* 첫 번째 페이지는 아래로, 두 번째 페이지는 위로 */
+    transform: ${({ showSecondStep }) => (showSecondStep ? "translateY(-60%)" : "translateY(0)")}; /* 첫 번째 페이지는 아래로, 두 번째 페이지는 위로 */
     height: 100%;
 `
 
@@ -42,7 +42,7 @@ const Join = () => {
         alert("회원가입이 완료되었습니다!")
 
         // 가입 완료 후 로그인 페이지로 이동
-        navigate("/")
+        navigate("/login")
     }
 
     const handleNext = () => {
