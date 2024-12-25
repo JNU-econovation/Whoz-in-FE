@@ -17,3 +17,8 @@ export const ListItem = styled.div`
     color: gray; 
   }
 `;
+
+export const ContentContainer = styled.div`
+  gap: 3rem;
+  padding:3rem;
+`;
