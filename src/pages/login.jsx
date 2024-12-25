@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom"
 import { Container, Input, Button, KakaoButton, JoinButton } from "../components/StyledComponents/AuthStyles"
 
 const Login = () => {
-    const [username, setUsername] = useState("")
+    const [loginid, setloginid] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
 
     function handleLogin() {
         // TODO: 자체 로그인 로직 구현
-        console.log("ID:", username)
+        console.log("ID:", loginid)
         console.log("비밀번호:", password)
         // TODO: 로그인 성공 시 메인 페이지로 이동
         navigate("/main")
@@ -27,7 +27,7 @@ const Login = () => {
 
     return (
         <Container>
-            <Input type="text" placeholder="ID" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <Input type="text" placeholder="ID" value={loginid} onChange={(e) => setloginid(e.target.value)} />
             <Input
                 type="password"
                 placeholder="비밀번호"

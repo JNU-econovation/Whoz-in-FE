@@ -17,7 +17,7 @@ const ProfileImage = styled.img`
 
 const MyProfile = () => {
     const [profilePic, setProfilePic] = useState(null); // 프로필 사진 상태
-    const [userName, setUserName] = useState("홍길동"); // 예시로 등록된 이름
+    const [loginid, setloginid] = useState("홍길동"); // 예시로 등록된 이름
 
     // 프로필 사진 변경 함수
     const handleImageChange = (e) => {
@@ -39,7 +39,7 @@ const MyProfile = () => {
                 <div>
                     <input type="file" accept="image/*" onChange={handleImageChange} />
                 </div>
-                <p>등록된 이름: {userName}</p>
+                <p>등록된 이름: {loginid}</p>
             </ProfileContainer>
         </ContentContainer>
     );

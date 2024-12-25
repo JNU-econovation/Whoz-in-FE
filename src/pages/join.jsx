@@ -1,16 +1,33 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { FaAngleLeft } from "react-icons/fa" // react-icons 패키지 사용
+import { FaAngleLeft } from "react-icons/fa" 
 import { Input, Button, Container } from "../components/StyledComponents/AuthStyles"
+import styled from "styled-components"
 // 스타일 선언
 
+const ScrollContainer = styled.div`
+
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.7s ease;
+    transform: ${({ showSecondStep }) => (showSecondStep ? "translateY(-100%)" : "translateY(0)")}; /* 첫 번째 페이지는 아래로, 두 번째 페이지는 위로 */
+    height: 100%;
+`
 
 const Join = () => {
     const navigate = useNavigate()
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const [email, setEmail] = useState("")
+
+    // 첫번째 페이지에서 받을 정보
+    const [name, setName] = useState("")  
+    const [loginid, setLoginId] = useState("")  
+    const [password, setPassword] = useState("")  
+    const [confirmPassword, setConfirmPassword] = useState("")  
+
+    // 스크롤 넘어가고 받을 정보
+    const [showSecondStep, setShowSecondStep] = useState(false)
+    const [Generation, setGeneration] = useState("") // 기수
+    const [field, setField] = useState("") // 분야
+
 
     const handleJoin = () => {
         if (password !== confirmPassword) {
@@ -19,22 +36,42 @@ const Join = () => {
         }
 
         // TODO: 회원가입 로직 구현&통신... 일단 콘솔로그 찍는걸로
-        console.log("ID:", username)
+        console.log("이름:", name)
+        console.log("ID:", loginid)
         console.log("비밀번호:", password)
-        console.log("이메일:", email)
         alert("회원가입이 완료되었습니다!")
 
         // 가입 완료 후 로그인 페이지로 이동
         navigate("/")
     }
 
-    //TODO: 아이디, 비밀번호 형식 지정하고 이메일 정규식 넣기
+    const handleNext = () => {
+        if (!name || !loginid || !password || !confirmPassword) {
+            alert("아직 입력하지 않은 값이 있습니다.")
+            return
+        }
+        setShowSecondStep(true)
+    }
+
+    const handlePrevious = () => {
+        setShowSecondStep(false)
+    }
+
     return (
         <Container>
-
-       
-                <Input type="text" placeholder="ID" value={username} onChange={(e) => setUsername(e.target.value)} />
-                <Input type="email" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <ScrollContainer showSecondStep={showSecondStep}>
+            <Input
+                    type="text"
+                    placeholder="이름"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <Input
+                    type="text"
+                    placeholder="ID (로그인 아이디)"
+                    value={loginid}
+                    onChange={(e) => setLoginId(e.target.value)}
+                />
                 <Input
                     type="password"
                     placeholder="비밀번호"
@@ -47,8 +84,52 @@ const Join = () => {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                <Button onClick={handleJoin}>회원가입</Button>
-           
+                <Button onClick={handleNext}>다음</Button>
+
+                {/* 두 번째 페이지 */}
+                {showSecondStep && (
+                    <>
+                    
+                    <Button onClick={handlePrevious}>
+                            <FaAngleLeft /> 이전
+                        </Button>
+
+                        <div>
+                            <label htmlFor="classNumber">기수</label>
+                            <select
+                                id="classNumber"
+                                value={Generation}
+                                onChange={(e) => setGeneration(e.target.value)}
+                            >
+                                {[...Array(18).keys()].map((i) => (
+                                    <option key={i} value={28 - i}>
+                                        {28 - i}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label htmlFor="field">분야</label>
+                            <select
+                                id="field"
+                                value={field}
+                                onChange={(e) => setField(e.target.value)}
+                            >
+                                <option value="">선택하세요</option>
+                                <option value="field1">BE</option>
+                                <option value="field2">FE</option>
+                                <option value="field3">AOS</option>
+                                <option value="field4">iOS</option>
+                                <option value="field5">AI</option>
+                                <option value="field5">GAME</option>
+                            </select>
+                        </div>
+
+                        <Button onClick={handleJoin}>회원가입</Button>
+                    </>
+                )}
+            </ScrollContainer>
         </Container>
     )
 }
