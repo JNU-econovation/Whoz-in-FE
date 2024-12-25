@@ -7,13 +7,11 @@ const NavContainer = styled.nav`
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 1.4rem;
+  padding-top: 1.4rem;
   padding-bottom: 2.4rem;
   display: flex;
-  justify-content: space-between; /* 버튼을 양쪽 끝에 배치 */
+  justify-content: space-around;
   align-items: center;
-  font-size: 1.5rem;
-  font-weight: bold;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1); 
   background-color: white;
   z-index: 1000;
@@ -22,13 +20,11 @@ const NavContainer = styled.nav`
 const NavButton = styled.button`
   display: flex;
   flex-direction: column;
-  margin-left: 2rem;
-  margin-right: 2rem;
   align-items: center;
   background: none;
   border: none;
   color: ${({ isActive }) => (isActive ? "#1F2024" : "#808080")}; /* 활성화된 탭은 검정색, 비활성화된 탭은 회색 */
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   font-weight: ${({ isActive }) => (isActive ? "bold" : "normal")}; /* 활성화된 탭은 볼드체, 비활성화된 탭은 일반체 */
 `;
@@ -38,7 +34,7 @@ const NavIcon = styled.div`
   height: 1.2rem;
   border-radius: 50%;
   background-color: ${({ isActive }) => (isActive ? "#006FFD" : "#D4D6DD")}; /* 파란색은 선택된 탭, 회색은 아닌 탭 */
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 `;
 
 function BottomNav() {
