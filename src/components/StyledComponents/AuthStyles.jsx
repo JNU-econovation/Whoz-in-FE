@@ -8,6 +8,7 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center;    // 이거 추가했더니 버튼 넓이가 글자수 넓이 만큼 줄었다. 왜지?
     padding: 2rem;
+    padding-top: 8rem;
     background-color: #fff;
     height: 100vh;
     box-sizing: border-box;

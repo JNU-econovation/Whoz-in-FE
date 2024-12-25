@@ -17,13 +17,15 @@ const HeaderContainer = styled.header` // 헤더 스타일
   font-size: 1.5rem;
   font-weight: bold;
   padding: 1rem 1rem;
-  min-height: 4rem; /* 적당한 최소 높이 설정 */
+  min-height: 3rem; /* 적당한 최소 높이 설정 */
   margin-bottom: 1rem;
+  
 `;
 
 const BackButtonWrapper = styled.div` // 버튼 래퍼
   position: absolute;
   left: 1rem;
+  top:2rem;
   display: flex;
   align-items: center;
   opacity: ${({ show }) => (show ? 1 : 0)};

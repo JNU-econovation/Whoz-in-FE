@@ -12,6 +12,7 @@ const Background = styled.div`
   height: 150vh; 
   background: linear-gradient(80deg, #b5d8f6 0%, #dab5f6 100%);
   z-index: -1;
+  
 `;
 
 const ContentWrapper = styled.div`
@@ -27,6 +28,7 @@ const UpperMessage = styled.div`
   color: black;
   text-align: left;
   padding: 2rem ;
+  padding-top: 4rem;
 `;
 
 const Main = () => {

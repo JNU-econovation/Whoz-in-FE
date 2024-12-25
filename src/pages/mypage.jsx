@@ -6,6 +6,9 @@ import styled from 'styled-components';
 const ProfileContainer = styled.div`
     padding: 3rem;
 `;
+const MyPageContainer = styled.div`
+    padding-top:4rem;
+`;
 
 const ProfileCard = () => {
     return (
@@ -20,13 +23,13 @@ const MyPage = () => {
 
     return (
         <div>
-    
+    <MyPageContainer>
             <ListContainer>
                 <ListItem onClick={() => navigate('profile')}>프로필</ListItem>
                 <ListItem onClick={() => navigate('device-management')}>내 기기 관리</ListItem>
                 <ListItem onClick={() => navigate('setting')}>앱 설정</ListItem>
             </ListContainer>
-    
+            </MyPageContainer>
         </div>
     );
 };
