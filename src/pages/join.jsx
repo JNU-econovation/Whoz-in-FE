@@ -13,6 +13,31 @@ const ScrollContainer = styled.div`
     transform: ${({ showSecondStep }) => (showSecondStep ? "translateY(-60%)" : "translateY(0)")}; /* 첫 번째 페이지는 아래로, 두 번째 페이지는 위로 */
     height: 100%;
 `
+const StyledSelect = styled.select`
+    height: 4rem;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    width: 100%;
+    max-width: 25rem;
+    box-sizing: border-box;
+
+&:focus {
+  border-color: #007bff;
+  outline: none;
+}
+`;
+
+const StyledLabel = styled.label`
+font-size: 1rem;
+color: #333;
+font-family: 'Pretendard', sans-serif;
+margin-top: 1rem;
+`;
+
+//TODO: 페이지 예쁘게 넘어가게 처리 다시하기  (12/25)
 
 const Join = () => {
     const navigate = useNavigate()
@@ -26,7 +51,7 @@ const Join = () => {
     // 스크롤 넘어가고 받을 정보
     const [showSecondStep, setShowSecondStep] = useState(false)
     const [Generation, setGeneration] = useState("") // 기수
-    const [field, setField] = useState("") // 분야
+    const [position, setPosition] = useState("") // 분야
 
 
     const handleJoin = () => {
@@ -46,10 +71,7 @@ const Join = () => {
     }
 
     const handleNext = () => {
-        if (!name || !loginid || !password || !confirmPassword) {
-            alert("아직 입력하지 않은 값이 있습니다.")
-            return
-        }
+
         setShowSecondStep(true)
     }
 
@@ -95,8 +117,8 @@ const Join = () => {
                         </Button>
 
                         <div>
-                            <label htmlFor="classNumber">기수</label>
-                            <select
+                            <StyledLabel htmlFor="classNumber">기수</StyledLabel>
+                            <StyledSelect
                                 id="classNumber"
                                 value={Generation}
                                 onChange={(e) => setGeneration(e.target.value)}
@@ -106,24 +128,24 @@ const Join = () => {
                                         {28 - i}
                                     </option>
                                 ))}
-                            </select>
+                            </StyledSelect>
                         </div>
 
                         <div>
-                            <label htmlFor="field">분야</label>
-                            <select
-                                id="field"
-                                value={field}
-                                onChange={(e) => setField(e.target.value)}
+                            
+                            <StyledSelect
+                                id="position"
+                                value={position}
+                                onChange={(e) => setPosition(e.target.value)}
                             >
-                                <option value="">선택하세요</option>
-                                <option value="field1">BE</option>
-                                <option value="field2">FE</option>
-                                <option value="field3">AOS</option>
-                                <option value="field4">iOS</option>
-                                <option value="field5">AI</option>
-                                <option value="field5">GAME</option>
-                            </select>
+                                <option value="">분야</option>
+                                <option value="BE">BE</option>
+                                <option value="FE">FE</option>
+                                <option value="AOS">AOS</option>
+                                <option value="IOS">iOS</option>
+                                <option value="AI">AI</option>
+                                <option value="GAME">GAME</option>
+                            </StyledSelect>
                         </div>
 
                         <Button onClick={handleJoin}>회원가입</Button>
