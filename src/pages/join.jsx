@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { FaAngleLeft } from "react-icons/fa" 
 import { Input, Button, Container } from "../components/StyledComponents/AuthStyles"
 import styled from "styled-components"
-// 스타일 선언
+import members from "../data/sampleData" // 회원 정보 데이터
 
 const ScrollContainer = styled.div`
 
@@ -50,7 +50,7 @@ const Join = () => {
 
     // 스크롤 넘어가고 받을 정보
     const [showSecondStep, setShowSecondStep] = useState(false)
-    const [Generation, setGeneration] = useState("") // 기수
+    const [generation, setGeneration] = useState("") // 기수
     const [position, setPosition] = useState("") // 분야
 
 
@@ -60,11 +60,20 @@ const Join = () => {
             return
         }
 
-        // TODO: 회원가입 로직 구현&통신... 일단 콘솔로그 찍는걸로
-        console.log("이름:", name)
-        console.log("ID:", loginid)
-        console.log("비밀번호:", password)
-        alert("회원가입이 완료되었습니다!")
+    // 새로운 회원 정보 생성
+    const newMember = {
+        id: members.length, // 회원가입과 동시에 고유 ID 부여
+        name,
+        loginid,
+        password,
+        generation,
+        position,
+      };
+  
+      // 회원 데이터 배열에 추가
+      members.push(newMember);
+
+      alert('회원가입이 완료되었습니다!');
 
         // 가입 완료 후 로그인 페이지로 이동
         navigate("/login")
@@ -120,7 +129,7 @@ const Join = () => {
                             <StyledLabel htmlFor="classNumber">기수</StyledLabel>
                             <StyledSelect
                                 id="classNumber"
-                                value={Generation}
+                                value={generation}
                                 onChange={(e) => setGeneration(e.target.value)}
                             >
                                 {[...Array(18).keys()].map((i) => (

@@ -12,6 +12,7 @@ const Login = () => {
         console.log("ID:", loginid)
         console.log("비밀번호:", password)
         // TODO: 로그인 성공 시 메인 페이지로 이동
+        //TODO: 기기등록 확인 로직 추가
         navigate("/main")
     }
 
@@ -39,6 +40,7 @@ const Login = () => {
             <KakaoButton onClick={handleKakaoLogin}>카카오로 로그인</KakaoButton>
 
             <JoinButton onClick={handleJoinClick}>회원가입하기</JoinButton>
+            <div>! WhozIn은 PC 환경에서의 회원가입을 권장합니다.</div>
         </Container>
     )
 }

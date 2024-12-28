@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ListContainer, ListItem } from '../components/StyledComponents/LayoutStyles';
 import styled from 'styled-components';
 
+
 const ProfileContainer = styled.div`
     padding: 3rem;
 `;

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import MemberStatusList from '../components/MemberStatusList';
 import members from '../data/sampleData';
 import styled from 'styled-components';
+// TODO: 멤버 활성 상태 통신 api 구현 및 연결
 
 const Background = styled.div`
   position: fixed;
