@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { FaAngleLeft } from "react-icons/fa" 
 import { Input, Button, Container } from "../components/StyledComponents/AuthStyles"
+import StyledSelect from "../components/GenerationSelect"
 import styled from "styled-components"
 import members from "../data/sampleData" // 회원 정보 데이터
 
@@ -13,23 +14,6 @@ const ScrollContainer = styled.div`
     transform: ${({ showSecondStep }) => (showSecondStep ? "translateY(-60%)" : "translateY(0)")}; /* 첫 번째 페이지는 아래로, 두 번째 페이지는 위로 */
     height: 100%;
 `
-const StyledSelect = styled.select`
-    height: 4rem;
-    border: 1px solid #ccc;
-    margin-bottom: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-radius: 0.5rem;
-    font-size: 1.2rem;
-    width: 100%;
-    max-width: 25rem;
-    box-sizing: border-box;
-
-&:focus {
-  border-color: #007bff;
-  outline: none;
-}
-`;
 
 
 //TODO: 페이지 예쁘게 넘어가게 처리 다시하기  (12/25)
@@ -155,9 +139,10 @@ const Join = () => {
                         <Button onClick={handleJoin}>회원가입</Button>
                     </>
                 )}
+            
             </ScrollContainer>
         </Container>
     )
 }
-
+//TODO: 반응형 따라 회원가입 버튼 안 보이는 거 수정
 export default Join
