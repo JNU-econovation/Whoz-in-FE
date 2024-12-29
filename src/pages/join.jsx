@@ -18,6 +18,7 @@ const StyledSelect = styled.select`
     border: 1px solid #ccc;
     margin-bottom: 1rem;
     padding-left: 1rem;
+    padding-right: 1rem;
     border-radius: 0.5rem;
     font-size: 1.2rem;
     width: 100%;
@@ -30,12 +31,6 @@ const StyledSelect = styled.select`
 }
 `;
 
-const StyledLabel = styled.label`
-font-size: 1rem;
-color: #333;
-font-family: 'Pretendard', sans-serif;
-margin-top: 1rem;
-`;
 
 //TODO: 페이지 예쁘게 넘어가게 처리 다시하기  (12/25)
 
@@ -126,12 +121,12 @@ const Join = () => {
                         </Button>
 
                         <div>
-                            <StyledLabel htmlFor="classNumber">기수</StyledLabel>
                             <StyledSelect
                                 id="classNumber"
                                 value={generation}
                                 onChange={(e) => setGeneration(e.target.value)}
                             >
+                                <option value="">기수</option>
                                 {[...Array(18).keys()].map((i) => (
                                     <option key={i} value={28 - i}>
                                         {28 - i}
