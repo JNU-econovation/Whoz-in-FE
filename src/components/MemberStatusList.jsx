@@ -13,6 +13,7 @@ const ActiveStatus = styled.div`
 
 const MemberListContainer = styled(ListContainer)`
   border-radius: 30px 30px 0 0;
+  min-height: 30rem
 `;
 
 const MemberStatusList = ({ members }) => {
