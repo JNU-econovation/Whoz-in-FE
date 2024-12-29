@@ -2,9 +2,9 @@ import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { FaAngleLeft } from "react-icons/fa" 
 import { Input, Button, Container } from "../components/StyledComponents/AuthStyles"
-import StyledSelect from "../components/GenerationSelect"
 import styled from "styled-components"
 import members from "../data/sampleData" // 회원 정보 데이터
+import GenerationsDropdown, {StyledSelect} from "../components/GenerationSelect"
 
 const ScrollContainer = styled.div`
 
@@ -104,20 +104,10 @@ const Join = () => {
                             <FaAngleLeft /> 이전
                         </Button>
 
-                        <div>
-                            <StyledSelect
-                                id="classNumber"
-                                value={generation}
-                                onChange={(e) => setGeneration(e.target.value)}
-                            >
-                                <option value="">기수</option>
-                                {[...Array(18).keys()].map((i) => (
-                                    <option key={i} value={28 - i}>
-                                        {28 - i}
-                                    </option>
-                                ))}
-                            </StyledSelect>
-                        </div>
+                        <GenerationsDropdown
+                            generation={generation}
+                            setGeneration={setGeneration}
+                        />
 
                         <div>
                             
