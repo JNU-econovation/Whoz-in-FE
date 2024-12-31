@@ -55,6 +55,10 @@ function BottomNav() {
         <NavIcon isActive={isMypageActive} />
         마이페이지   
       </NavButton>
+      <NavButton onClick={() => navigate("/join")} isActive={isMypageActive}>
+        <NavIcon isActive={isMypageActive} />
+        가입   
+      </NavButton>
     </NavContainer>
   );
 }
