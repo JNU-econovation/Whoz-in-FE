@@ -7,12 +7,15 @@ const FallingAnimation = keyframes`
     transform: translateY(-100%);
     opacity: 0;
   }
-  10% {
+  20% {
     opacity: 1;
+  }
+  40% {
+    opacity: 0;
   }
   100% {
     transform: translateY(100vh);
-    opacity: 1;
+    opacity: 0;
   }
 `;
 
@@ -23,7 +26,7 @@ const Snowflake = styled.div`
   left: ${({ left }) => left}%;
   font-size: ${({ size }) => size}rem;
   opacity: 0;
-  color:white;
+  color: white;
   animation: ${FallingAnimation} ${({ duration }) => duration}s linear infinite;
   animation-delay: ${({ delay }) => delay}s;
 `;
@@ -32,9 +35,9 @@ const Snowflake = styled.div`
 const generateSnowflakes = (count) => {
   const snowflakes = [];
   for (let i = 0; i < count; i++) {
-    const size = Math.random() * 1.5 + 0.5; // 0.5rem ~ 2rem
+    const size = Math.random() * 2 + 1; // 2rem ~ 3rem
     const left = Math.random() * 100; // 0% ~ 100%
-    const duration = Math.random() * 5 + 5; // 5s ~ 10s
+    const duration = Math.random() * 15 + 20; // 10s ~ 15s
     const delay = Math.random() * 5; // 0s ~ 5s
     snowflakes.push(
       <Snowflake
@@ -44,7 +47,7 @@ const generateSnowflakes = (count) => {
         duration={duration}
         delay={delay}
       >
-        ❅
+        ⦁
       </Snowflake>
     );
   }

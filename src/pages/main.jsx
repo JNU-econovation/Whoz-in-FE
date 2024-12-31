@@ -13,7 +13,7 @@ const Background = styled.div`
   width: 100%;
   height: 150vh; 
   /*background: linear-gradient(80deg, #b5d8f6 0%, #dab5f6 100%);*/
-  background: linear-gradient(120deg, #000000, #ceabff);
+  background: linear-gradient(120deg, #000000, #abbaff);
   z-index: -1;
   
 `;
@@ -48,7 +48,7 @@ const Main = () => {
           <UpperMessage>
             현재 동방에
             <br />
-            <b>{nowActiveMembers.length}</b>명 있습니다.
+            <b>{nowActiveMembers.length}</b>명 있습니다 ☃️
           </UpperMessage>
           <MemberStatusList members={members} />
         </ContentWrapper>
