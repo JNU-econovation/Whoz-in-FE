@@ -2,9 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes, viewport-fit=cover" />
+        <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+        <meta name="apple-mobile-web-app-status-bar-style" content="transparent"></meta>
+
         <meta name="theme-color" content="#000000" />
-        <meta name="description" content="Web site created using create-react-app" />
+        <meta name="description" content="WhozIn - 에코노 동방 현황을 확인해요." />
 
         <!-- Favicon 설정 -->
         <link rel="icon" href="%PUBLIC_URL%/icons/favicon-96x96.png" sizes="96x96" type="image/png" />
@@ -13,6 +17,12 @@
 
         <!-- iOS 아이콘 설정 -->
         <link rel="apple-touch-icon" href="%PUBLIC_URL%/icons/apple-touch-icon.png" />
+        <style>
+            html {
+                min-height: calc(100% + env(safe-area-inset-top));
+                padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            }
+        </style>
 
         <!-- 웹 앱 매니페스트 -->
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
