@@ -44,6 +44,8 @@ function BottomNav() {
   // 현재 경로에 맞춰 활성화된 탭을 결정
   const isMainActive = location.pathname === "/main";
   const isMypageActive = location.pathname === "/mypage";
+  const isJoinActive = location.pathname === "/join";
+
 
   return (
     <NavContainer>
@@ -55,8 +57,8 @@ function BottomNav() {
         <NavIcon isActive={isMypageActive} />
         마이페이지   
       </NavButton>
-      <NavButton onClick={() => navigate("/join")} isActive={isMypageActive}>
-        <NavIcon isActive={isMypageActive} />
+      <NavButton onClick={() => navigate("/join")} isActive={isJoinActive}>
+        <NavIcon isActive={isJoinActive} />
         가입   
       </NavButton>
     </NavContainer>
