@@ -6,28 +6,27 @@ import styled from "styled-components"
 import members from "../data/sampleData" // 회원 정보 데이터
 import GenerationsDropdown, {StyledSelect} from "../components/GenerationSelect"
 
+/*
 const ScrollContainer = styled.div`
 
     flex-direction: column;
     overflow: hidden;
     transition: all 0.7s ease;
-    transform: ${({ showSecondStep }) => (showSecondStep ? "translateY(-60%)" : "translateY(0)")}; /* 첫 번째 페이지는 아래로, 두 번째 페이지는 위로 */
+    transform: ${({ showSecondStep }) => (showSecondStep ? "translateY(-60%)" : "translateY(0)")}; 
     height: 100%;
-`
-
+`*/
 
 //TODO: 페이지 예쁘게 넘어가게 처리 다시하기  (12/25)
 
 const Join = () => {
     const navigate = useNavigate()
 
-    // 첫번째 페이지에서 받을 정보
+
     const [name, setName] = useState("")  
     const [loginid, setLoginId] = useState("")  
     const [password, setPassword] = useState("")  
     const [confirmPassword, setConfirmPassword] = useState("")  
 
-    // 스크롤 넘어가고 받을 정보
     const [showSecondStep, setShowSecondStep] = useState(false)
     const [generation, setGeneration] = useState("") // 기수
     const [position, setPosition] = useState("") // 분야
@@ -58,18 +57,17 @@ const Join = () => {
         navigate("/login")
     }
 
-    const handleNext = () => {
+   /* const handleNext = () => {
 
         setShowSecondStep(true)
     }
 
     const handlePrevious = () => {
         setShowSecondStep(false)
-    }
+    }   */
 
     return (
         <Container>
-            <ScrollContainer showSecondStep={showSecondStep}>
             <Input
                     type="text"
                     placeholder="이름"
@@ -94,22 +92,13 @@ const Join = () => {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                <Button onClick={handleNext}>다음</Button>
-
-                {/* 두 번째 페이지 */}
-                {showSecondStep && (
-                    <>
-                    
-                    <Button onClick={handlePrevious}>
-                            <FaAngleLeft /> 이전
-                        </Button>
-
-                        <GenerationsDropdown
+              
+                    <GenerationsDropdown
                             generation={generation}
                             setGeneration={setGeneration}
                         />
 
-                        <div>
+                    
                             
                             <StyledSelect
                                 id="position"
@@ -124,13 +113,13 @@ const Join = () => {
                                 <option value="AI">AI</option>
                                 <option value="GAME">GAME</option>
                             </StyledSelect>
-                        </div>
+                    
 
                         <Button onClick={handleJoin}>회원가입</Button>
-                    </>
-                )}
+               
+           
             
-            </ScrollContainer>
+
         </Container>
     )
 }
