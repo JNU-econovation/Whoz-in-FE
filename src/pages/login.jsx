@@ -1,7 +1,15 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container, Input, Button, KakaoButton, JoinButton } from "../components/StyledComponents/AuthStyles"
+import styled from "styled-components"
 
+const LoginButtonContainer = styled.div`
+    display: flex;            
+    justify-content: space-around;  
+    width: 100%;
+    margin-top: 1rem;
+    
+`
 const Login = () => {
     const [loginid, setloginid] = useState("")
     const [password, setPassword] = useState("")
@@ -35,12 +43,11 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <Button onClick={handleLogin}>로그인</Button>
-
-            <KakaoButton onClick={handleKakaoLogin}>카카오로 로그인</KakaoButton>
-
+            <LoginButtonContainer>
+                <Button onClick={handleLogin}>로그인</Button>
+                <KakaoButton onClick={handleKakaoLogin}>카카오</KakaoButton>
+            </LoginButtonContainer>
             <JoinButton onClick={handleJoinClick}>회원가입하기</JoinButton>
-            <div>! WhozIn은 PC 환경에서의 회원가입을 권장합니다.</div>
         </Container>
     )
 }
