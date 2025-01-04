@@ -1,7 +1,8 @@
 import React from "react";
 import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
-import Login from "./pages/login";
-import Join from "./pages/join";
+import Login from "./pages/auth/login";
+import Join from "./pages/auth/join";
+import KakaoRedirect from "./pages/auth/KakaoRedirect";
 import Main from "./pages/main";
 import Header from "./components/LayoutComponent/Header";
 import BottomNav from "./components/LayoutComponent/BottomNav";
@@ -23,6 +24,7 @@ const App = () => {
         <Routes>
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/oauth/kakao" element={<KakaoRedirect />} />
           <Route path="/main" element={<Main />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/profile" element={<MyProfile />} />
