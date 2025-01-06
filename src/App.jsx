@@ -1,11 +1,15 @@
 import React from "react";
 import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
+
 import Login from "./pages/auth/login";
 import Join from "./pages/auth/join";
 import KakaoRedirect from "./pages/auth/KakaoRedirect";
-import Main from "./pages/main";
+import BetaLogin from "./pages/auth/BetaLogin";
+
 import Header from "./components/LayoutComponent/Header";
 import BottomNav from "./components/LayoutComponent/BottomNav";
+
+import Main from "./pages/main";
 import MyPage from "./pages/mypage";
 import ManageDevice from "./pages/account/ManageDevice";
 import MyProfile from "./pages/account/MyProfile";
@@ -15,7 +19,7 @@ const App = () => {
   const location = useLocation();  // 현재 경로를 확인
 
   // 로그인 또는 회원가입 페이지일 때 BottomNav를 숨기기
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/join';
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/join' || location.pathname === '/beta-login';
 
   return (
     <div className="root-wrap">
@@ -24,6 +28,7 @@ const App = () => {
         <Routes>
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/beta-login" element={<BetaLogin />} />
           <Route path="/oauth/kakao" element={<KakaoRedirect />} />
           <Route path="/main" element={<Main />} />
           <Route path="/mypage" element={<MyPage />} />
