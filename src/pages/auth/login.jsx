@@ -27,9 +27,9 @@ const Login = () => {
     const handleKakaoLogin = () => {
         const REST_API_KEY = '';
         const REDIRECT_URI = '';
-        const KauthLink = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-    
-        window.location.href= KauthLink
+        const KauthLink = process.env.REACT_APP_KAUTH_LINK; 
+
+        window.location.href = KauthLink;
         }
 
     const handleJoinClick = () => {
