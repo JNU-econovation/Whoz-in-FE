@@ -7,9 +7,9 @@ import reportWebVitals from "./reportWebVitals"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
-    <React.StrictMode>
+    <React.Fragment>
         <App />
-    </React.StrictMode>
+    </React.Fragment>
 )
 
 serviceWorkerRegistration.register() //unregister -> register 서비스워커 활성화

@@ -13,7 +13,7 @@ const BetaLogin = () => {
 
     return (
         <Container>
-            <h1>로그인 베타 버전</h1>
+            <h1>베타 버전</h1>
             <p>현재는 카카오 로그인만 지원됩니다.</p>
             <KakaoButton onClick={handleKakaoLogin}>카카오로 로그인</KakaoButton>
         </Container>
