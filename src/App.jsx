@@ -5,7 +5,9 @@ import Login from "./pages/auth/login";
 import Join from "./pages/auth/join";
 import KakaoRedirect from "./pages/auth/KakaoRedirect";
 import BetaLogin from "./pages/auth/BetaLogin";
-import OAuthSuccess from "./pages/auth/OAuthSuccess.jsx";
+import OAuthSuccess from "./pages/auth/OAuthSuccess";
+import MemberInfo from "./pages/auth/MemberInfo";
+import AuthInfo from "./pages/auth/AuthInfo";
 
 import Header from "./components/LayoutComponent/Header";
 import BottomNav from "./components/LayoutComponent/BottomNav";
@@ -32,7 +34,9 @@ const App = () => {
           <Route path="/beta-login" element={<BetaLogin />} />
           <Route path="/oauth/kakao" element={<KakaoRedirect />} />
           <Route path="/oauth/success" element={<OAuthSuccess />} />
-          
+          <Route path="/oauth/member-info" element={<MemberInfo />} />
+          <Route path="/oauth/auth-info" element={<AuthInfo />} />
+
           <Route path="/main" element={<Main />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/profile" element={<MyProfile />} />
