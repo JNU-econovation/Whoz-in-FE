@@ -25,12 +25,10 @@ const Login = () => {
     }
 
     const handleKakaoLogin = () => {
-        const REST_API_KEY = '';
-        const REDIRECT_URI = '';
-        const KauthLink = process.env.REACT_APP_KAUTH_LINK; 
+        const KauthLink = process.env.REACT_APP_BACKEND_BASEURL + '/oauth2/authorization/kakao'; 
 
         window.location.href = KauthLink;
-        }
+    }
 
     const handleJoinClick = () => {
         navigate("/join") // 회원가입 페이지로 이동

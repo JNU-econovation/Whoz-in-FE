@@ -14,7 +14,7 @@ const OAuthSuccess = () => {
 
         if (isRegistered === "false") {
             // 회원가입이 안 된 상태라면 추가 정보 페이지로 이동
-            navigate("/oauth/member-info");
+            navigate("/join?step=2&social=true");
             console.log("false");
         } else {
             // 이미 가입된 경우 메인 페이지로 이동

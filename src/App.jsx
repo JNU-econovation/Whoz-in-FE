@@ -34,8 +34,8 @@ const App = () => {
           <Route path="/beta-login" element={<BetaLogin />} />
           <Route path="/oauth/kakao" element={<KakaoRedirect />} />
           <Route path="/oauth/success" element={<OAuthSuccess />} />
-          <Route path="/oauth/member-info" element={<MemberInfo />} />
-          <Route path="/oauth/auth-info" element={<AuthInfo />} />
+          {/* <Route path="/oauth/member-info" element={<MemberInfo />} />
+          <Route path="/oauth/auth-info" element={<AuthInfo />} /> */}
 
           <Route path="/main" element={<Main />} />
           <Route path="/mypage" element={<MyPage />} />

@@ -11,6 +11,7 @@ const MemberInfo = ({ name, setName, generation, setGeneration, position, setPos
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
+            {/* <GenerationsDropdown name={name} setName={setName} /> */}
             <GenerationsDropdown generation={generation} setGeneration={setGeneration} />
             <StyledSelect
                 id="position"

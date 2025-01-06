@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import AuthInfo from "./AuthInfo";
-import MemberInfo from "./MemberInfo.jsx";
+import MemberInfo from "./MemberInfo";
 import members from "../../data/sampleData";
-
+import axios from 'axios';
 
 const Join = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const query = new URLSearchParams(location.search);
-    const initialStep = query.get("step") === "2" ? 2 : 1;
+    //const initialStep = query.get("step") === "2" ? 2 : 1;
 
-    const [step, setStep] = useState(initialStep);
+    //const [step, setStep] = useState(initialStep);
     const [loginid, setLoginId] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -24,15 +24,17 @@ const Join = () => {
             alert("비밀번호가 일치하지 않습니다.");
             return;
         }
-        setStep(2);
+        // setStep(2);
+        navigate("/join?step=2"); // step=2로 쿼리 파라미터 바꿔봐
+
     };
 
     const handleJoin = () => {
         const newMember = {
             id: members.length,
-            name,
             loginid,
             password,
+            name,
             generation,
             position,
         };
@@ -42,26 +44,56 @@ const Join = () => {
         navigate("/login");
     };
 
-    return step === 1 ? (
-        <AuthInfo
-            loginid={loginid}
-            setLoginId={setLoginId}
-            password={password}
-            setPassword={setPassword}
-            confirmPassword={confirmPassword}
-            setConfirmPassword={setConfirmPassword}
-            onNext={handleNext}
-        />
-    ) : (
-        <MemberInfo
-            name={name}
-            setName={setName}
-            generation={generation}
-            setGeneration={setGeneration}
-            position={position}
-            setPosition={setPosition}
-            onJoin={handleJoin}
-        />
+    const handleSocialJoin = async () => {
+        const newMember = {
+            name,
+            generation,
+            position,
+        };
+    console.log(name, generation, position);
+        try {
+            const response = await axios.post(process.env.REACT_APP_BACKEND_BASEURL + '/api/v1/signup/oauth', newMember);
+            if (response.status === 200) {
+                alert("회원가입이 완료되었습니다!");
+                navigate("/login");
+            } else {
+                alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+            }
+        } catch (error) {
+            console.error("회원가입 중 오류가 발생했습니다:", error);
+            alert("회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
+        }
+    };
+
+    const step = query.get("step");
+    const social = query.get("social");
+
+    return (
+        <div>
+            {step === "1" ? (
+                <AuthInfo
+                    loginid={loginid}
+                    setLoginId={setLoginId}
+                    password={password}
+                    setPassword={setPassword}
+                    confirmPassword={confirmPassword}
+                    setConfirmPassword={setConfirmPassword}
+                    onNext={handleNext}
+                />
+            ) : step === "2" ? (
+                <MemberInfo
+                    name={name}
+                    setName={setName}
+                    generation={generation}
+                    setGeneration={setGeneration}
+                    position={position}
+                    setPosition={setPosition}
+                    onJoin={social === "true" ? handleSocialJoin : handleJoin}
+                />
+            ) : (
+                <div>잘못된 접근입니다.</div>
+            )}
+        </div>
     );
 };
 

@@ -6,7 +6,7 @@ const BetaLogin = () => {
     const navigate = useNavigate();
 
     const handleKakaoLogin = () => {
-        const KauthLink = process.env.REACT_APP_KAUTH_LINK; 
+        const KauthLink = process.env.REACT_APP_BACKEND_BASEURL + '/oauth2/authorization/kakao'; 
       
         window.location.href = KauthLink;
     };
