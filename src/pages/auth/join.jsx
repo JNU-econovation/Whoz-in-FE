@@ -52,7 +52,7 @@ const Join = () => {
         };
     console.log(name, generation, position);
         try {
-            const response = await axios.post(process.env.REACT_APP_BACKEND_BASEURL + '/api/v1/signup   /oauth', newMember);
+            const response = await axios.post(process.env.REACT_APP_BACKEND_BASEURL + '/api/v1/signup/oauth', newMember);
             if (response.status === 200) {
                 alert("회원가입이 완료되었습니다!");
                 navigate("/login");
