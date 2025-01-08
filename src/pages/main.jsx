@@ -5,6 +5,7 @@ import members from '../data/sampleData';
 import styled from 'styled-components';
 import SnowAnimation from '../components/StyledComponents/SnowyEffect';
 // TODO: 멤버 활성 상태 통신 api 구현 및 연결
+import { ContentContainer, ContentWrapper } from '../components/StyledComponents/LayoutStyles';
 
 const Background = styled.div`
   position: fixed;
@@ -18,13 +19,8 @@ const Background = styled.div`
   
 `;
 
-const ContentWrapper = styled.div`
-  position: relative;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-`;
 
-const UpperMessage = styled.div`
+export const UpperMessage = styled.div`
   font-size: 2rem;
   font-family: 'Pretendard', sans-serif;
   font-weight: 400;
@@ -44,7 +40,7 @@ const Main = () => {
         <Background>
           <SnowAnimation count={50} />
           </Background>
-        <ContentWrapper>
+        <ContentWrapper >
           <UpperMessage>
             현재 동방에
             <br />

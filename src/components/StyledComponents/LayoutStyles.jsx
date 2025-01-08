@@ -22,3 +22,9 @@ export const ContentContainer = styled.div`
   gap: 3rem;
   padding:3rem;
 `;
+
+export const ContentWrapper = styled.div`
+  position: relative;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+`;
