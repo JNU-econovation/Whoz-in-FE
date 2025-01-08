@@ -9,6 +9,8 @@ import OAuthSuccess from "./pages/auth/OAuthSuccess";
 import MemberInfo from "./pages/auth/MemberInfo";
 import AuthInfo from "./pages/auth/AuthInfo";
 
+import DeviceRegister from "./pages/Device/DeviceRegister";
+
 import Header from "./components/LayoutComponent/Header";
 import BottomNav from "./components/LayoutComponent/BottomNav";
 
@@ -37,6 +39,7 @@ const App = () => {
           {/* <Route path="/oauth/member-info" element={<MemberInfo />} />
           <Route path="/oauth/auth-info" element={<AuthInfo />} /> */}
 
+          <Route path="/device-register" element={<DeviceRegister />} />
           <Route path="/main" element={<Main />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/profile" element={<MyProfile />} />
