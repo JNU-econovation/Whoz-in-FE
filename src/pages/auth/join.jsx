@@ -51,9 +51,20 @@ const Join = () => {
             position,
         };
     console.log(name, generation, position);
+    axios.interceptors.request.use(config => {
+        console.log('Request Config:', config);
+        return config;
+      });
+
+    
         try {
-            const response = await axios.post(process.env.REACT_APP_BACKEND_BASEURL + '/api/v1/signup/oauth', newMember);
-            if (response.status === 200) {
+            const response = await axios.post(process.env.REACT_APP_BACKEND_BASEURL + '/api/v1/signup/oauth', 
+                newMember,
+                {
+                    withCredentials: true
+                  }
+            );
+            if (response.status === 200 || response.status === 201) {
                 alert("회원가입이 완료되었습니다!");
                 navigate("/login");
             } else {
