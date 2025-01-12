@@ -1,4 +1,5 @@
 import React from "react";
+import { AuthProvider } from "./context/AuthContext";
 import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
 
 import Login from "./pages/auth/login";
@@ -24,7 +25,8 @@ const App = () => {
   const location = useLocation();  // 현재 경로를 확인
 
   // 로그인 또는 회원가입 페이지일 때 BottomNav를 숨기기
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/join' || location.pathname === '/beta-login';
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/join'
+   || location.pathname === '/beta-login' || location.pathname === '/device-register';
 
   return (
     <div className="root-wrap">
@@ -54,9 +56,11 @@ const App = () => {
 };
 
 const Root = () => (
+  <AuthProvider>
   <BrowserRouter>
     <App />
   </BrowserRouter>
+  </AuthProvider> 
 );
 
 export default Root;
