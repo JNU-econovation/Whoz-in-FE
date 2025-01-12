@@ -7,7 +7,7 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 
 export default function DeviceRegisterStepper() {
   // 현재 단계와 완료된 단계를 관리
-  const [activeStep, setActiveStep] = React.useState(1); // 예시로 첫 번째 단계만 활성화
+  const [activeStep, setActiveStep] = React.useState(2); 
 
   return (
     <Stepper
@@ -19,9 +19,8 @@ export default function DeviceRegisterStepper() {
         '--Step-connectorInset': '0.5rem',
         '--Step-connectorRadius': '1rem',
         '--Step-connectorThickness': '4px',
-        '--joy-palette-success-solidBg': 'var(--joy-palette-success-400)',
         [`& .${stepClasses.completed}`]: {
-          '&::after': { bgcolor: 'success.solidBg' },
+          '&::after': { bgcolor: '#1976D2' }, // 완료된 상태의 배경색
         },
         [`& .${stepClasses.active}`]: {
           [`& .${stepIndicatorClasses.root}`]: {
@@ -44,8 +43,8 @@ export default function DeviceRegisterStepper() {
         completed={activeStep >= 1}
         indicator={
           activeStep >= 1 ? (
-            <StepIndicator variant="solid" color="success">
-              <CheckRoundedIcon />
+            <StepIndicator variant="solid" sx={{ bgcolor: '#1976D2' }}>
+              <CheckRoundedIcon sx={{ color: '#fff' }} />
             </StepIndicator>
           ) : (
             <StepIndicator>{1}</StepIndicator>
@@ -54,15 +53,17 @@ export default function DeviceRegisterStepper() {
       >
         <div>
           <Typography level="title-sm">Step 1</Typography>
-          Device Information
+          {activeStep > 1
+            ? '{Wifi1}에 연결 완료'
+            : '첫 번째 Wi-Fi에 연결합니다.'}
         </div>
       </Step>
       <Step
         completed={activeStep >= 2}
         indicator={
           activeStep >= 2 ? (
-            <StepIndicator variant="solid" color="success">
-              <CheckRoundedIcon />
+            <StepIndicator variant="solid" sx={{ bgcolor: '#1976D2' }}>
+              <CheckRoundedIcon sx={{ color: '#fff' }} />
             </StepIndicator>
           ) : (
             <StepIndicator>{2}</StepIndicator>
@@ -71,7 +72,11 @@ export default function DeviceRegisterStepper() {
       >
         <div>
           <Typography level="title-sm">Step 2</Typography>
-          Network Settings
+          {activeStep > 2
+            ? '{WIFI2}에 연결 완료'
+            : activeStep === 2
+            ? '두 번째 와이파이에 연결 중입니다.'
+            : '두 번째 와이파이 연결'}
         </div>
       </Step>
       <Step
@@ -79,8 +84,8 @@ export default function DeviceRegisterStepper() {
         active={activeStep === 3}
         indicator={
           activeStep >= 3 ? (
-            <StepIndicator variant="solid" color="success">
-              <CheckRoundedIcon />
+            <StepIndicator variant="solid" sx={{ bgcolor: '#1976D2' }}>
+              <CheckRoundedIcon sx={{ color: '#fff' }} />
             </StepIndicator>
           ) : (
             <StepIndicator>{3}</StepIndicator>
@@ -89,15 +94,19 @@ export default function DeviceRegisterStepper() {
       >
         <div>
           <Typography level="title-sm">Step 3</Typography>
-          Subscription Plan
+          {activeStep > 3
+            ? '{Wifi3}에 연결 완료'
+            : activeStep === 3
+            ? '세 번째 와이파이에 연결 중입니다.'
+            : '세 번째 와이파이 연결'}
         </div>
       </Step>
       <Step
         completed={activeStep >= 4}
         indicator={
           activeStep >= 4 ? (
-            <StepIndicator variant="solid" color="success">
-              <CheckRoundedIcon />
+            <StepIndicator variant="solid" sx={{ bgcolor: '#1976D2' }}>
+              <CheckRoundedIcon sx={{ color: '#fff' }} />
             </StepIndicator>
           ) : (
             <StepIndicator>{4}</StepIndicator>
@@ -106,7 +115,7 @@ export default function DeviceRegisterStepper() {
       >
         <div>
           <Typography level="title-sm">Step 4</Typography>
-          Payment Details
+          기기등록 완료
         </div>
       </Step>
     </Stepper>
