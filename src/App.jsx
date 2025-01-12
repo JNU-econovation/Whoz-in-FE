@@ -25,10 +25,11 @@ const App = () => {
   const location = useLocation();  // 현재 경로를 확인
 
   // 로그인 또는 회원가입 페이지일 때 BottomNav를 숨기기
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/join'
-   || location.pathname === '/beta-login' || location.pathname === '/device-register';
+  const authRoutes = ['/login', '/join', '/beta-login', '/device-register'];
+  const isAuthPage = authRoutes.includes(location.pathname);
 
   return (
+
     <div className="root-wrap">
       <Header />
       <div className="content-wrap">
@@ -47,20 +48,23 @@ const App = () => {
           <Route path="/mypage/profile" element={<MyProfile />} />
           <Route path="/mypage/device-management" element={<ManageDevice />} />
           <Route path="/mypage/setting" element={<Setting />} />
+
+          <Route path="*" element={<div>404: 규민이가 잘못보냄</div>} />
         </Routes>
       </div>
       {/* 로그인과 회원가입 페이지에서는 BottomNav 숨기기 */}
       {!isAuthPage && <BottomNav />}
     </div>
+
   );
 };
 
 const Root = () => (
-  <AuthProvider>
   <BrowserRouter>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </BrowserRouter>
-  </AuthProvider> 
 );
 
 export default Root;
