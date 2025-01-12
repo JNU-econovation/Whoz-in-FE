@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ContentContainer } from '../../components/StyledComponents/LayoutStyles';
+import { useAuth } from '../../context/AuthContext';
 
 const ProfileContainer = styled.div`
     text-align: center;
@@ -16,16 +17,15 @@ const ProfileImage = styled.img`
 `;
 
 const MyProfile = () => {
-    const [profilePic, setProfilePic] = useState(null); // 프로필 사진 상태
-    const [loginid, setloginid] = useState("홍길동"); // 예시로 등록된 이름
+    const { authInfo } = useAuth(); 
+    const [profilePic, setProfilePic] = useState(null);
 
-    // 프로필 사진 변경 함수
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setProfilePic(reader.result); // 선택된 이미지 URL을 상태로 설정
+                setProfilePic(reader.result);
             };
             reader.readAsDataURL(file);
         }
@@ -39,7 +39,10 @@ const MyProfile = () => {
                 <div>
                     <input type="file" accept="image/*" onChange={handleImageChange} />
                 </div>
-                <p>등록된 이름: {loginid}</p>
+                <b>{authInfo?.name || "정보 없음"}</b>
+                <p>기수:{authInfo?.generation || "정보 없음"}</p>
+                <p>분야: {authInfo?.position || "정보 없음"}</p>
+
             </ProfileContainer>
         </ContentContainer>
     );
