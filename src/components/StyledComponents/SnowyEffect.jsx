@@ -30,12 +30,12 @@ const Snowflake = styled.div`
   animation: ${FallingAnimation} ${({ duration }) => duration}s linear infinite;
   animation-delay: ${({ delay }) => delay}s;
 `;
-
+//TODO: 근데 왜 이렇게 갑자기 커졌지...
 // 눈송이 컴포넌트 생성 함수
 const generateSnowflakes = (count) => {
   const snowflakes = [];
   for (let i = 0; i < count; i++) {
-    const size = Math.random() * 2 + 1; // 2rem ~ 3rem
+    const size = Math.random() * 0.5 + 1; // 0.5rem ~ 1.5rem
     const left = Math.random() * 100; // 0% ~ 100%
     const duration = Math.random() * 15 + 20; // 10s ~ 15s
     const delay = Math.random() * 5; // 0s ~ 5s
