@@ -22,6 +22,7 @@ const ActiveTime = styled.span`
 const MemberListContainer = styled(ListContainer)`
   border-radius: 30px 30px 0 0;
   min-height: 30rem;
+  margin-bottom: 2.5rem;
 `;
 
 const MemberStatusList = ({ members }) => {
