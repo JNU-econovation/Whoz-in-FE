@@ -26,20 +26,21 @@ const MemberListContainer = styled(ListContainer)`
 
 const MemberStatusList = ({ members }) => {
 
-  const [showTimeIndex, setShowTimeIndex] = useState(null); 
+  const [showTime, setShowTime] = useState(Array(members.length).fill(false)); // 배열로 클릭한 멤버 빼기
 
-  // 초록불 클릭하면 시간 표시
+  // 특정 멤버의 시간 표시 토글
   const toggleShowTime = (index) => {
-    setShowTimeIndex((prevIndex) => (prevIndex === index ? null : index));
+    setShowTime((prev) =>
+      prev.map((state, i) => (i === index ? !state : state)) 
+    );
   };
-
   // 활동 시간 계산 로직
   const calculateActiveTime = (startTime) => {
     const now = new Date();
     const start = new Date(startTime);
     const diffMs = now - start; 
-    const hours = Math.floor(diffMs / (1000 * 60 * 60)); // 시간
-    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60)); // 분
+    const hours = Math.floor(diffMs / (1000 * 60 * 60)); 
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60)); 
     return `${hours}:${minutes}`;
   };
 
@@ -49,7 +50,7 @@ const MemberStatusList = ({ members }) => {
         <ListItem key={index}>
           {member.generation}기 {member.name}
       
-          {showTimeIndex === index ? (
+          {showTime[index]  ? (
             <ActiveTime onClick={() => toggleShowTime(index)}>
               {calculateActiveTime(member.activeSince)}
             </ActiveTime>
