@@ -22,13 +22,15 @@ code {
     src: url('./fonts/KoddiUDOnGothic-Bold.ttf') format("truetype"); 
   }
   
+*/
+
+
 @font-face {
-    font-family: 'UDOnGothic-ExtraBold'; 
-    src: url('./fonts/KoddiUDOnGothic-ExtraBold.ttf') format("truetype"); 
+    font-family: 'Pretendard-Regular'; 
+    src: url('./fonts/Pretendard-Regular.ttf') format("truetype"); 
   }
   
   body {
-    font-family: "UDOnGothic-Regular";
+    font-family: "Pretendard-Regular";
   }
 
-  */
