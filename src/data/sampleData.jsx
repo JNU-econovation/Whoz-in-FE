@@ -33,15 +33,27 @@ const members = [
     },
     {
       id: 0,
+      name: '강명덕',
+      generation: '27',
+      isActive: true,
+    },
+    {
+      id: 0,
       name: '박건규',
       generation: '26',
       isActive: true,
     },
     {
       id: 0,
-      name: '정승현',
+      name: '정승현',
       generation: '27',
       isActive: false,
+    },
+    {
+      id: 0,
+      name: '정승현',
+      generation: '27',
+      isActive:true,
     },
     {
       id: 0,
