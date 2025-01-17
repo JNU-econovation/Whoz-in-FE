@@ -5,11 +5,9 @@ import StepIndicator, { stepIndicatorClasses } from '@mui/joy/StepIndicator';
 import Typography, { typographyClasses } from '@mui/joy/Typography';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 
-export default function DeviceRegisterStepper() {
+export default function BetaDeviceRegisterStepper() {
   // 현재 단계와 완료된 단계를 관리
   const [activeStep, setActiveStep] = React.useState(2); 
-
-//TODO: 와이파이 목록 배열 +1 length
 
   return (
     <Stepper
@@ -26,7 +24,7 @@ export default function DeviceRegisterStepper() {
         },
         [`& .${stepClasses.active}`]: {
           [`& .${stepIndicatorClasses.root}`]: {
-            border: '4px solid',
+            border: '4px solid', 
             borderColor: '#fff',
             boxShadow: `0 0 0 1px ${theme.vars.palette.primary[500]}`,
           },
@@ -120,7 +118,6 @@ export default function DeviceRegisterStepper() {
           기기등록 완료
         </div>
       </Step>
-      
     </Stepper>
   );
 }

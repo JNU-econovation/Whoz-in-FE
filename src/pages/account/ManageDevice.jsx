@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const ManageDevice = () => {
+
+    //TODO: 기기 이름/ MAC 주소/ 기기 삭제 버튼/ 맥주소 수정
     return (
         <div>
             <h2>기기 관리</h2>

@@ -1,8 +1,9 @@
 import React from "react";
 import { styled } from "styled-components";
 
-import { UpperMessage } from "../main"; // 상단 메시지 컴포넌트
-import { ContentWrapper, ContentContainer } from "../../components/StyledComponents/LayoutStyles";
+import { UpperMessage } from "../main.jsx"; // 상단 메시지 컴포넌트
+import { ContentWrapper, ContentContainer } from "../../components/StyledComponents/LayoutStyles.jsx";
+import BetaDeviceRegisterStepper from "../../components/BetaDeviceRegisterStepper.jsx";
 import DeviceRegisterStepper from "../../components/DeviceRegisterStepper.jsx";
 
 const UpperMessageBlack = styled(UpperMessage)`
@@ -10,7 +11,7 @@ const UpperMessageBlack = styled(UpperMessage)`
 `;
 
 
-export default function DeviceRegister() {
+export default function BetaDeviceRegister() {
   return (
     <ContentWrapper>
       <UpperMessageBlack>
@@ -20,7 +21,7 @@ export default function DeviceRegister() {
       </UpperMessageBlack>
    
       <ContentContainer>
-     <DeviceRegisterStepper />
+     <BetaDeviceRegisterStepper />
       </ContentContainer>
     </ContentWrapper>
   );
