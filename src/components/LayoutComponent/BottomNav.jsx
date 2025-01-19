@@ -57,10 +57,7 @@ function BottomNav() {
         <NavIcon isActive={isMypageActive} />
         마이페이지   
       </NavButton>
-      <NavButton onClick={() => navigate("/beta-login")} isActive={isBetaLoginActive}>
-        <NavIcon isActive={isBetaLoginActive} />
-        베타 로그인   
-      </NavButton>
+     
     </NavContainer>
   );
 }

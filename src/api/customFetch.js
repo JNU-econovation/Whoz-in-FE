@@ -10,7 +10,7 @@ export function customFetch(url, options = {}) {
             if (data.error_code === "2001") {
                 // alert(data.error_code)
                 window.location.href = "/beta-login";
-                return Promise.reject(new Error("Unauthorized, Redirecting..."));
+ 
             }
         })
         return response;
