@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react"
 import { styled } from "styled-components";
 import { UpperMessage } from "../main"; // 상단 메시지 컴포넌트
 import {
@@ -7,6 +7,7 @@ import {
 } from "../../components/StyledComponents/LayoutStyles";
 import DeviceRegisterStepper from "../../components/DeviceRegisterStepper.jsx";
 import { useNavigate } from "react-router-dom"
+import { customFetch } from "../../api/customFetch"
 const UpperMessageBlack = styled(UpperMessage)`
   color: black;
 `;
@@ -41,11 +42,12 @@ export default function DeviceRegister() {
   const [currentStep, setCurrentStep] = useState(0); // 현재 단계
   const [deviceName, setDeviceName] = useState(""); // 기기 이름
   const navigate = useNavigate();
+  const abortControllerRef = useRef(null);
 
   // SSID 리스트 불러오기
   useEffect(() => {
-    fetch(`${BASE_URL}/api/v1/ssid`, { credentials: "include" })
-    .then((res) => res.json())
+    customFetch(`${BASE_URL}/api/v1/ssid`)
+    .then(response=> response.json())
     .then((data) => {
       if (data.data) {
         setSsids(data.data);
@@ -56,20 +58,27 @@ export default function DeviceRegister() {
 
   // 가장 빠른 IP 응답을 받기 위한 함수
   const fetchFastestIP = async () => {
-    const abortControllers = IP_LIST.map(() => new AbortController());
+    // const abortControllers = IP_LIST.map(() => new AbortController());
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
 
     try {
       const fetchPromises = IP_LIST.map((ip, index) =>
-          fetch(`${ip}/api/v1/ip`, { signal: abortControllers[index].signal, credentials: "include" })
+          customFetch(`${ip}/api/v1/ip`, { signal: abortControllerRef.current.signal})
           .then((res) => res.text())
-          .then((data) => ({ ip: data, controller: abortControllers[index] }))
+          .then((data) => ({ ip: data}))
+          .catch((error) => {
+            if (error.name === "AbortError") {
+              // 요청이 취소된 경우 무시
+              return null;
+            }
+            throw error; // 다른 네트워크 에러는 정상적으로 throw
+          })
       );
 
-      const fastestResponse = await Promise.any(fetchPromises);
-      abortControllers.forEach((controller) => {
-        if (controller !== fastestResponse.controller) controller.abort();
-      });
-
+      const fastestResponse = await Promise.any(fetchPromises.filter(Boolean));
       return fastestResponse.ip;
     } catch (error) {
       console.error("IP 요청 실패:", error);
@@ -79,28 +88,28 @@ export default function DeviceRegister() {
 
   // 내부 IP를 기반으로 기기 등록 요청
   const registerWifi = async () => {
-    const internalIp = await fetchFastestIP();
+    const internalIp = await fetchFastestIP(abortControllerRef);
     if (!internalIp) return;
 
     try {
-      const response = await fetch(`${BASE_URL}/api/v1/device/info`, {
+      const response = await customFetch(`${BASE_URL}/api/v1/device/info`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ ip: internalIp }),
       });
       const data = await response.json();
+      const wifi = data.data;
       if (data.error_code === '3030') {
         alert(data.message)
         navigate("/main"); // 🚀 /main으로 이동
         return;
       }
 
-      if (data.data) {
+      if (wifi) {
         setRegisteredWifi((prev) => {
-          if (!prev.includes(data.data)) {
+          if (!prev.includes(wifi)) {
             setCurrentStep((prev) => prev + 1);
-            return [...prev, data.data];
+            return [...prev, wifi];
           }
           return prev;
         });
@@ -115,16 +124,15 @@ export default function DeviceRegister() {
     if (deviceName.trim().length === 0) return;
 
     try {
-      const response = await fetch(`${BASE_URL}/api/v1/device`, {
+      const response = await customFetch(`${BASE_URL}/api/v1/device`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ device_name: deviceName }),
       });
-      const data = await response.json();
 
       if (response.status === 200 || response.status === 201) {
         alert("기기 등록이 완료되었습니다!");
+        navigate("/main"); // 🚀 /main으로 이동
       }
     } catch (error) {
       console.error("기기 등록 요청 실패:", error);
