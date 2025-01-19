@@ -35,27 +35,14 @@ const MemberStatusList = ({ members }) => {
     );
   };
 
-  // 활동 시간 계산 로직
-  const calculateActiveTime = (startTime) => {
-    const now = new Date();
-    const start = new Date(startTime);
-    const diffMs = now - start;
-    const hours = Math.floor(diffMs / (1000 * 60 * 60));
-    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-    return `${hours}:${minutes}`;
-  };
-
   // 멤버 정렬 목록
   const sortedMembers = [...members].sort((a, b) => {
-    if (a.isActive && b.isActive) {
-      // 활동 중인지 비교, 둘 다 활동 중이면 재실 시간 긴 순으로
-      const aActiveTime = new Date() - new Date(a.activeSince);
-      const bActiveTime = new Date() - new Date(b.activeSince);
-      return bActiveTime - aActiveTime;
+    if (a.is_active && b.is_active) {
+      return 1;
     }
     // 비활 회원은 뒤에 추가
-    if (a.isActive) return -1;
-    if (b.isActive) return 1;
+    if (a.is_active) return -1;
+    if (b.is_active) return 1;
     return 0;
   });
 
@@ -63,15 +50,15 @@ const MemberStatusList = ({ members }) => {
     <MemberListContainer>
       {sortedMembers.map((member, index) => (
         <ListItem key={index}>
-          {member.generation}기 {member.name}
+          {member.generation}기 {member.member_name}
           {showTime[index] ? (
-            <ActiveTime onClick={() => toggleShowTime(index, member.isActive)}>
-              {calculateActiveTime(member.activeSince)}
+            <ActiveTime onClick={() => toggleShowTime(index, member.is_active)}>
+              {member.continuous_active_time}
             </ActiveTime>
           ) : (
             <ActiveStatus
-              isActive={member.isActive}
-              onClick={() => toggleShowTime(index, member.isActive)}
+              isActive={member.is_active}
+              onClick={() => toggleShowTime(index, member.is_active)}
             />
           )}
         </ListItem>

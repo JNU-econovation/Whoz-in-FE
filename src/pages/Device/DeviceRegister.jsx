@@ -188,7 +188,8 @@ export default function DeviceRegister() {
   return (
       <ContentWrapper>
         <UpperMessageBlack>
-          <b>기기 등록</b>을 진행합니다.
+          <b>기기 등록</b>을
+          <br/>진행합니다.
         </UpperMessageBlack>
         <ContentContainer>
           <DeviceRegisterStepper steps={steps} currentStep={currentStep} onNicknameChange={(value) => setDeviceName(value)} />

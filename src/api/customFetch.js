@@ -5,13 +5,14 @@ export function customFetch(url, options = {}) {
         credentials: "include" // withCredentials 옵션 추가
     })
     .then((response) => {
-        const data = response.clone().json();
-        // alert("zz")
-        // error_code가 2001이면 로그인 페이지로 이동
-        if (data.error_code === "2001") {
-            window.location.href("/beta-login");
-            return Promise.reject(new Error("Unauthorized, Redirecting..."));
-        }
+        const clone = response.clone()
+        clone.json().then((data)=>{
+            if (data.error_code === "2001") {
+                // alert(data.error_code)
+                window.location.href = "/beta-login";
+                return Promise.reject(new Error("Unauthorized, Redirecting..."));
+            }
+        })
         return response;
     })
     .catch((error) => {
