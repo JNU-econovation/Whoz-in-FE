@@ -1,81 +1,74 @@
 import React, { useEffect, useState } from "react"
-import MemberStatusList from '../components/MemberStatusList';
-import styled from 'styled-components';
-import SnowAnimation from '../components/StyledComponents/SnowyEffect';
-// TODO: 멤버 활성 상태 통신 api 구현 및 연결
-import { ContentContainer, ContentWrapper } from '../components/StyledComponents/LayoutStyles';
-import { customFetch } from "../api/customFetch"
+import styled from "styled-components";
+import { ListContainer, ListItem } from "./StyledComponents/LayoutStyles";
 
-const Background = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 150vh; 
-  /*background: linear-gradient(80deg, #b5d8f6 0%, #dab5f6 100%);*/
-  background: linear-gradient(120deg, #000000, #abbaff);
-  z-index: -1;
-  
+// 활동 상태 표시 초록불
+const ActiveStatus = styled.div`
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: ${({ isActive }) => (isActive ? "green" : "#bbbbbb")};
+  margin-left: auto;
+  cursor: ${({ isActive }) => (isActive ? "pointer" : "default")};
 `;
 
-
-export const UpperMessage = styled.div`
-  font-size: 2rem;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 400;
-  color: white;
-  text-align: left;
-  padding: 2rem ;
-  padding-top: 4rem;
+const ActiveTime = styled.span`
+  color: gray;
+  font-size: 0.9rem;
+  margin-left: auto;
+  cursor: pointer;
 `;
 
-const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
+const MemberListContainer = styled(ListContainer)`
+  border-radius: 30px 30px 0 0;
+  min-height: 30rem;
+  margin-bottom: 2.5rem;
+`;
 
-const Main = () => {
-  const [members, setMembers] = useState([]); // 멤버 리스트 상태
-  const [activeCount, setActiveCount] = useState();
-
-  const fetchMembers = async () => {
-    try {
-      const response = await customFetch(`${BASE_URL}/api/v1/members?page=1&size=10&sortType=asc`);
-      const data = await response.json();
-      const members = data.data.members;
-      if (members) {
-        setMembers(members);
-        const activeMembers = members.filter(member => member.is_active).length;
-        setActiveCount(activeMembers);
-      }
-    } catch (error) {
-      console.error("멤버 목록 불러오기 실패:", error);
-    }
-  };
-
+const MemberStatusList = ({ members }) => {
+  const [showTime, setShowTime] = useState([]);
+  // members가 변경될 때 기존 상태를 유지하면서 새 멤버 추가 - member id로 관리
   useEffect(() => {
-    fetchMembers(); // 최초 데이터 요청
-    const interval = setInterval(fetchMembers, 60000);
-    return () => clearInterval(interval);
-  }, []);
+    setShowTime((prevShowTime) => {
+      const newShowTime = {};
+      // 기존 상태 유지하면서 새로운 멤버 추가
+      members.forEach((member) => {
+        // alert(prevShowTime[member.member_id])
+        newShowTime[member.member_id] = prevShowTime[member.member_id] || false;
+      });
 
-    return (
-      <>
-        <PersistentBackground/>
-        <ContentWrapper >
-          <UpperMessage>
-            현재 동방에
-            <br />
-            <b>{activeCount}</b>명 있습니다 ☃️
-          </UpperMessage>
-          <MemberStatusList members={members} />
-        </ContentWrapper>
-      </>
-    );
+      return newShowTime; // 업데이트된 상태 반환
+    });
+  }, [members]);
+
+  const toggleShowTime = (member_id, isActive) => {
+    if (!isActive) return; // 비활성화 상태에서는 클릭 불가능
+    setShowTime((prev) => ({
+      ...prev,
+      [member_id]: !prev[member_id],
+    }));
   };
 
-  const PersistentBackground = React.memo(() => (
-      <Background>
-        {/*<SnowAnimation count={50} />*/}
-      </Background>
-  ));
+  return (
+    <MemberListContainer>
+      {members.map((member, index) => (
+        <ListItem key={index}>
+          {member.generation}기 {member.member_name}
 
+          {showTime[member.member_id] ? (
+            <ActiveTime onClick={() => toggleShowTime(member.member_id, member.is_active)}>
+              {member.total_active_time}
+            </ActiveTime>
+          ) : (
+            <ActiveStatus
+              isActive={member.is_active}
+              onClick={() => toggleShowTime(member.member_id, member.is_active)}
+            />
+          )}
+        </ListItem>
+      ))}
+    </MemberListContainer>
+  );
+};
 
-export default Main;
+export default MemberStatusList;
