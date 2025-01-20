@@ -41,8 +41,7 @@ const MemberStatusList = ({ members }) => {
     });
   }, [members]);
 
-  const toggleShowTime = (member_id, isActive) => {
-    if (!isActive) return; // 비활성화 상태에서는 클릭 불가능
+  const toggleShowTime = (member_id) => {
     setShowTime((prev) => ({
       ...prev,
       [member_id]: !prev[member_id],
@@ -56,13 +55,13 @@ const MemberStatusList = ({ members }) => {
           {member.generation}기 {member.member_name}
 
           {showTime[member.member_id] ? (
-            <ActiveTime onClick={() => toggleShowTime(member.member_id, member.is_active)}>
+            <ActiveTime onClick={() => toggleShowTime(member.member_id)}>
               {member.total_active_time}
             </ActiveTime>
           ) : (
             <ActiveStatus
               isActive={member.is_active}
-              onClick={() => toggleShowTime(member.member_id, member.is_active)}
+              onClick={() => toggleShowTime(member.member_id)}
             />
           )}
         </ListItem>
