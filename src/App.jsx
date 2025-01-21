@@ -1,6 +1,12 @@
 import React from "react";
 import { AuthProvider } from "./context/AuthContext";
-import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  BrowserRouter,
+  useLocation,
+  Navigate,
+} from "react-router-dom"
 
 // auth
 import Login from "./pages/auth/login";
@@ -8,8 +14,6 @@ import Join from "./pages/auth/join";
 import KakaoRedirect from "./pages/auth/KakaoRedirect";
 import BetaLogin from "./pages/auth/BetaLogin";
 import OAuthSuccess from "./pages/auth/OAuthSuccess";
-import MemberInfo from "./pages/auth/MemberInfo";
-import AuthInfo from "./pages/auth/AuthInfo";
 
 import DeviceRegister from "./pages/Device/DeviceRegister";
 import BetaDeviceRegister from "./pages/Device/BetaDeviceRegister";
@@ -36,6 +40,7 @@ const App = () => {
       <Header />
       <div className="content-wrap">
         <Routes>
+          <Route path="/" element={<Navigate to="/main" replace />} />
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
           <Route path="/beta-login" element={<BetaLogin />} />
