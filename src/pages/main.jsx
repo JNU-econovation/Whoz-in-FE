@@ -65,7 +65,7 @@ const Main = () => {
 
   const PersistentBackground = React.memo(() => (
       <Background>
-        {/*<SnowAnimation count={50} />*/}
+        {<SnowAnimation count={40} />}
       </Background>
   ));
 

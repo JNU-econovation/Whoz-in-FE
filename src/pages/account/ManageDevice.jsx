@@ -71,7 +71,7 @@ const IconButton = styled.button`
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 
-const ManageDevice = () => {
+/* const ManageDevice = () => {
     const [devices, setDevices] = useState([]);
     const [selectedDevice, setSelectedDevice] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -139,5 +139,109 @@ const ManageDevice = () => {
         </ContentWrapper>
     );
 };
+*/
+
+const ManageDevice = () => {
+    const [devices, setDevices] = useState([
+        {
+            device_id: 1,
+            device_name: "규민 아이폰",
+            connected_ssid: "ECONO_5G",
+            mac_per_ssid: {
+                HomeWiFi: "00:1A:2B:3C:4D:5E",
+                OfficeWiFi: "00:1A:2B:3C:4D:5F",
+            },
+        },
+        {
+            device_id: 2,
+            device_name: "gyum Mac",
+            connected_ssid: "JNU",
+            mac_per_ssid: {
+                HomeWiFi: "11:2B:3C:4D:5E:6F",
+                OfficeWiFi: "11:2B:3C:4D:5E:70",
+            },
+        },
+        {
+            device_id: 3,
+            device_name: "규민 아이패드",
+            connected_ssid: null,
+            mac_per_ssid: {
+                HomeWiFi: "22:3C:4D:5E:6F:71",
+            },
+        },
+    ]);
+    const [selectedDevice, setSelectedDevice] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate();
+
+    const handleEditClick = (device) => {
+        setSelectedDevice(device);
+        setShowModal(true);
+    };
+
+    const handleDelete = (deviceId) => {
+        setDevices((prevDevices) =>
+            prevDevices.filter((device) => device.device_id !== deviceId)
+        );
+    };
+
+    return (
+        <ContentWrapper>
+            <UpperContainer>
+                <UpperMessageBlack>기기 관리</UpperMessageBlack>
+                <AddButton onClick={() => navigate("/device-register")}>+</AddButton>
+            </UpperContainer>
+            <ContentContainer>
+                <DeviceList>
+                    {devices.map((device) => (
+                        <DeviceItem
+                            key={device.device_id}
+                            selected={selectedDevice === device}
+                        >
+                            <DeviceName>{device.device_name}</DeviceName>
+                            {device.connected_ssid ? `📶${device.connected_ssid}` : ""}
+                            <div>
+                                <IconButton onClick={() => handleEditClick(device)}>
+                                    ✏️
+                                </IconButton>
+                                <IconButton onClick={() => handleDelete(device.device_id)}>
+                                    ❌
+                                </IconButton>
+                            </div>
+                        </DeviceItem>
+                    ))}
+                </DeviceList>
+            </ContentContainer>
+
+            {showModal && selectedDevice && (
+                <Modal onClose={() => setShowModal(false)}>
+                    <h3>{selectedDevice.device_name}</h3>
+                    {Object.entries(selectedDevice.mac_per_ssid).map(([ssid, mac]) => (
+                        <div
+                            key={ssid}
+                            style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                marginBottom: "5px",
+                            }}
+                        >
+                            <span>{ssid}</span>
+                            <span
+                                style={{
+                                    background: "#d3d3d3",
+                                    padding: "5px",
+                                    borderRadius: "5px",
+                                }}
+                            >
+                                {mac}
+                            </span>
+                        </div>
+                    ))}
+                </Modal>
+            )}
+        </ContentWrapper>
+    );
+};
+
 
 export default ManageDevice;
