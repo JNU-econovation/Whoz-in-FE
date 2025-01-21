@@ -139,17 +139,67 @@ export default function DeviceRegister() {
     }
   };
 
-  // 3초마다 내부 IP 확인 및 기기 등록 실행
   useEffect(() => {
-    const interval = setInterval(async () => {
-      if (registeredWifi.length<ssids.length) {
-        await registerWifi();
-      } else {
-        clearInterval(interval)
+    let timeoutId;
+    let intervalId;
+
+    const isInDongbang = async () => {
+      try {
+        timeoutId = setTimeout(() => {
+          alert("동아리방의 와이파이에 연결되어있지 않습니다.");
+          window.history.back()
+        }, 3000);
+
+        // IP 요청을 병렬 실행하고, 가장 빠른 응답을 받음
+        const fetchPromises = IP_LIST.map((ip) =>
+            customFetch(`${ip}/api/v1/ip`)
+            .then((res) => {
+              if (!res.ok) throw new Error(`Error fetching from ${ip}`);
+              return res.text();
+            })
+            .then((data) => ({ ip: data }))
+            .catch((error) => {
+              if (error.name === "AbortError") {
+                return null;
+              }
+              throw error;
+            })
+        );
+
+        // 가장 먼저 응답한 IP 가져오기
+        const fastestResponse = await Promise.any(fetchPromises);
+
+        if (fastestResponse?.ip) {
+          clearTimeout(timeoutId);
+          return true;
+        }
+
+        return false;
+      } catch (error) {
+        console.error("IP 요청 실패:", error);
+        return false;
       }
-    }, 3000);
-    return () => clearInterval(interval);
+    };
+
+    isInDongbang().then((isSuccess) => {
+      // 내부 IP를 정상적으로 가져온 경우에만 실행
+      if (isSuccess) {
+        intervalId = setInterval(async () => {
+          if (registeredWifi.length < ssids.length) {
+            await registerWifi();
+          } else {
+            clearInterval(intervalId);
+          }
+        }, 3000);
+      }
+    });
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+    };
   }, [registeredWifi, ssids]);
+
 
   const steps = [];
 
@@ -164,7 +214,7 @@ export default function DeviceRegister() {
     remainingSsids.forEach((ssid, index) => {
       steps.push({
         label: `Step ${registeredWifi.length + index + 1}`,
-        description: `${ssid} 등록해주세요.`,
+        description: `${ssid}에 연결하고 기다려주세요.`,
       });
     });
   } else {
