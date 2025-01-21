@@ -28,3 +28,13 @@ export const ContentWrapper = styled.div`
   padding-top: 3rem;
   padding-bottom: 3rem;
 `;
+
+export const UpperMessage = styled.div`
+  font-size: 2rem;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 400;
+  color: white;
+  text-align: left;
+  padding: 2rem ;
+  padding-top: 4rem;
+`;

@@ -2,33 +2,43 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 import Modal from "../../components/Modal";
-
+import { UpperMessage } from "../../components/StyledComponents/LayoutStyles";
 import {
     ContentWrapper,
     ContentContainer,
 } from "../../components/StyledComponents/LayoutStyles";
-import { UpperMessage } from "../main";
 import { customFetch } from "../../api/customFetch"
 
-const UpperMessageBlack = styled(UpperMessage)`
+const UpperMessageBlack = styled.div`
   color: black;
+  font-size: 2rem;
+  font-family: 'Pretendard medium', sans-serif;
+  font-weight: 400;
+
 `;
 
 const AddButton = styled.button`
   background: #d3d3d3;
   border: none;
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
+  margin-right: 1rem;
   font-size: 24px;
   font-weight: bold;
+  display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
-  //display: flex;
-  //cursor: pointer;
+  cursor: pointer;
 `;
 
+const UpperContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  padding-top: 4rem;
+`;
 
 const DeviceList = styled.div`
   display: flex;
@@ -92,10 +102,12 @@ const ManageDevice = () => {
 
     return (
         <ContentWrapper>
-            <UpperMessageBlack>
-                <b>기기 관리</b>
+            <UpperContainer>    
+                <UpperMessageBlack>
+                   기기 관리
+                </UpperMessageBlack>
                 <AddButton onClick={() => navigate("/device-register")}>+</AddButton>
-            </UpperMessageBlack>
+            </UpperContainer>
             <ContentContainer>
                 <DeviceList>
                     {devices.map((device) => (

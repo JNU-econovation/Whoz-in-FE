@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import { styled } from "styled-components";
-import { UpperMessage } from "../main"; // 상단 메시지 컴포넌트
+import { UpperMessage } from "../../components/StyledComponents/LayoutStyles";
 import {
   ContentWrapper,
   ContentContainer,
@@ -8,6 +8,8 @@ import {
 import DeviceRegisterStepper from "../../components/DeviceRegisterStepper.jsx";
 import { useNavigate } from "react-router-dom"
 import { customFetch } from "../../api/customFetch"
+
+
 const UpperMessageBlack = styled(UpperMessage)`
   color: black;
 `;

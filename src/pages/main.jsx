@@ -5,6 +5,7 @@ import SnowAnimation from '../components/StyledComponents/SnowyEffect';
 // TODO: 멤버 활성 상태 통신 api 구현 및 연결
 import { ContentContainer, ContentWrapper } from '../components/StyledComponents/LayoutStyles';
 import { customFetch } from "../api/customFetch"
+import { UpperMessage } from "../components/StyledComponents/LayoutStyles";
 
 const Background = styled.div`
   position: fixed;
@@ -19,15 +20,6 @@ const Background = styled.div`
 `;
 
 
-export const UpperMessage = styled.div`
-  font-size: 2rem;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 400;
-  color: white;
-  text-align: left;
-  padding: 2rem ;
-  padding-top: 4rem;
-`;
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 
