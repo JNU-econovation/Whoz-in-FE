@@ -17,7 +17,7 @@ const UpperMessageBlack = styled(UpperMessage)`
 
 // 환경 변수에서 API 기본 URL 가져오기
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
-const IP_LIST = ["http://168.131.34.101:28080", "http://192.168.0.9:8080"]; //동방 개발
+const IP_LIST = ["https://168.131.34.101:28080", "https://192.168.0.9:8080"]; //동방 개발
 // const IP_LIST = ["http://localhost:8080"]; //로컬 개발
 
 // const UpperMessage = styled.div`
