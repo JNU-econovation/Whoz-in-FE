@@ -73,10 +73,10 @@ const BetaLogin = () => {
       <KakaoButton onClick={handleKakaoLogin} isClicked={isClicked}>
         카카오로 시작하기
       </KakaoButton>
-     {/*} <Footer>
+      <Footer>
         By using this service, you agree to our{" "}
         <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.
-      </Footer> */}
+      </Footer> 
     </Container>
   );
 };
