@@ -16,7 +16,7 @@ import BetaLogin from "./pages/auth/BetaLogin";
 import OAuthSuccess from "./pages/auth/OAuthSuccess";
 
 import DeviceRegister from "./pages/Device/DeviceRegister";
-import BetaDeviceRegister from "./pages/Device/BetaDeviceRegister";
+// import BetaDeviceRegister from "./pages/Device/BetaDeviceRegister";
 
 import Header from "./components/LayoutComponent/Header";
 import BottomNav from "./components/LayoutComponent/BottomNav";
@@ -47,10 +47,10 @@ const App = () => {
           <Route path="/oauth/kakao" element={<KakaoRedirect />} />
           <Route path="/oauth/success" element={<OAuthSuccess />} />
           {/* <Route path="/oauth/member-info" element={<MemberInfo />} />
-          <Route path="/oauth/auth-info" element={<AuthInfo />} /> */}
+          <Route path="/oauth/auth-info" element={<AuthInfo />} />   <Route path="/beta-register" element={<BetaDeviceRegister />} />*/}
 
           <Route path="/device-register" element={<DeviceRegister />} />
-          <Route path="/beta-register" element={<BetaDeviceRegister />} />
+        
           <Route path="/main" element={<Main />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/profile" element={<MyProfile />} />
