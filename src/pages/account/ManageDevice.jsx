@@ -88,12 +88,11 @@ font-size: 1rem;
 
     }
   }
-
   `;
 
   const IconButton = styled.button`
   background: none;
-  color: white;
+  color: #595959;
   border: none;
   font-size: 18px;
   cursor: pointer;
