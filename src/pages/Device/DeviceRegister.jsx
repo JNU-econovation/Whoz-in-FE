@@ -103,7 +103,7 @@ export default function DeviceRegister() {
       const wifi = data.data;
       if (data.error_code === '3030') {
         alert(data.message)
-        navigate("/main"); // 🚀 /main으로 이동
+        window.location.href = process.env.REACT_APP_FRONTEND_BASEURL + '/main'
         return;
       }
 
