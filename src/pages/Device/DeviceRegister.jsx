@@ -145,7 +145,6 @@ export default function DeviceRegister() {
     let intervalId;
 
     const isInDongbang = async () => {
-      console.log(IP_LIST);
       try {
         timeoutId = setTimeout(() => {
           alert("동아리방의 와이파이에 연결되어있지 않습니다.");
