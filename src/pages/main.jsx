@@ -35,16 +35,22 @@ const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 const Main = () => {
   const [members, setMembers] = useState([]); // 멤버 리스트 상태
   const [activeCount, setActiveCount] = useState();
+  const [registrationNeeded, setRegistrationNeeded] = useState(false); // 기기 등록 여부
+  const [isLoading, setIsLoading] = useState(true); // 멤버 리스트 요청 중인지 여부
 
   const fetchMembers = async () => {
     try {
       const response = await customFetch(`${BASE_URL}/api/v1/members?page=1&size=10&sortType=asc`);
       const data = await response.json();
+      setIsLoading(false);
 
-      if (data.error_code === "3060") {
-        //이 경우에 멤버 리스트가 아닌 그냥 기기를 한 대 이상 등록해달라고 하고 싶음
-        console.log("기기 등록이 필요합니다.");
+      if (data.error_code === "3060") { // 기기 등록 필요할 때 3060
+        setRegistrationNeeded(true);
+        return;
       }
+
+      setRegistrationNeeded(false);
+
       const members = data.data.members;
       if (members) {
         setMembers(members);
@@ -68,11 +74,19 @@ const Main = () => {
       <>
         <PersistentBackground/>
         <ContentWrapper >
-          <UpperMessage>
-            현재 동방에
-            <br />
-            <b>{activeCount}</b>명 있습니다 ☃️
-          </UpperMessage>
+          {isLoading ? null : (
+              registrationNeeded ? (
+                  <UpperMessage>
+                    기기 등록을 먼저 진행해주세요
+                  </UpperMessage>
+              ) : (
+                  <UpperMessage>
+                    현재 동방에
+                    <br />
+                    <b>{activeCount}</b>명 있습니다 ☃️
+                  </UpperMessage>
+              )
+          )}
           <MemberStatusList members={members} />
         </ContentWrapper>
         <a href="/mypage/voc">
