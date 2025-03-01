@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import AuthInfo from "./AuthInfo";
 import MemberInfo from "./MemberInfo";
-import members from "../../data/sampleData";
 import axios from 'axios';
 import { customFetch } from "../../api/customFetch"
 
@@ -31,7 +30,6 @@ const Join = () => {
 
     const handleJoin = () => {
         const newMember = {
-            id: members.length,
             loginid,
             password,
             name,
@@ -39,7 +37,8 @@ const Join = () => {
             position,
         };
 
-        members.push(newMember);
+        // TODO: newMember로 회원가입 요청 전송하기
+
         alert("회원가입이 완료되었습니다!");
         navigate("/login");
     };

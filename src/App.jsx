@@ -26,6 +26,7 @@ import MyPage from "./pages/mypage";
 import ManageDevice from "./pages/account/ManageDevice";
 import MyProfile from "./pages/account/MyProfile";
 import Setting from "./pages/account/setting";
+import VOCForm from "./pages/account/VOCForm";
 
 const App = () => {
   const location = useLocation();  // 현재 경로를 확인
@@ -56,7 +57,8 @@ const App = () => {
           <Route path="/mypage/profile" element={<MyProfile />} />
           <Route path="/mypage/device-management" element={<ManageDevice />} />
           <Route path="/mypage/setting" element={<Setting />} />
-
+          <Route path="/mypage/voc" element={<VOCForm />} />
+          
           <Route path="*" element={<div>404: 규민이가 잘못보냄</div>} />
         </Routes>
       </div>
