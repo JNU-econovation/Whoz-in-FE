@@ -31,12 +31,18 @@ const Main = () => {
     try {
       const response = await customFetch(`${BASE_URL}/api/v1/members?page=1&size=10&sortType=asc`);
       const data = await response.json();
+
+      if (data.error_code === "3060") {
+        //이 경우에 멤버 리스트가 아닌 그냥 기기를 한 대 이상 등록해달라고 하고 싶음
+        console.log("기기 등록이 필요합니다.");
+      }
       const members = data.data.members;
       if (members) {
         setMembers(members);
         const activeMembers = members.filter(member => member.is_active).length;
         setActiveCount(activeMembers);
       }
+
     } catch (error) {
       console.error("멤버 목록 불러오기 실패:", error);
     }
