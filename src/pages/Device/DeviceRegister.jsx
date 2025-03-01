@@ -17,7 +17,7 @@ const UpperMessageBlack = styled(UpperMessage)`
 
 // 환경 변수에서 API 기본 URL 가져오기
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
-const IP_LIST = ["http://192.168.0.6:8080"];// // const IP_LIST = ["http://localhost:8080"]; //로컬 개발
+const IP_LIST = process.env.REACT_APP_IP_LIST.split(",");
 
 // const UpperMessage = styled.div`
 //   font-size: 1.5rem;
@@ -145,6 +145,7 @@ export default function DeviceRegister() {
     let intervalId;
 
     const isInDongbang = async () => {
+      console.log(IP_LIST);
       try {
         timeoutId = setTimeout(() => {
           alert("동아리방의 와이파이에 연결되어있지 않습니다.");
