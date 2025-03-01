@@ -6,6 +6,7 @@ import SnowAnimation from '../components/StyledComponents/SnowyEffect';
 import { ContentContainer, ContentWrapper } from '../components/StyledComponents/LayoutStyles';
 import { customFetch } from "../api/customFetch"
 import { UpperMessage } from "../components/StyledComponents/LayoutStyles";
+import VOCBanner from '../components/VOC배너.png';
 
 const Background = styled.div`
   position: fixed;
@@ -18,9 +19,17 @@ const Background = styled.div`
   z-index: -1;
   
 `;
+const FloatingBanner = styled.img`
+  position: fixed;
+  bottom: 6.5rem; 
+  left: 50%;
+  transform: translateX(-50%);  
+  width: 90%;  
+  max-width: 800px;  
+  z-index: 1000; 
+`;
 
-
-
+      
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 
 const Main = () => {
@@ -31,16 +40,17 @@ const Main = () => {
     try {
       const response = await customFetch(`${BASE_URL}/api/v1/members?page=1&size=10&sortType=asc`);
       const data = await response.json();
-      const members = data.data.members;
-      if (members) {
-        setMembers(members);
-        const activeMembers = members.filter(member => member.is_active).length;
+      
+      if (data.data.members) {
+        setMembers(data.data.members);
+        const activeMembers = data.data.members.filter(member => member.is_active).length;
         setActiveCount(activeMembers);
       }
     } catch (error) {
       console.error("멤버 목록 불러오기 실패:", error);
     }
   };
+  
 
   useEffect(() => {
     fetchMembers(); // 최초 데이터 요청
@@ -59,6 +69,10 @@ const Main = () => {
           </UpperMessage>
           <MemberStatusList members={members} />
         </ContentWrapper>
+        <a href="/mypage/voc">
+  <FloatingBanner src={VOCBanner} alt="VOC 배너" />
+</a>
+
       </>
     );
   };

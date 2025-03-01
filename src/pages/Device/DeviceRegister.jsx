@@ -24,7 +24,7 @@ const IP_LIST = ["http://192.168.0.6:8080"];// // const IP_LIST = ["http://local
 //   font-weight: bold;
 //   text-align: center;
 //   margin-bottom: 1.5rem;
-// `;
+// `;q
 
 const RegisterButton = styled.button`
   margin-top: 1rem;
