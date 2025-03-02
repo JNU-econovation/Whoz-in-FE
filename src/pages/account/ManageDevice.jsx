@@ -163,13 +163,35 @@ const ManageDevice = () => {
         //삭제 기능 구현하기
     };
 
+    const [isChecking, setIsChecking] = useState(false); // 요청 중 여부
+    const checkNetworkAndRedirect = async () => {
+        if (isChecking) return; // 이미 실행 중이면 클릭 방지
+        setIsChecking(true); // 버튼 비활성화
+        const url = process.env.REACT_APP_NETWORK_API_BASEURL + '/device-register';
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 2000);
+        try {
+            const response = await fetch(url, { method: "HEAD", mode: "no-cors", signal: controller.signal });
+            response.text().then(console.log);
+            // 정상적인 서버면 이동
+            window.location.href = url;
+        } catch (error) {
+            console.log(error);
+            alert("동아리방 와이파이에 연결되어있지 않습니다. 연결 후 다시 시도해주세요.");
+        } finally {
+            setIsChecking(false); // 버튼 다시 활성화
+            clearTimeout(timeout);
+        }
+    };
+
+
     return (
         <ContentWrapper>
             <UpperContainer>    
                 <UpperMessageBlack>
                    기기 관리
                 </UpperMessageBlack>
-                <AddButton onClick={() => window.location.href = process.env.REACT_APP_NETWORK_API_BASEURL + '/device-register'}>+</AddButton>
+                <AddButton onClick={checkNetworkAndRedirect}>+</AddButton>
             </UpperContainer>
             <ContentContainer>
                 <DeviceList>
