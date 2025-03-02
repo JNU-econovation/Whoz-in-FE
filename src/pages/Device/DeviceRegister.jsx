@@ -10,11 +10,6 @@ import { useNavigate } from "react-router-dom"
 import { customFetch } from "../../api/customFetch"
 
 
-const UpperMessageBlack = styled(UpperMessage)`
-  color: black;
-`;
-
-
 // 환경 변수에서 API 기본 URL 가져오기
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 const IP_LIST = process.env.REACT_APP_IP_LIST.split(",");
@@ -238,10 +233,10 @@ export default function DeviceRegister() {
 
   return (
       <ContentWrapper>
-        <UpperMessageBlack>
+        <UpperMessage>
           <b>기기 등록</b>을
           <br/>진행합니다.
-        </UpperMessageBlack>
+        </UpperMessage>
         <ContentContainer>
           <DeviceRegisterStepper steps={steps} currentStep={currentStep} onNicknameChange={(value) => setDeviceName(value)} />
           <RegisterButton disabled={deviceName.trim().length===0} onClick={registerDevice}>
