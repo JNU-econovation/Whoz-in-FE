@@ -28,7 +28,7 @@ const MyPage = () => {
             <ListContainer>
                 <ListItem onClick={() => navigate('profile')}>프로필</ListItem>
                 <ListItem onClick={() => navigate('device-management')}>내 기기 관리</ListItem>
-                <ListItem onClick={() => navigate('setting')}>앱 설정</ListItem>
+            {/* <ListItem onClick={() => navigate('setting')}>앱 설정</ListItem>  */}
                 <ListItem onClick={() => navigate('voc')}>VOC</ListItem>
 
             </ListContainer>
