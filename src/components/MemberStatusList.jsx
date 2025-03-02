@@ -25,19 +25,23 @@ const MemberListContainer = styled(ListContainer)`
   margin-bottom: 2.5rem;
 `;
 
-const MemberStatusList = ({ members }) => {
+const RegisterNotice = styled.div`
+  font-size: 1.2rem;
+  color: #5b5b5b;
+  text-align: center;
+  padding-top: 3rem;
+`;
+
+const MemberStatusList = ({ members, registrationNeeded }) => {
   const [showTime, setShowTime] = useState([]);
-  // members가 변경될 때 기존 상태를 유지하면서 새 멤버 추가 - member id로 관리
+
   useEffect(() => {
     setShowTime((prevShowTime) => {
       const newShowTime = {};
-      // 기존 상태 유지하면서 새로운 멤버 추가
       members.forEach((member) => {
-        // alert(prevShowTime[member.member_id])
         newShowTime[member.member_id] = prevShowTime[member.member_id] || false;
       });
-
-      return newShowTime; // 업데이트된 상태 반환
+      return newShowTime;
     });
   }, [members]);
 
@@ -48,12 +52,19 @@ const MemberStatusList = ({ members }) => {
     }));
   };
 
+  if (registrationNeeded) {
+    return (
+      <MemberListContainer>
+        <RegisterNotice>기기 등록을 먼저 진행해주세요.</RegisterNotice>
+      </MemberListContainer>
+    );
+  }
+
   return (
     <MemberListContainer>
       {members.map((member, index) => (
         <ListItem key={index}>
           {member.generation}기 {member.member_name}
-
           {showTime[member.member_id] ? (
             <ActiveTime onClick={() => toggleShowTime(member.member_id)}>
               {member.total_active_time}

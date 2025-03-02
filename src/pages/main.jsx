@@ -82,13 +82,13 @@ const Main = () => {
                         <>
                             현재 동방에
                             <br />
-                            <b>{activeCount}</b>명 있습니다 ☃️
+                            <b>{activeCount}</b>명 있습니다 
                         </>
                     )}
                 </UpperMessage>
 
-                <MemberStatusList members={members} />
-            </ContentWrapper>
+                <MemberStatusList members={members} registrationNeeded={registrationNeeded} />
+                </ContentWrapper>
             <a href="/mypage/voc">
                 <FloatingBanner src={VOCBanner} alt="VOC 배너" />
             </a>
