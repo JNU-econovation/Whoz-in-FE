@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import { MoonLoader } from "react-spinners";
 
 const StepperContainer = styled.div`
   display: flex;
@@ -49,60 +50,54 @@ const NicknameInput = styled.input`
   border-radius: 4px;
   width: 100%;
 `;
-
 export default function DeviceRegisterStepper({
   steps = [],
   currentStep = 0,
   onNicknameChange = value => {},
 }) {
   return (
-      <StepperContainer>
-        {steps.map((step, index) => {
-          const isLastStep = index === steps.length - 1;
-          const isCompleted = currentStep > index;
-          const isActive = currentStep === index;
+    <StepperContainer>
+      {steps.map((step, index) => {
+        const isLastStep = step.status === "input";
+        const isCompleted = step.status === "completed";
+        const isWaiting = step.status === "waiting";
+        const isActive = currentStep === index;
 
-          // 마지막 단계 (기기 이름 입력)
-          if (isLastStep) {
-            return (
-                <StepContainer key={index}>
-                  <StepIndicator isCompleted={isCompleted} isActive={isActive}>
-                    {isCompleted ? <CheckRoundedIcon /> : index + 1}
-                  </StepIndicator>
-                  <div>
-                    <StepText isCompleted={isCompleted} isActive={isActive}>
-                      {step.label}
-                    </StepText>
-                    <NicknameInput
-                        type="text"
-                        placeholder="기기의 별명을 입력하세요."
-                        onChange={(e) => onNicknameChange(e.target.value)}
-                        disabled={!isActive}
-                    />
-                  </div>
-                </StepContainer>
-            );
-          }
+        return (
+          <StepContainer key={index}>
+            <StepIndicator isCompleted={isCompleted} isActive={isActive}>
+              {isCompleted ? (
+                <CheckRoundedIcon />
+              ) : isWaiting && isActive ? (
+                <MoonLoader size={20} color="#1976D2" />
+              ) : (
+                index + 1
+              )}
+            </StepIndicator>
+            <div>
+              <StepText isCompleted={isCompleted} isActive={isActive}>
+                {step.label}
+              </StepText>
 
-          // 일반 단계
-          return (
-              <StepContainer key={index}>
-                <StepIndicator isCompleted={isCompleted} isActive={isActive}>
-                  {isCompleted ? <CheckRoundedIcon /> : index + 1}
-                </StepIndicator>
-                <div>
-                  <StepText isCompleted={isCompleted} isActive={isActive}>
-                    {step.label}
-                  </StepText>
-                  <StepDescription isCompleted={isCompleted} isActive={isActive}>
-                    {isCompleted && step.description
-                        ? `${step.description}`
-                        : step.description}
-                  </StepDescription>
-                </div>
-              </StepContainer>
-          );
-        })}
-      </StepperContainer>
+              {isLastStep ? (
+                <NicknameInput
+                  type="text"
+                  placeholder="기기의 별명을 입력하세요."
+                  onChange={(e) => onNicknameChange(e.target.value)}
+                  disabled={!isActive}
+                />
+              ) : (
+                <StepDescription
+                  isCompleted={isCompleted}
+                  isActive={isActive}
+                >
+                  {step.description}
+                </StepDescription>
+              )}
+            </div>
+          </StepContainer>
+        );
+      })}
+    </StepperContainer>
   );
 }
