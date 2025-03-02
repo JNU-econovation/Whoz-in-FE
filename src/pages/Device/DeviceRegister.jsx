@@ -44,10 +44,15 @@ export default function DeviceRegister() {
   const [deviceName, setDeviceName] = useState(""); // 기기 이름
   const navigate = useNavigate();
   const abortControllerRef = useRef(null);
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get("device_register_token"); // 쿼리스트링에서 token 값 가져오기
 
   // SSID 리스트 불러오기
   useEffect(() => {
-    customFetch(`${BASE_URL}/api/v1/ssid`)
+    customFetch(`${BASE_URL}/api/v1/ssid`, {
+      method: "GET",
+      headers: {"Authorization": `Bearer ${token}`}
+    })
     .then(response=> response.json())
     .then((data) => {
       if (data.data) {
@@ -95,7 +100,7 @@ export default function DeviceRegister() {
     try {
       const response = await customFetch(`${BASE_URL}/api/v1/device/info`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}`},
         body: JSON.stringify({ ip: internalIp }),
       });
       const data = await response.json();
@@ -127,7 +132,7 @@ export default function DeviceRegister() {
     try {
       const response = await customFetch(`${BASE_URL}/api/v1/device`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , "Authorization": `Bearer ${token}`},
         body: JSON.stringify({ device_name: deviceName }),
       });
 
