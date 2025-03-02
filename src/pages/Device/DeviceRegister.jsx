@@ -105,7 +105,7 @@ export default function DeviceRegister() {
       });
       const data = await response.json();
       const wifi = data.data;
-      if (data.error_code === '3030') {
+      if ([ '3030', '3020' ].includes(data.error_code)) {
         alert(data.message)
         window.location.href = process.env.REACT_APP_FRONTEND_BASEURL + '/main'
         return;
