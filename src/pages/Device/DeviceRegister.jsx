@@ -200,37 +200,49 @@ export default function DeviceRegister() {
   const steps = [];
 
   if (registeredWifi.length > 0) {
+    // 완료된 Wi-Fi 단계
     registeredWifi.forEach((ssid, index) => {
       steps.push({
         label: `Step ${index + 1}`,
-        description: `${registeredWifi[index]} 등록되었습니다.`,
-      })
-    })
+        description: `${ssid} 등록되었습니다.`,
+        status: "completed",
+      });
+    });
+  
+    // 남은 Wi-Fi 대기 단계
     const remainingSsids = ssids.filter((ssid) => !registeredWifi.includes(ssid));
     remainingSsids.forEach((ssid, index) => {
       steps.push({
         label: `Step ${registeredWifi.length + index + 1}`,
         description: `${ssid}에 연결하고 기다려주세요.`,
+        status: "waiting",
       });
     });
+  
   } else {
+    // 가장 첫 대기 상태
     steps.push({
       label: "Step 1",
       description: "잠시 기다려주세요.",
+      status: "waiting",
     });
-    ssids.slice(1, ssids.length).forEach((ssid, index) => {
+  
+    ssids.slice(1).forEach((_, index) => {
       steps.push({
         label: `Step ${index + 2}`,
-        description: ``,
-      })
-    })
+        description: "",
+        status: "waiting",
+      });
+    });
   }
-
+  
+  // 마지막 단계: 기기 이름 입력
   steps.push({
     label: "기기 등록 완료",
     description: registeredWifi.length === ssids.length ? "기기 이름 입력" : "",
+    status: "input",
   });
-
+  
   return (
       <ContentWrapper>
         <UpperMessage>
