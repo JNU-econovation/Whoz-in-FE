@@ -134,35 +134,7 @@ const NetworkInfo = styled.div`
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 
 const ManageDevice = () => {
-    const [devices, setDevices] = useState([
-        {
-            device_id: 1,
-            device_name: "규민 아이폰",
-            connected_ssid: "ECONO_5G",
-            mac_per_ssid: {
-                ECONO_5G: "00:1A:2B:3C:4D:5E",
-                JNU: "00:1A:2B:3C:4D:5F",
-                EDUROAM: "00:1A:2B:3C:4D:60",
-            },
-        },
-        {
-            device_id: 2,
-            device_name: "gyum Mac",
-            connected_ssid: "JNU",
-            mac_per_ssid: {
-                ECONO_5G: "11:2B:3C:4D:5E:6F",
-                JNU: "11:2B:3C:4D:5E:70",
-            },
-        },
-        {
-            device_id: 3,
-            device_name: "규민 아이패드",
-            connected_ssid: null,
-            mac_per_ssid: {
-                ECONO_5G: "22:3C:4D:5E:6F:71",
-            },
-        },
-    ]);
+    const [devices, setDevices] = useState([]);
 
     const [selectedDevice, setSelectedDevice] = useState(null);
     const [showModal, setShowModal] = useState(false);
