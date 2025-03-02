@@ -168,19 +168,6 @@ const ManageDevice = () => {
         if (isChecking) return; // 이미 실행 중이면 클릭 방지
         setIsChecking(true); // 버튼 비활성화
         const networkApiUrl = process.env.REACT_APP_NETWORK_API_BASEURL + '/device-register';
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 2000);
-        try {
-            // 동아리방의 네트워크 api에 연결 가능한지 확인
-            await fetch(networkApiUrl, { method: "HEAD", mode: "no-cors", signal: controller.signal });
-        } catch (error) {
-            console.log(error);
-            alert("동아리방 와이파이에 연결되어있지 않습니다. 연결 후 다시 시도해주세요.");
-            return;
-        } finally {
-            setIsChecking(false); // 버튼 다시 활성화
-            clearTimeout(timeout);
-        }
         // 기기 등록을 위한 토큰 발급받기
         const tokenResponse = await customFetch(`${BASE_URL}/api/v1/device-register-token`, {method: "POST"});
 
@@ -189,6 +176,7 @@ const ManageDevice = () => {
             console.log(token.data)
             window.location.href = networkApiUrl + "?device_register_token=" + token.data;
         }
+        setIsChecking(false); // 버튼 다시 활성화
     };
 
 
