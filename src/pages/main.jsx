@@ -82,7 +82,7 @@ const Main = () => {
                         <>
                             현재 동방에
                             <br />
-                            <b>{activeCount}</b>명 있습니다 ☃️
+                            <b>{activeCount}</b>명 있습니다 
                         </>
                     )}
                 </UpperMessage>
