@@ -37,7 +37,7 @@ const generateSnowflakes = (count) => {
   for (let i = 0; i < count; i++) {
     const size = Math.random() * 0.5 + 0.6; // 0.5rem ~ 1.5rem
     const left = Math.random() * 100; // 0% ~ 100%
-    const duration = Math.random() * 5 + 20; // 10s ~ 15s
+    const duration = Math.random() * 25 + 20; 
     const delay = Math.random() * 3; // 0s ~ 5s
     snowflakes.push(
       <Snowflake
@@ -47,7 +47,7 @@ const generateSnowflakes = (count) => {
         duration={duration}
         delay={delay}
       >
-        ⦁
+        ✴︎
       </Snowflake> //❄
     );
   }
