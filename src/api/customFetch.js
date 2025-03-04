@@ -14,7 +14,7 @@ export function customFetch(url, options = {}) {
         }
 
         // 인증 필요하면 로그인 페이지로 리디렉션
-        if (data?.error_code === "2001") {
+        if (data?.error_code === "2000") {
             window.location.href = "/beta-login";
         }
 
