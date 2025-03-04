@@ -20,26 +20,21 @@ export const StyledSelect = styled.select`
   outline: none;
 }
 `
-// 자동화
 const getGenerations = () => {
-    const baseYear = 2017;
-    const baseMonth = 5; // 5월
+    const baseDate = new Date(2017, 4, 1); // 2017년 5월 1일 (월은 0부터 시작)
     const baseGeneration = 11;
 
     const today = new Date();
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth() + 1;
-    const currentDay = today.getDate();
 
-    let generationCount = (currentYear - baseYear) * 2;
+    // 몇 개월 차이인지 계산
+    const diffYears = today.getFullYear() - baseDate.getFullYear();
+    const diffMonths = today.getMonth() - baseDate.getMonth();
+    const totalMonths = diffYears * 12 + diffMonths;
 
-    if (currentMonth > 10 || (currentMonth === 10 && currentDay >= 1)) {
-        generationCount += 2;
-    } else if (currentMonth > 5 || (currentMonth === 5 && currentDay >= 1)) {
-        generationCount += 1;
-    }
+    // 5월, 10월에만 기수 증가 -> 6개월마다 증가
+    const generationCount = Math.floor(totalMonths / 6);
 
-    const latestGeneration = baseGeneration + generationCount - 1;
+    const latestGeneration = baseGeneration + generationCount;
 
     const generations = [];
     for (let i = latestGeneration; i >= baseGeneration; i--) {
@@ -47,6 +42,7 @@ const getGenerations = () => {
     }
     return generations;
 };
+
 
 
 // 드롭다운 컴포넌트
