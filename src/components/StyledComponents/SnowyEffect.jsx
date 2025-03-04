@@ -35,10 +35,10 @@ const Snowflake = styled.div`
 const generateSnowflakes = (count) => {
   const snowflakes = [];
   for (let i = 0; i < count; i++) {
-    const size = Math.random() * 0.5 + 0.6; // 0.5rem ~ 1.5rem
+    const size = Math.random() * 0.5 + 0.6; // 0.8rem ~ 1.4rem
     const left = Math.random() * 100; // 0% ~ 100%
     const duration = Math.random() * 25 + 20; 
-    const delay = Math.random() * 3; // 0s ~ 5s
+    const delay = Math.random() * 5; 
     snowflakes.push(
       <Snowflake
         key={i}
@@ -47,14 +47,14 @@ const generateSnowflakes = (count) => {
         duration={duration}
         delay={delay}
       >
-        ✴︎
+        ⦁
       </Snowflake> //❄
     );
   }
   return snowflakes;
 };
 
-const SnowAnimation = ({ count = 50 }) => {
+const SnowAnimation = ({ count = 100 }) => {
   return (
     <>
       {generateSnowflakes(count)}
