@@ -21,8 +21,9 @@ const ActiveTime = styled.span`
 
 const MemberListContainer = styled(ListContainer)`
   border-radius: 30px 30px 0 0;
-  min-height: 30rem;
+  min-height: 35rem;
   margin-bottom: 2.5rem;
+  padding-bottom: 7rem;
 `;
 
 const RegisterNotice = styled.div`
