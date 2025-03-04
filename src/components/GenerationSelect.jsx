@@ -22,21 +22,24 @@ export const StyledSelect = styled.select`
 `
 // 자동화
 const getGenerations = () => {
-    const baseYear = 2017; //기준점
+    const baseYear = 2017;
+    const baseMonth = 5; // 5월
     const baseGeneration = 11;
+
     const today = new Date();
     const currentYear = today.getFullYear();
     const currentMonth = today.getMonth() + 1;
     const currentDay = today.getDate();
 
     let generationCount = (currentYear - baseYear) * 2;
+
     if (currentMonth > 10 || (currentMonth === 10 && currentDay >= 1)) {
         generationCount += 2;
-    } else if (currentMonth > 4 || (currentMonth === 4 && currentDay >= 1)) {
+    } else if (currentMonth > 5 || (currentMonth === 5 && currentDay >= 1)) {
         generationCount += 1;
     }
 
-    const latestGeneration = baseGeneration + generationCount;
+    const latestGeneration = baseGeneration + generationCount - 1;
 
     const generations = [];
     for (let i = latestGeneration; i >= baseGeneration; i--) {
@@ -44,6 +47,7 @@ const getGenerations = () => {
     }
     return generations;
 };
+
 
 // 드롭다운 컴포넌트
 const GenerationsDropdown = ({ generation, setGeneration }) => {
