@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { UpperMessage, UpperContainer, ContentWrapper} from "../../components/StyledComponents/LayoutStyles";
+
 
 const FormContainer = styled.div`
-  max-width: 600px;
+  max-width: 20rem;
   width: 90%;
-  margin: 3rem auto;
   padding: 2rem;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-`;
-
-const Title = styled.h2`
-  text-align: center;
-  margin-bottom: 1rem;
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 90%;
   padding: 0.8rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
@@ -26,7 +19,7 @@ const Input = styled.input`
 `;
 
 const TextArea = styled.textarea`
-  width: 100%;
+  width: 90%;
   height: 150px;
   padding: 0.8rem;
   border: 1px solid #ccc;
@@ -38,11 +31,12 @@ const TextArea = styled.textarea`
 const SubmitButton = styled.button`
   width: 100%;
   padding: 0.8rem;
-  background-color: #4a90e2;
+  background: linear-gradient(80deg, #b5d8f6 0%, #dab5f6 100%);
   color: white;
   font-size: 1.1rem;
+  font-weight: bold;
   border: none;
-  border-radius: 5px;
+  border-radius: 3rem;
   cursor: pointer;
   margin-top: 1rem;
   transition: background 0.3s;
@@ -77,8 +71,12 @@ const VOCForm = () => {
   };
 
   return (
+    <ContentWrapper>
+
+       <UpperMessage>피드백 남기기</UpperMessage>
+      
+  
     <FormContainer>
-      <Title>피드백 남기기</Title>
       <form onSubmit={handleSubmit}>
         <Input
           type="text"
@@ -93,7 +91,8 @@ const VOCForm = () => {
         />
         <SubmitButton type="submit">제출하기</SubmitButton>
       </form>
-    </FormContainer>
+    </FormContainer>  
+    </ContentWrapper>
   );
 };
 
