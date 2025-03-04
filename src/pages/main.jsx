@@ -38,7 +38,7 @@ const Main = () => {
 
     const fetchMembers = async () => {
         try {
-            const response = await customFetch(`${BASE_URL}/api/v1/members?page=1&size=10&sortType=asc`)
+            const response = await customFetch(`${BASE_URL}/api/v1/members?page=1&size=100&sortType=asc`)
             const data = await response.json()
             setIsLoading(false)
 
