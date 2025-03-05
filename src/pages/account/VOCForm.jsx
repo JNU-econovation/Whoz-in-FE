@@ -62,7 +62,7 @@ const VOCForm = () => {
 
     try {
       const response = await customFetch(
-        `${process.env.REACT_APP_BACKEND_BASEURL}/api/v1/voc`,
+        `${process.env.REACT_APP_BACKEND_BASEURL}/api/v1/feedback`,
         {
           method: "POST",
           headers: {
