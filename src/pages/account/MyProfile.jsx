@@ -7,7 +7,6 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const ProfileContainer = styled.div`
     text-align: center;
-    margin: 1.25rem;
     padding: 1.25rem;
     background: #f9f9f9;
     border-radius: 0.625rem;
