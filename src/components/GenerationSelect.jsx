@@ -5,7 +5,7 @@ export const StyledSelect = styled.select`
     height: 4rem;
     border: none;
     background-color: #ededed;
-    color:#a3a3a3;
+    color: #a3a3a3;
     margin-bottom: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -15,37 +15,36 @@ export const StyledSelect = styled.select`
     max-width: 25rem;
     box-sizing: border-box;
 
-&:focus {
-  border-color: #007bff;
-  outline: none;
-}
-`
+    &:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+`;
+
+// ✅ 고정 배열 + 날짜 기준으로 추가
 const getGenerations = () => {
-    const baseDate = new Date(2017, 4, 1); // 2017년 5월 1일 (월은 0부터 시작)
-    const baseGeneration = 11;
-
+    const baseGenerations = Array.from({ length: 28 - 11 + 1 }, (_, i) => 11 + i); // 11~28기
     const today = new Date();
+    const currentYear = today.getFullYear();
 
-    // 몇 개월 차이인지 계산
-    const diffYears = today.getFullYear() - baseDate.getFullYear();
-    const diffMonths = today.getMonth() - baseDate.getMonth();
-    const totalMonths = diffYears * 12 + diffMonths;
+    // 기준 날짜들
+    const march20 = new Date(currentYear, 2, 20); // 3월 20일
+    const september20 = new Date(currentYear, 8, 20); // 9월 20일
 
-    // 5월, 10월에만 기수 증가 -> 6개월마다 증가
-    const generationCount = Math.floor(totalMonths / 6);
+    let extraCount = 0;
+    if (today >= march20) extraCount++;
+    if (today >= september20) extraCount++;
 
-    const latestGeneration = baseGeneration + generationCount;
+    const latestGeneration = 28 + extraCount;
 
     const generations = [];
-    for (let i = latestGeneration; i >= baseGeneration; i--) {
+    for (let i = latestGeneration; i >= 11; i--) {
         generations.push(i);
     }
     return generations;
 };
 
-
-
-// 드롭다운 컴포넌트
+// ✅ 드롭다운 컴포넌트
 const GenerationsDropdown = ({ generation, setGeneration }) => {
     const generations = getGenerations();
 
