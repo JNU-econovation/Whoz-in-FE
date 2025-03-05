@@ -2,30 +2,26 @@ import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import Modal from "../../components/Modal"
-import { UpperMessage } from "../../components/StyledComponents/LayoutStyles"
+import { UpperMessage, UpperContainer } from "../../components/StyledComponents/LayoutStyles"
 import { ContentWrapper, ContentContainer, Input } from "../../components/StyledComponents/LayoutStyles"
 import { customFetch } from "../../api/customFetch"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPen, faTrash, faWifi } from "@fortawesome/free-solid-svg-icons"
 
-const UpperMessageBlack = styled.div`
-    color: black;
-    font-size: 2rem;
-    font-family: "Pretendard medium", sans-serif;
-    font-weight: 400;
-`
 
 const AddButton = styled.button`
-    background: #bfbfd5;
+    background: #8b8baa;
     color: white;
     border: none;
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
     margin-right: 1rem;
-    font-size: 24px;
+    font-size: 1.8rem;
     font-weight: bold;
+    margin:2rem;
+    margin-top:4rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,14 +36,6 @@ const AddButton = styled.button`
     }
 `
 
-const UpperContainer = styled.div`
-    // 상단 컨테이너 (상단 메세지 + 추가 버튼)
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 2rem;
-    padding-top: 4rem;
-`
 
 const DeviceList = styled.div`
     // 기기 리스트 컨테이너
@@ -188,9 +176,9 @@ const ManageDevice = () => {
     return (
         <ContentWrapper>
             <UpperContainer>
-                <UpperMessageBlack>기기 관리</UpperMessageBlack>
+                <UpperMessage>기기 관리</UpperMessage>
                 <AddButton onClick={checkNetworkAndRedirect}>+</AddButton>
-            </UpperContainer>
+</UpperContainer>
             <ContentContainer>
                 <DeviceList>
                     {devices.map((device) => (
@@ -215,7 +203,7 @@ const ManageDevice = () => {
                                 <IconButton onClick={() => handleEditClick(device)}>
                                     <FontAwesomeIcon icon={faPen} />
                                 </IconButton>
-                                <IconButton onClick={() => handleDelete(device.device_id)}>
+                               {} <IconButton onClick={() => handleDelete(device.device_id)}>
                                     <FontAwesomeIcon icon={faTrash} />
                                 </IconButton>
                             </div>
