@@ -2,6 +2,16 @@ import React, { useEffect, useState } from "react"
 import styled from "styled-components";
 import { ListContainer, ListItem } from "./StyledComponents/LayoutStyles";
 
+const ClickableArea = styled.div`
+  display: flex;
+  align-items: center;
+  width:5rem;
+  min-height: 1rem;
+  height: 1rem;
+  padding: 0.5rem 1rem; 
+  cursor: ${({ isActive }) => (isActive ? "pointer" : "default")};
+`;
+
 // 활동 상태 표시 초록불
 const ActiveStatus = styled.div`
   width: 1rem;
@@ -66,16 +76,16 @@ const MemberStatusList = ({ members, registrationNeeded }) => {
       {members.map((member, index) => (
         <ListItem key={index}>
           {member.generation}기 {member.member_name}
-          {showTime[member.member_id] ? (
-            <ActiveTime onClick={() => toggleShowTime(member.member_id)}>
-              {member.total_active_time}
-            </ActiveTime>
-          ) : (
-            <ActiveStatus
-              isActive={member.is_active}
-              onClick={() => toggleShowTime(member.member_id)}
-            />
-          )}
+          <ClickableArea
+            isActive={member.is_active}
+            onClick={() => toggleShowTime(member.member_id)}
+          >
+            {showTime[member.member_id] ? (
+              <ActiveTime>{member.total_active_time}</ActiveTime>
+            ) : (
+              <ActiveStatus isActive={member.is_active} />
+            )}
+          </ClickableArea>
         </ListItem>
       ))}
     </MemberListContainer>

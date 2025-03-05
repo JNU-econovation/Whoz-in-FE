@@ -7,7 +7,7 @@ import MyProfile from './account/MyProfile';
 const MyPageContainer = styled.div`
     padding-top: 4rem;
 `;
-
+// TODO: 프로필 통신 코드
 const MyPage = () => {
     const navigate = useNavigate();
 

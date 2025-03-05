@@ -12,6 +12,7 @@ export const ListItem = styled.div`
   display: flex;
   align-items: center;
   font-size: 1.2rem;
+  justify-content: space-between;
   cursor: pointer; 
   &:hover {
     color: gray; 
