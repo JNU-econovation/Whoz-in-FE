@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import MemberStatusList from "../components/MemberStatusList"
 import styled from "styled-components"
 import SnowAnimation from "../components/StyledComponents/SnowyEffect"
-// TODO: 멤버 활성 상태 통신 api 구현 및 연결
 import { ContentContainer, ContentWrapper } from "../components/StyledComponents/LayoutStyles"
 import { customFetch } from "../api/customFetch"
 import { UpperMessage } from "../components/StyledComponents/LayoutStyles"
@@ -71,12 +70,18 @@ const Main = () => {
         <>
             <PersistentBackground />
             <ContentWrapper>
-                <UpperMessage style={{ visibility: isLoading ? "hidden" : "visible" }}>
+            <UpperMessage style={{ visibility: isLoading ? "hidden" : "visible" }}>
                     {registrationNeeded ? (
                         <>
                             현재 동방에
                             <br />
                             누가 있을까요?
+                        </>
+                    ) : activeCount === 0 ? (
+                        <>
+                            현재 동방에
+                            <br />
+                            아무도 없습니다
                         </>
                     ) : (
                         <>
@@ -86,7 +91,6 @@ const Main = () => {
                         </>
                     )}
                 </UpperMessage>
-
                 <MemberStatusList members={members} registrationNeeded={registrationNeeded} />
                 </ContentWrapper>
             <a href="/mypage/voc">
