@@ -157,27 +157,48 @@ const ManageDevice = () => {
         //삭제 기능 구현하기
     }
 
-    const [isChecking, setIsChecking] = useState(false) // 요청 중 여부
-    const checkNetworkAndRedirect = async () => {
-        if (isChecking) return // 이미 실행 중이면 클릭 방지
-        setIsChecking(true) // 버튼 비활성화
-        const networkApiUrl = process.env.REACT_APP_NETWORK_API_BASEURL + "/device-register"
-        // 기기 등록을 위한 토큰 발급받기
-        const tokenResponse = await customFetch(`${BASE_URL}/api/v1/device-register-token`, { method: "POST" })
 
-        if (tokenResponse.status === 200 || tokenResponse.status === 201) {
-            const token = await tokenResponse.json()
-            console.log(token.data)
-            window.location.href = networkApiUrl + "?device_register_token=" + token.data
+
+    const [isChecking, setIsChecking] = useState(false) // 요청 중 여부
+    const redirectDeviceRegister = async () => {
+        if (isChecking) return; // 이미 실행 중이면 클릭 방지
+        setIsChecking(true); // 버튼 비활성화
+
+        if (!window.confirm("현재 동아리방의 와이파이(JNU, eduroam, ECONO_5G) 중 하나에 연결되어있나요?")) {
+            setIsChecking(false);
+            return;
         }
-        setIsChecking(false) // 버튼 다시 활성화
-    }
+
+        try {
+            // 네트워크 API URL 요청, 기기 등록 토큰 요청
+            const [networkApiUrlResponse, tokenResponse] = await Promise.all([
+                customFetch(`${BASE_URL}/api/v1/internal-access-url?room=jeonsanwon`, { method: "GET" }),
+                customFetch(`${BASE_URL}/api/v1/device-register-token`, { method: "POST" })
+            ]);
+            const [networkApiBody, tokenBody] = await Promise.all([
+                networkApiUrlResponse.json(),
+                tokenResponse.json()
+            ]);
+            if (networkApiBody.error_code === "7001") {
+                alert("현재 동아리방 서버가 작동하지 않습니다.....");
+                return;
+            }
+            // 기기 등록 페이지로 이동
+            window.location.href = `${networkApiBody.data}/device-register?device_register_token=${tokenBody.data}`;
+        } catch (error) {
+            console.error("오류 발생:", error.message);
+            alert("알 수 없는 오류가 발생했습니다.")
+        } finally {
+            setIsChecking(false); // 버튼 다시 활성화
+        }
+    };
+
 
     return (
         <ContentWrapper>
             <UpperContainer>
                 <UpperMessage>기기 관리</UpperMessage>
-                <AddButton onClick={checkNetworkAndRedirect}>+</AddButton>
+                <AddButton onClick={redirectDeviceRegister}>+</AddButton>
 </UpperContainer>
             <ContentContainer>
                 <DeviceList>
