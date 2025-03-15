@@ -67,7 +67,7 @@ export default function DeviceRegister() {
 
     try {
       const fetchPromises = IP_LIST.map((ip, index) =>
-          customFetch(`${ip}/api/v1/ip`, { signal: abortControllerRef.current.signal})
+          customFetch(`${ip}/api/v1/my-ip`, { signal: abortControllerRef.current.signal})
           .then((res) => res.text())
           .then((data) => ({ ip: data}))
           .catch((error) => {
@@ -153,7 +153,7 @@ export default function DeviceRegister() {
 
         // IP 요청을 병렬 실행하고, 가장 빠른 응답을 받음
         const fetchPromises = IP_LIST.map((ip) =>
-            customFetch(`${ip}/api/v1/ip`)
+            customFetch(`${ip}/api/v1/my-ip`)
             .then((res) => {
               if (!res.ok) throw new Error(`Error fetching from ${ip}`);
               return res.text();
