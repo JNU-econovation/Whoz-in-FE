@@ -12,6 +12,7 @@ export const ListItem = styled.div`
   display: flex;
   align-items: center;
   font-size: 1.2rem;
+  justify-content: space-between;
   cursor: pointer; 
   &:hover {
     color: gray; 
@@ -31,10 +32,19 @@ export const ContentWrapper = styled.div`
 
 export const UpperMessage = styled.div`
   font-size: 2rem;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 400;
+  font-family: 'Pretendard-medium', sans-serif;
   color: #101740;
   text-align: left;
   padding: 2rem ;
   padding-top: 4rem;
+
 `;
+
+export const UpperContainer = styled.div`
+// 상단 컨테이너 (상단 메세지 + 추가 버튼)
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding-right: 1rem;
+
+`

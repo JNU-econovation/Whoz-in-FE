@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ContentContainer } from '../../components/StyledComponents/LayoutStyles';
 import { useAuth } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { customFetch } from '../../api/customFetch';
 
 const ProfileContainer = styled.div`
     text-align: center;
-    margin: 1.25rem;
     padding: 1.25rem;
     background: #f9f9f9;
     border-radius: 0.625rem;
@@ -87,61 +87,89 @@ const InfoText = styled.p`
 `;
 
 const MyProfile = () => {
-    const { authInfo } = useAuth(); 
     const [profilePic, setProfilePic] = useState(null);
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setProfilePic(reader.result);
-            };
-            reader.readAsDataURL(file);
+    const [profileInfo, setProfileInfo] = useState({
+      name: '정보 없음',
+      generation: '정보 없음',
+      position: '정보 없음',
+      statusMessage: '',
+    });
+  
+    const fetchProfile = async () => {
+      try {
+        const response = await customFetch('/api/v1/member');
+        const data = await response.json();
+  
+        if (data.data) {
+          setProfileInfo({
+            name: data.data.name || '정보 없음',
+            generation: data.data.generation !== undefined ? data.data.generation : '정보 없음',
+            position: data.data.position || '정보 없음',
+            statusMessage: data.data.statusMessage || '',
+          });
         }
+      } catch (error) {
+        console.error('프로필 정보 가져오기 실패:', error);
+      }
     };
-
+  
+    useEffect(() => {
+      fetchProfile();
+    }, []);
+  
+    const handleImageChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setProfilePic(reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+  
     const handleDeleteImage = () => {
-        setProfilePic(null);
+      setProfilePic(null);
     };
-
+  
     return (
-        <ContentContainer>
-            <ProfileContainer>
-                <h2>프로필</h2>
-                <ProfileImageContainer>
-                    {profilePic ? (
-                        <ProfileImage 
-                            src={profilePic} 
-                            alt={authInfo?.name ? `${authInfo.name}의 프로필 이미지` : "업로드된 프로필 이미지"} 
-                        />
-                    ) : (
-                        <IconPlaceholder icon={faUser} aria-label="기본 프로필 아이콘" />
-                    )}
-                </ProfileImageContainer>
-                <FileInputContainer>
-                    <FileInputLabel htmlFor="file-upload">
-                        이미지 업로드
-                    </FileInputLabel>
-                    <HiddenFileInput 
-                        id="file-upload" 
-                        type="file" 
-                        accept="image/*" 
-                        onChange={handleImageChange} 
-                        aria-label="프로필 이미지 업로드"
-                    />
-                    {profilePic && (
-                        <DeleteButton onClick={handleDeleteImage}>
-                            삭제
-                        </DeleteButton>
-                    )}
-                </FileInputContainer>
-                <b style={{ marginTop: '1rem', display: 'block' }}>{authInfo?.name || "이름 정보 없음"}</b>
-                <InfoText>기수: {authInfo?.generation || "정보 없음"}</InfoText>
-                <InfoText>분야: {authInfo?.position || "정보 없음"}</InfoText>
-            </ProfileContainer>
-        </ContentContainer>
+      <ContentContainer>
+        <ProfileContainer>
+          <h2>프로필</h2>
+          <ProfileImageContainer>
+            {profilePic ? (
+              <ProfileImage
+                src={profilePic}
+                alt={profileInfo.name !== '정보 없음' ? `${profileInfo.name}의 프로필 이미지` : '업로드된 프로필 이미지'}
+              />
+            ) : (
+              <IconPlaceholder icon={faUser} aria-label="기본 프로필 아이콘" />
+            )}
+          </ProfileImageContainer>
+          <FileInputContainer>
+            <FileInputLabel htmlFor="file-upload">
+              이미지 업로드
+            </FileInputLabel>
+            <HiddenFileInput
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              aria-label="프로필 이미지 업로드"
+            />
+            {profilePic && (
+              <DeleteButton onClick={handleDeleteImage}>
+                삭제
+              </DeleteButton>
+            )}
+          </FileInputContainer>
+          <b style={{ marginTop: '1rem', display: 'block' }}>{profileInfo.name}</b>
+          <InfoText>기수: {profileInfo.generation}</InfoText>
+          <InfoText>분야: {profileInfo.position}</InfoText>
+          {profileInfo.statusMessage && <InfoText>{profileInfo.statusMessage}</InfoText>}
+        </ProfileContainer>
+      </ContentContainer>
     );
-};
-
-export default MyProfile;
+  };
+  
+  export default MyProfile;

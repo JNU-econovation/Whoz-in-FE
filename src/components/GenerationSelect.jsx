@@ -5,7 +5,7 @@ export const StyledSelect = styled.select`
     height: 4rem;
     border: none;
     background-color: #ededed;
-    color:#a3a3a3;
+    color: #a3a3a3;
     margin-bottom: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -15,37 +15,36 @@ export const StyledSelect = styled.select`
     max-width: 25rem;
     box-sizing: border-box;
 
-&:focus {
-  border-color: #007bff;
-  outline: none;
-}
-`
-// 자동화
+    &:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+`;
+
+// ✅ 고정 배열 + 날짜 기준으로 추가
 const getGenerations = () => {
-    const baseYear = 2017; //기준점
-    const baseGeneration = 11;
+    const baseGenerations = Array.from({ length: 28 - 11 + 1 }, (_, i) => 11 + i); // 11~28기
     const today = new Date();
     const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth() + 1;
-    const currentDay = today.getDate();
 
-    let generationCount = (currentYear - baseYear) * 2;
-    if (currentMonth > 10 || (currentMonth === 10 && currentDay >= 1)) {
-        generationCount += 2;
-    } else if (currentMonth > 4 || (currentMonth === 4 && currentDay >= 1)) {
-        generationCount += 1;
-    }
+    // 기준 날짜들
+    const march20 = new Date(currentYear, 2, 20); // 3월 20일
+    const september20 = new Date(currentYear, 8, 20); // 9월 20일
 
-    const latestGeneration = baseGeneration + generationCount;
+    let extraCount = 0;
+    if (today >= march20) extraCount++;
+    if (today >= september20) extraCount++;
+
+    const latestGeneration = 28 + extraCount;
 
     const generations = [];
-    for (let i = latestGeneration; i >= baseGeneration; i--) {
+    for (let i = latestGeneration; i >= 11; i--) {
         generations.push(i);
     }
     return generations;
 };
 
-// 드롭다운 컴포넌트
+// ✅ 드롭다운 컴포넌트
 const GenerationsDropdown = ({ generation, setGeneration }) => {
     const generations = getGenerations();
 
