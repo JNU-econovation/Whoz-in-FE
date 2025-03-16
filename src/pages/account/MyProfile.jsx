@@ -86,25 +86,21 @@ const InfoText = styled.p`
     color: #555;
 `;
 
+const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
+
 const MyProfile = () => {
     const [profilePic, setProfilePic] = useState(null);
-    const [profileInfo, setProfileInfo] = useState({
-      name: '정보 없음',
-      generation: '정보 없음',
-      position: '정보 없음',
-      statusMessage: '',
-    });
+    const [profileInfo, setProfileInfo] = useState({});
   
     const fetchProfile = async () => {
       try {
-        const response = await customFetch('/api/v1/member');
+          const response = await customFetch(BASE_URL + '/api/v1/member');
         const data = await response.json();
-  
-        if (data.data) {
-          setProfileInfo({
-            name: data.data.name || '정보 없음',
-            generation: data.data.generation !== undefined ? data.data.generation : '정보 없음',
-            position: data.data.position || '정보 없음',
+          if (data.data) {
+              setProfileInfo({
+            name: data.data.name || '',
+            generation: data.data.generation !== undefined ? data.data.generation : '',
+            position: data.data.position || '',
             statusMessage: data.data.statusMessage || '',
           });
         }
@@ -164,8 +160,8 @@ const MyProfile = () => {
             )}
           </FileInputContainer>
           <b style={{ marginTop: '1rem', display: 'block' }}>{profileInfo.name}</b>
-          <InfoText>기수: {profileInfo.generation}</InfoText>
-          <InfoText>분야: {profileInfo.position}</InfoText>
+          <InfoText>{profileInfo.generation ? `기수: ${profileInfo.generation}` : '' }</InfoText>
+          <InfoText>{profileInfo.position ? `분야: ${profileInfo.position}` : '' }</InfoText>
           {profileInfo.statusMessage && <InfoText>{profileInfo.statusMessage}</InfoText>}
         </ProfileContainer>
       </ContentContainer>
