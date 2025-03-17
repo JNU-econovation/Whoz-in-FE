@@ -69,7 +69,7 @@ const VOCForm = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            content, // API 요구사항에 맞춰서 content만 전달
+            title, content
           }),
         }
       );
