@@ -69,7 +69,7 @@ const VOCForm = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            content, // API 요구사항에 맞춰서 content만 전달
+            title, content
           }),
         }
       );
@@ -77,7 +77,7 @@ const VOCForm = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("서버 응답:", result);
-        alert(result.message || "피드백이 제출되었습니다!");
+        alert("피드백이 제출되었습니다!");
         setTitle("");
         setContent("");
       } else {
