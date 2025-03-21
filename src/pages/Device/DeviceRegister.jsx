@@ -99,18 +99,19 @@ export default function DeviceRegister() {
         body: JSON.stringify({ ip: internalIp }),
       });
       const data = await response.json();
-      const wifi = data.data;
-      if ([ '3030', '3020' ].includes(data.error_code)) {
+      const wifiList = data.data;
+      if ([ '3030', '3020', '3033' ].includes(data.error_code)) {
         alert(data.message)
         window.location.href = process.env.REACT_APP_FRONTEND_BASEURL + '/main'
         return;
       }
 
-      if (wifi) {
+      if (Array.isArray(wifiList)) {
         setRegisteredWifi((prev) => {
-          if (!prev.includes(wifi)) {
-            setCurrentStep((prev) => prev + 1);
-            return [...prev, wifi];
+          const newWifis = wifiList.filter((wifi) => !prev.includes(wifi));
+          if (newWifis.length > 0) {
+            setCurrentStep((prev) => prev + newWifis.length);
+            return [...prev, ...newWifis];
           }
           return prev;
         });
