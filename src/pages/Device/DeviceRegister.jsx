@@ -159,7 +159,7 @@ export default function DeviceRegister() {
     const isInDongbang = async () => {
       try {
         timeoutId = setTimeout(() => {
-          alert("로컬 네트워크 요청을 허용해야 합니다.");
+          alert("로컬 네트워크 요청이 거부되어있습니다. 허용하고 브라우저를 재시작해주세요.");
           window.history.back()
         }, 3000);
 
