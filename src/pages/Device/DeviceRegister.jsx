@@ -154,7 +154,7 @@ export default function DeviceRegister() {
     const isInDongbang = async () => {
       try {
         timeoutId = setTimeout(() => {
-          alert("동아리방의 와이파이에 연결되어있지 않습니다.");
+          alert("로컬 네트워크 요청을 허용해야 합니다.");
           window.history.back()
         }, 3000);
 
