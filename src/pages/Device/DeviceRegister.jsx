@@ -68,7 +68,12 @@ export default function DeviceRegister() {
     try {
       const fetchPromises = IP_LIST.map((ip, index) =>
           customFetch(`${ip}/api/v1/my-ip`, { signal: abortControllerRef.current.signal})
-          .then((res) => res.text())
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error(`HTTP ${res.status}`);
+            }
+            return res.text();
+          })
           .then((data) => ({ ip: data}))
           .catch((error) => {
             if (error.name === "AbortError") {
