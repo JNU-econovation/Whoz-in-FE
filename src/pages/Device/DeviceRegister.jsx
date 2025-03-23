@@ -130,6 +130,13 @@ export default function DeviceRegister() {
         headers: { "Content-Type": "application/json" , "Authorization": `Bearer ${token}`},
         body: JSON.stringify({ device_name: deviceName }),
       });
+      const data = await response.json();
+
+      if ([ '3031' ].includes(data.error_code)) {
+        alert(data.message)
+        window.history.back();
+        return;
+      }
 
       if (response.status === 200 || response.status === 201) {
         alert("기기 등록이 완료되었습니다!");
