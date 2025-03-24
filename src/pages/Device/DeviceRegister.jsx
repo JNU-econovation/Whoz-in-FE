@@ -68,7 +68,12 @@ export default function DeviceRegister() {
     try {
       const fetchPromises = IP_LIST.map((ip, index) =>
           customFetch(`${ip}/api/v1/my-ip`, { signal: abortControllerRef.current.signal})
-          .then((res) => res.text())
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error(`HTTP ${res.status}`);
+            }
+            return res.text();
+          })
           .then((data) => ({ ip: data}))
           .catch((error) => {
             if (error.name === "AbortError") {
@@ -99,18 +104,18 @@ export default function DeviceRegister() {
         body: JSON.stringify({ ip: internalIp }),
       });
       const data = await response.json();
-      const wifi = data.data;
-      if ([ '3030', '3020' ].includes(data.error_code)) {
+      if ([ '3030', '3020', '3033' ].includes(data.error_code)) {
         alert(data.message)
         window.location.href = process.env.REACT_APP_FRONTEND_BASEURL + '/main'
         return;
       }
-
-      if (wifi) {
+      const wifiList = data.data;
+      if (Array.isArray(wifiList)) {
         setRegisteredWifi((prev) => {
-          if (!prev.includes(wifi)) {
-            setCurrentStep((prev) => prev + 1);
-            return [...prev, wifi];
+          const newWifis = wifiList.filter((wifi) => !prev.includes(wifi));
+          if (newWifis.length > 0) {
+            setCurrentStep((prev) => prev + newWifis.length);
+            return [...prev, ...newWifis];
           }
           return prev;
         });
@@ -130,6 +135,13 @@ export default function DeviceRegister() {
         headers: { "Content-Type": "application/json" , "Authorization": `Bearer ${token}`},
         body: JSON.stringify({ device_name: deviceName }),
       });
+      const data = await response.json();
+
+      if ([ '3031' ].includes(data.error_code)) {
+        alert(data.message)
+        window.history.back();
+        return;
+      }
 
       if (response.status === 200 || response.status === 201) {
         alert("기기 등록이 완료되었습니다!");
@@ -147,7 +159,7 @@ export default function DeviceRegister() {
     const isInDongbang = async () => {
       try {
         timeoutId = setTimeout(() => {
-          alert("동아리방의 와이파이에 연결되어있지 않습니다.");
+          alert("로컬 네트워크 요청이 거부되어있습니다. 허용하고 브라우저를 재시작해주세요.");
           window.history.back()
         }, 3000);
 
