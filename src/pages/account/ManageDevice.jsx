@@ -30,10 +30,6 @@ const AddButton = styled.button`
         background 0.3s ease,
         transform 0.2s;
 
-    &:hover {
-        background: #0056b3;
-        transform: scale(1.1);
-    }
 `
 
 
@@ -53,7 +49,6 @@ const DeviceItem = styled.div`
     padding: 10px;
     border-radius: 1.5rem;
     position: relative;
-    border: ${(props) => (props.selected ? "2px solid blue" : "none")};
     padding: 1rem;
     height: 4rem;
 `
@@ -99,21 +94,6 @@ const IconButton = styled.button`
     }
 `
 
-// ModalCloseButton: 모달 닫기 버튼
-const ModalCloseButton = styled.button`
-    background: #ff5252;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 1rem;
-    transition: background 0.3s ease;
-
-    &:hover {
-        background: #d32f2f;
-    }
-`
 
 // 모달 내 네트워크 정보 스타일
 const NetworkInfo = styled.div`
