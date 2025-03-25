@@ -24,11 +24,11 @@ const ModalContainer = styled.div`
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 10px;
+  top: 1rem;
   right: 10px;
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 1rem;
   cursor: pointer;
 `;
 

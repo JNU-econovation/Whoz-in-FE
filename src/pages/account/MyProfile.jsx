@@ -12,6 +12,7 @@ const ProfileContainer = styled.div`
     background: #f9f9f9;
     border-radius: 0.625rem;
     box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
+    padding-top: 4rem;
 `;
 
 const ProfileImageContainer = styled.div`
@@ -131,7 +132,6 @@ const MyProfile = () => {
     return (
       <ContentContainer>
         <ProfileContainer>
-          <h2>프로필</h2>
           <ProfileImageContainer>
             {profilePic ? (
               <ProfileImage

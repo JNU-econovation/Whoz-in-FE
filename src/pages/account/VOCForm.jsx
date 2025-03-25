@@ -9,7 +9,7 @@ const FormContainer = styled.div`
   padding: 2rem;
 `;
 
-const Input = styled.input`
+const TitleArea= styled.input`
   width: 90%;
   padding: 0.8rem;
   margin-bottom: 1rem;
@@ -18,7 +18,7 @@ const Input = styled.input`
   font-size: 1rem;
 `;
 
-const TextArea = styled.textarea`
+const ContentArea = styled.textarea`
   width: 90%;
   height: 150px;
   padding: 0.8rem;
@@ -93,27 +93,28 @@ const VOCForm = () => {
   };
 
   return (
-    <ContentWrapper>
-      <UpperMessage>피드백 남기기</UpperMessage>
+    <ContentWrapper style={{ display: "flex", justifyContent: "center"}}>
+      <div>
+        <UpperMessage>피드백 남기기</UpperMessage>
 
-      <FormContainer>
-        <form onSubmit={handleSubmit}>
-          <Input
-            type="text"
-            placeholder="제목을 입력하세요"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <TextArea
-            placeholder="피드백을 작성해주세요"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-          <SubmitButton type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "제출 중..." : "제출하기"}
-          </SubmitButton>
-        </form>
-      </FormContainer>
+        <FormContainer>
+          <form onSubmit={handleSubmit}>
+            <TitleArea
+              placeholder="제목을 입력하세요"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <ContentArea
+              placeholder="피드백을 작성해주세요"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            <SubmitButton type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "제출 중..." : "제출하기"}
+            </SubmitButton>
+          </form>
+        </FormContainer>
+      </div>
     </ContentWrapper>
   );
 };

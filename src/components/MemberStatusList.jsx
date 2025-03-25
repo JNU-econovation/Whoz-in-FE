@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ListContainer, ListItem } from "./StyledComponents/LayoutStyles";
+import ProfileCard from "./ProfileCard";  
+import Modal from "./Modal";  
 
 const ClickableArea = styled.div`
   display: flex;
   align-items: center;
-  width:5rem;
+  width: 5rem;
   min-height: 1rem;
   height: 1rem;
-  padding: 0.5rem 1rem; 
+  padding: 0.5rem 1rem;
   cursor: ${({ isActive }) => (isActive ? "pointer" : "default")};
 `;
 
-// 활동 상태 표시 초록불
 const ActiveStatus = styled.div`
   width: 1rem;
   height: 1rem;
@@ -45,6 +46,7 @@ const RegisterNotice = styled.div`
 
 const MemberStatusList = ({ members, registrationNeeded }) => {
   const [showTime, setShowTime] = useState([]);
+  const [selectedMember, setSelectedMember] = useState(null);
 
   useEffect(() => {
     setShowTime((prevShowTime) => {
@@ -63,6 +65,15 @@ const MemberStatusList = ({ members, registrationNeeded }) => {
     }));
   };
 
+  const openProfile = (member) => {
+    console.log(member); // 잘 되는디 ..
+    setSelectedMember(member);
+  };
+
+  const closeProfile = () => {
+    setSelectedMember(null);
+  };
+
   if (registrationNeeded) {
     return (
       <MemberListContainer>
@@ -75,7 +86,9 @@ const MemberStatusList = ({ members, registrationNeeded }) => {
     <MemberListContainer>
       {members.map((member, index) => (
         <ListItem key={index}>
-          {member.generation}기 {member.member_name}
+          <span onClick={() => openProfile(member)} style={{ cursor: 'pointer' }}>
+            {member.generation}기 {member.member_name}
+          </span>
           <ClickableArea
             isActive={member.is_active}
             onClick={() => toggleShowTime(member.member_id)}
@@ -88,6 +101,11 @@ const MemberStatusList = ({ members, registrationNeeded }) => {
           </ClickableArea>
         </ListItem>
       ))}
+      {selectedMember && (
+        <Modal onClose={closeProfile}>
+          <ProfileCard member={selectedMember} />
+        </Modal>
+      )}
     </MemberListContainer>
   );
 };
