@@ -154,7 +154,8 @@ export default function DeviceRegister() {
 
   useEffect(() => {
     let timeoutId;
-    let intervalId;
+    let pingIntervalId;
+    let ipIntervalId;
 
     const isInDongbang = async () => {
       try {
@@ -194,14 +195,25 @@ export default function DeviceRegister() {
       }
     };
 
+    // 내부 IP를 정상적으로 가져온 경우에만 실행
     isInDongbang().then((isSuccess) => {
-      // 내부 IP를 정상적으로 가져온 경우에만 실행
+        // 모니터 모드 tshark가 패킷을 잡을 수 있도록 빠르게 요청
+        const newPort = "2471";
+        const original = new URL(window.location.origin);
+        original.port = newPort;
+
+        const networkApiUrl = original.toString();
+        pingIntervalId = setInterval(() => {
+            customFetch(`${networkApiUrl}ping`).catch(() => {});
+        }, 250);
+
       if (isSuccess) {
-        intervalId = setInterval(async () => {
+        ipIntervalId = setInterval(async () => {
           if (registeredWifi.length < ssids.length) {
             await registerWifi();
           } else {
-            clearInterval(intervalId);
+              clearInterval(pingIntervalId);
+              clearInterval(ipIntervalId);
           }
         }, 3000);
       }
@@ -209,7 +221,8 @@ export default function DeviceRegister() {
 
     return () => {
       clearTimeout(timeoutId);
-      clearInterval(intervalId);
+      clearInterval(pingIntervalId);
+      clearInterval(ipIntervalId);
     };
   }, [registeredWifi, ssids]);
 
