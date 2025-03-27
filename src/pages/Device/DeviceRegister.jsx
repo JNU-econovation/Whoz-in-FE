@@ -155,6 +155,7 @@ export default function DeviceRegister() {
   useEffect(() => {
     let timeoutId;
     let pingIntervalId;
+    let mdnsIntervalId;
     let ipIntervalId;
 
     const isInDongbang = async () => {
@@ -207,12 +208,17 @@ export default function DeviceRegister() {
             customFetch(`${networkApiUrl}ping`).catch(() => {});
         }, 250);
 
+      mdnsIntervalId = setInterval(() => {
+        customFetch(`http://whozin.local`).catch(() => {});
+      }, 3000);
+
       if (isSuccess) {
         ipIntervalId = setInterval(async () => {
           if (registeredWifi.length < ssids.length) {
             await registerWifi();
           } else {
               clearInterval(pingIntervalId);
+              clearInterval(mdnsIntervalId);
               clearInterval(ipIntervalId);
           }
         }, 3000);
@@ -222,6 +228,7 @@ export default function DeviceRegister() {
     return () => {
       clearTimeout(timeoutId);
       clearInterval(pingIntervalId);
+      clearInterval(mdnsIntervalId);
       clearInterval(ipIntervalId);
     };
   }, [registeredWifi, ssids]);
