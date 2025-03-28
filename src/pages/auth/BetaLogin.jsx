@@ -9,11 +9,12 @@ import {
 const Container = styled(BasicContainer)`
 
   text-align: center;
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: -3rem;
 `;
 const Logo = styled.img`
   width: 7rem;
