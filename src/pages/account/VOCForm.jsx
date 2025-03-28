@@ -31,12 +31,12 @@ const ContentArea = styled.textarea`
 const SubmitButton = styled.button`
   width: 100%;
   padding: 0.8rem;
-  background: linear-gradient(80deg, #b5d8f6 0%, #dab5f6 100%);
-  color: white;
+  background: #e4e4e4;
+  color: #535353;
   font-size: 1.1rem;
   font-weight: bold;
   border: none;
-  border-radius: 3rem;
+  border-radius: 1rem;
   cursor: pointer;
   margin-top: 1rem;
   transition: background 0.3s;
