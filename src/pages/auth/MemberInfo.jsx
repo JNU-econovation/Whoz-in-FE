@@ -21,8 +21,7 @@ const MemberInfo = ({ name, setName, generation, setGeneration, position, setPos
                 <option value="">분야</option>
                 <option value="BE">BE</option>
                 <option value="FE">FE</option>
-                <option value="AOS">AOS</option>
-                <option value="IOS">iOS</option>
+                <option value="APP">APP</option>
                 <option value="AI">AI</option>
                 <option value="GAME">GAME</option>
             </StyledSelect>
