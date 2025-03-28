@@ -7,6 +7,7 @@ import {
 } from "../../components/StyledComponents/AuthStyles";
 
 const Container = styled(BasicContainer)`
+
   text-align: center;
   min-height: 100vh;
   display: flex;
@@ -14,18 +15,25 @@ const Container = styled(BasicContainer)`
   justify-content: center;
   align-items: center;
 `;
-
+const Logo = styled.img`
+  width: 7rem;
+  margin: 5rem;
+  margin-top: 3rem;
+  align-items: center;
+justify-content: center;
+  `;
 const Header = styled.h1`
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  font-size: 2.3rem;
+  font-weight: bolder;
+  font-family: "Pretendard-bold", sans-serif;
+  margin-bottom: 0.1rem;
   color: #333;
 `;
 
 const SubHeader = styled.p`
   font-size: 1rem;
   color: #555;
-  margin-bottom: 2rem;
+  margin-bottom: 0rem;
 `;
 
 const KakaoButton = styled(KakaoButtonBasic)`
@@ -33,7 +41,7 @@ const KakaoButton = styled(KakaoButtonBasic)`
   max-width: 300px;
   font-size: 1.2rem;
   padding: 1rem;
-  margin-top: 1rem;
+  margin-top: 0.4rem;
   transition: transform 0.3s ease, opacity 0.3s ease;
   transform: ${({ isClicked }) => (isClicked ? "scale(0.95)" : "scale(1)")};
   opacity: ${({ isClicked }) => (isClicked ? 0.8 : 1)};
@@ -68,15 +76,18 @@ const BetaLogin = () => {
 
   return (
     <Container>
-      <Header>베타 버전</Header>
-      <SubHeader>현재는 카카오 로그인만 지원됩니다.</SubHeader>
+      <Header>WhozIn</Header>
+      <SubHeader>by Team gyu.jar</SubHeader>
+
+      <Logo src="/logocartoon.png" alt="Logo" />
       <KakaoButton onClick={handleKakaoLogin} isClicked={isClicked}>
         카카오로 시작하기
       </KakaoButton>
+      {/*}
       <Footer>
         By using this service, you agree to our{" "}
         <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.
-      </Footer> 
+      </Footer> */}
     </Container>
   );
 };
