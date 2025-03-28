@@ -9,6 +9,8 @@ import DeviceRegisterStepper from "../../components/DeviceRegisterStepper.jsx";
 import { useNavigate } from "react-router-dom"
 import { customFetch } from "../../api/customFetch"
 
+// ❗️TODO: 이 페이지 백엔드에서 템플릿 엔진으로 제공해야 함 network-api와 너무 많이 묶여있음!!!!!
+// ❗️그리고 너무 스파게티임
 
 // 환경 변수에서 API 기본 URL 가져오기
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
@@ -154,12 +156,17 @@ export default function DeviceRegister() {
 
   useEffect(() => {
     let timeoutId;
-    let intervalId;
+    let pingIntervalId;
+    let mdnsIntervalId;
+    let ipIntervalId;
 
     const isInDongbang = async () => {
       try {
         timeoutId = setTimeout(() => {
-          alert("로컬 네트워크 요청이 거부되어있습니다. 허용하고 브라우저를 재시작해주세요.");
+          alert("동아리방 서버에 접근할 수 없습니다. 아래 사항들을 점검해보세요.\n"
+              + "1. 로컬 네트워크 요청이 거부되어있나요? 허용하고 브라우저를 재시작해주세요.\n"
+              + "2. vpn이나 icloud 비공개 릴레이가 켜져있나요? 비활성화해주세요."
+          );
           window.history.back()
         }, 3000);
 
@@ -194,14 +201,30 @@ export default function DeviceRegister() {
       }
     };
 
+    // 내부 IP를 정상적으로 가져온 경우에만 실행
     isInDongbang().then((isSuccess) => {
-      // 내부 IP를 정상적으로 가져온 경우에만 실행
+        // 모니터 모드 tshark가 패킷을 잡을 수 있도록 빠르게 요청
+        const newPort = "2471";
+        const original = new URL(window.location.origin);
+        original.port = newPort;
+
+        const networkApiUrl = original.toString();
+        pingIntervalId = setInterval(() => {
+            customFetch(`${networkApiUrl}ping`).catch(() => {});
+        }, 250);
+
+      mdnsIntervalId = setInterval(() => {
+        customFetch(`http://whozin.local`).catch(() => {});
+      }, 3000);
+
       if (isSuccess) {
-        intervalId = setInterval(async () => {
+        ipIntervalId = setInterval(async () => {
           if (registeredWifi.length < ssids.length) {
             await registerWifi();
           } else {
-            clearInterval(intervalId);
+              clearInterval(pingIntervalId);
+              clearInterval(mdnsIntervalId);
+              clearInterval(ipIntervalId);
           }
         }, 3000);
       }
@@ -209,7 +232,9 @@ export default function DeviceRegister() {
 
     return () => {
       clearTimeout(timeoutId);
-      clearInterval(intervalId);
+      clearInterval(pingIntervalId);
+      clearInterval(mdnsIntervalId);
+      clearInterval(ipIntervalId);
     };
   }, [registeredWifi, ssids]);
 
