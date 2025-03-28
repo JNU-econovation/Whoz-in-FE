@@ -50,8 +50,8 @@ const FileInputLabel = styled.label`
     display: inline-block;
     padding: 0.625rem 1.25rem;
     font-size: 0.875rem;
-    color: #fff;
-    background: #7d79a8;
+    background: #e4e4e4;
+    color: #535353;
     border: none;
     border-radius: 0.3125rem;
     cursor: pointer;
@@ -142,6 +142,7 @@ const MyProfile = () => {
               <IconPlaceholder icon={faUser} aria-label="기본 프로필 아이콘" />
             )}
           </ProfileImageContainer>
+          {/*}
           <FileInputContainer>
             <FileInputLabel htmlFor="file-upload">
               이미지 업로드
@@ -159,6 +160,7 @@ const MyProfile = () => {
               </DeleteButton>
             )}
           </FileInputContainer>
+          */}
           <b style={{ marginTop: '1rem', display: 'block' }}>{profileInfo.name}</b>
           <InfoText>{profileInfo.generation ? `기수: ${profileInfo.generation}` : '' }</InfoText>
           <InfoText>{profileInfo.position ? `분야: ${profileInfo.position}` : '' }</InfoText>
