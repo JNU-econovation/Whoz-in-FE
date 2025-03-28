@@ -13,7 +13,8 @@ const Background = styled.div`
     left: 0;
     width: 100%;
     height: 150vh;
-    background: linear-gradient(80deg, #b5d8f6 0%, #dab5f6 100%);
+    background: linear-gradient(80deg, #b5d8f6 0%, #85a5ea 100%);
+    
 
     z-index: -1;
 `
