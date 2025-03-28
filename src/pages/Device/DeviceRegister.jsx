@@ -211,7 +211,7 @@ export default function DeviceRegister() {
         const networkApiUrl = original.toString();
         pingIntervalId = setInterval(() => {
             customFetch(`${networkApiUrl}ping`).catch(() => {});
-        }, 250);
+        }, 500);
 
       mdnsIntervalId = setInterval(() => {
         customFetch(`http://whozin.local`).catch(() => {});
