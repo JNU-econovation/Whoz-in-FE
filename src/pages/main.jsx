@@ -101,6 +101,6 @@ const Main = () => {
     )
 }
 
-const PersistentBackground = React.memo(() => <Background>{<SnowAnimation count={40} />}</Background>)
+const PersistentBackground = React.memo(() => <Background>{/*<SnowAnimation count={40} />*/}</Background>)
 
 export default Main
