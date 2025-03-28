@@ -24,6 +24,10 @@ const MemberInfo = ({ name, setName, generation, setGeneration, position, setPos
                 <option value="APP">APP</option>
                 <option value="AI">AI</option>
                 <option value="GAME">GAME</option>
+                <option value="PM">PM</option>
+                <option value="DE">DESIGNER</option>
+                
+
             </StyledSelect>
             <Button onClick={onJoin}>회원가입</Button>
         </Container>
