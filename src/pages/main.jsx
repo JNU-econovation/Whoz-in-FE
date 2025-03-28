@@ -20,7 +20,7 @@ const Background = styled.div`
 `
 const FloatingBanner = styled.img`
     position: fixed;
-    bottom: 6.8rem;
+    bottom: 7.1rem;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
