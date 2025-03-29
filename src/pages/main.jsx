@@ -13,13 +13,14 @@ const Background = styled.div`
     left: 0;
     width: 100%;
     height: 150vh;
-    background: linear-gradient(80deg, #b5d8f6 0%, #dab5f6 100%);
+    background: linear-gradient(80deg, #b5d8f6 0%, #85a5ea 100%);
+    
 
     z-index: -1;
 `
 const FloatingBanner = styled.img`
     position: fixed;
-    bottom: 6.8rem;
+    bottom: 7.1rem;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
@@ -100,6 +101,6 @@ const Main = () => {
     )
 }
 
-const PersistentBackground = React.memo(() => <Background>{<SnowAnimation count={40} />}</Background>)
+const PersistentBackground = React.memo(() => <Background>{/*<SnowAnimation count={40} />*/}</Background>)
 
 export default Main

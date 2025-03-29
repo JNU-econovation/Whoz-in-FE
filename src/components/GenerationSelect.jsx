@@ -5,7 +5,7 @@ export const StyledSelect = styled.select`
     height: 4rem;
     border: none;
     background-color: #ededed;
-    color: #a3a3a3;
+    color: #242424;
     margin-bottom: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
