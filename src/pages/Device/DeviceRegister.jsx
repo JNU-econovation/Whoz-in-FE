@@ -46,7 +46,7 @@ export default function DeviceRegister() {
   const token = urlParams.get("device_register_token"); // 쿼리스트링에서 token 값 가져오기
   const [ssidModalVisible, setSsidModalVisible] = useState(false);
   const [ssidCandidates, setSsidCandidates] = useState([]);
-  const [ssidHint, setSsidHint] = useState(null); // 선택된 ssid 힌트
+  const ssidHintRef = useRef(null);
 
   // SSID 리스트 불러오기
   useEffect(() => {
@@ -107,7 +107,7 @@ export default function DeviceRegister() {
       const response = await customFetch(`${BASE_URL}/api/v1/device/info`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}`},
-        body: JSON.stringify({ ip: internalIp, ssid_hint: ssidHint  }),
+        body: JSON.stringify({ ip: internalIp, ssid_hint: ssidHintRef.current  }),
       });
       const json = await response.json();
       if ([ '3030', '3020', '3033' ].includes(json.error_code)) {
@@ -117,14 +117,17 @@ export default function DeviceRegister() {
       }
       const status = json.data.status;
       const wifiList = json.data.ssids;
-      if (status === "MULTIPLE_CANDIDATES" && !wifiList.includes(ssidHint)) {
+      if (status === "MULTIPLE_CANDIDATES" && !wifiList.includes(ssidHintRef.current)) {
         // 모달 띄워서 ssid 고르게
         setSsidCandidates(json.data.ssids);
         setSsidModalVisible(true);
         return;
       }
-      if (status === "ADDED" && wifiList.length >= 1)
-        setSsidHint(null)
+
+      if (status === "ADDED") {
+        ssidHintRef.current = null
+      }
+
       if (Array.isArray(wifiList)) {
         setRegisteredWifi((prev) => {
           const newWifis = wifiList.filter((wifi) => !prev.includes(wifi));
@@ -316,7 +319,8 @@ export default function DeviceRegister() {
                 actions={ssidCandidates.map((ssid) => ({
                   label: ssid,
                   onClick: () => {
-                    setSsidHint(ssid); // 힌트 저장
+                    ssidHintRef.current = ssid;
+                    console.log(ssidHintRef.current);
                     setSsidModalVisible(false);
                   },
                 }))}
