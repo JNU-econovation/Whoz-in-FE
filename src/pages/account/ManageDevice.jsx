@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import Modal from "../../components/Modal"
+import ActionModal from "../../components/ActionModal"
 import { UpperMessage, UpperContainer } from "../../components/StyledComponents/LayoutStyles"
 import { ContentWrapper, ContentContainer, Input } from "../../components/StyledComponents/LayoutStyles"
 import { customFetch } from "../../api/customFetch"
@@ -109,13 +110,16 @@ const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
 
 const ManageDevice = () => {
     const [devices, setDevices] = useState([])
-
     const [selectedDevice, setSelectedDevice] = useState(null)
     const [showModal, setShowModal] = useState(false)
+    const [confirmModalVisible, setConfirmModalVisible] = useState(false)
+    const [isChecking, setIsChecking] = useState(false) // 요청 중 여부
     const navigate = useNavigate()
 
     useEffect(() => {
         fetchDevices()
+        setShowModal(false);
+        setConfirmModalVisible(false);
     }, [])
 
     const fetchDevices = async () => {
@@ -138,17 +142,14 @@ const ManageDevice = () => {
     }
 
 
-
-    const [isChecking, setIsChecking] = useState(false) // 요청 중 여부
     const redirectDeviceRegister = async () => {
-        if (isChecking) return; // 이미 실행 중이면 클릭 방지
-        setIsChecking(true); // 버튼 비활성화
+        if (isChecking) return
+        setIsChecking(true)
 
-        if (!window.confirm("현재 동아리방의 와이파이(JNU, eduroam, ECONO_5G) 중 하나에 연결되어있나요?")) {
-            setIsChecking(false);
-            return;
-        }
+        setConfirmModalVisible(true) // 모달 표시
+    }
 
+    const proceedDeviceRegister = async () => {
         try {
             // 네트워크 API URL 요청, 기기 등록 토큰 요청
             const [networkApiUrlResponse, tokenResponse] = await Promise.all([
@@ -163,6 +164,7 @@ const ManageDevice = () => {
                 alert("현재 동아리방 서버가 작동하지 않습니다.....");
                 return;
             }
+            setConfirmModalVisible(false);
             // 기기 등록 페이지로 이동
             window.location.href = `${networkApiBody.data}/device-register?device_register_token=${tokenBody.data}`;
         } catch (error) {
@@ -226,6 +228,16 @@ const ManageDevice = () => {
                         </div>
                     ))}
                 </Modal>
+            )}
+
+            {confirmModalVisible && (
+                <ActionModal
+                    title="현재 동아리방의 와이파이(JNU, eduroam, ECONO_5G) 중 하나에 연결되어있나요?"
+                    actions={[
+                        { label: "취소", onClick: () => { setConfirmModalVisible(false); setIsChecking(false) } },
+                        { label: "확인", onClick: proceedDeviceRegister },
+                    ]}
+                />
             )}
         </ContentWrapper>
     )
