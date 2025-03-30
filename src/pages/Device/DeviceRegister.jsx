@@ -318,7 +318,6 @@ export default function DeviceRegister() {
                   onClick: () => {
                     setSsidHint(ssid); // 힌트 저장
                     setSsidModalVisible(false);
-                    registerWifi(); // 다시 재요청
                   },
                 }))}
             />
