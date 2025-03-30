@@ -10,7 +10,7 @@ export function customFetch(url, options = {}) {
         try {
             data = await clone.json();
         } catch (jsonError) {
-            console.log("응답 바디가 JSON이 아님");
+            // console.log("응답 바디가 JSON이 아님");
         }
 
         // 인증 필요하면 로그인 페이지로 리디렉션
