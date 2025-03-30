@@ -98,10 +98,8 @@ const MemberStatusList = ({ members, registrationNeeded }) => {
                             ) : (
                                 <ActiveStatus isActive={member.is_active} />
                             )}
-                        </ClickableArea> : <></>
+                        </ClickableArea> : <ClickableArea></ClickableArea>
                     }
-
-
                 </ListItem>
             ))}
         </MemberListContainer>
