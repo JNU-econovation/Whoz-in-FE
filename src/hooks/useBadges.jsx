@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { customFetch } from "../api/customFetch";
 
-const API_BASE_URL = "/api/v1/badges";
+const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
 
 export const useBadges = (memberId) => {
   const [badges, setBadges] = useState([]);
@@ -10,7 +11,7 @@ export const useBadges = (memberId) => {
     const fetchBadges = async () => {
       try {
         // 사용자 뱃지 목록 가져오기
-        const memberResponse = await fetch(`${API_BASE_URL}/members`);
+        const memberResponse = await customFetch(`${BASE_URL}/api/v1/badges/members`);
         const memberData = await memberResponse.json();
         
         if (!memberData.data || !memberData.data.badgeMembers) return;
@@ -19,7 +20,7 @@ export const useBadges = (memberId) => {
           memberData.data.badgeMembers
             .filter((b) => b.isBadgeShown) // 표시 가능한 뱃지만 가져옴
             .map(async (b) => {
-              const badgeResponse = await fetch(`${API_BASE_URL}/${b.badgeId}`);
+              const badgeResponse = await fetch(`${BASE_URL}/api/v1/badges/${b.badgeId}`);
               const badgeData = await badgeResponse.json();
               return {
                 id: b.badgeId,
@@ -39,6 +40,5 @@ export const useBadges = (memberId) => {
 
     fetchBadges();
   }, [memberId]);
-
   return { badges, loading };
 };
