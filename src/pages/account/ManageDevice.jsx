@@ -119,6 +119,7 @@ const ManageDevice = () => {
     useEffect(() => {
         fetchDevices()
         setShowModal(false);
+        setConfirmModalVisible(false);
     }, [])
 
     const fetchDevices = async () => {
