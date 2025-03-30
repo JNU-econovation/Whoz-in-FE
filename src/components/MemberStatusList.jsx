@@ -91,7 +91,6 @@ const MemberStatusList = ({ members, registrationNeeded }) => {
                         <span onClick={() => openProfile(member)} style={{ cursor: "pointer" }}>
                             {member.generation}기 {member.member_name}
                         </span>
-                        <BadgeContainer memberId={member.member_id} /> 
                     </div>
                     <ClickableArea isActive={member.is_active} onClick={() => toggleShowTime(member.member_id)}>
                         {showTime[member.member_id] ? (
