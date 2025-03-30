@@ -105,13 +105,19 @@ export default function DeviceRegister() {
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}`},
         body: JSON.stringify({ ip: internalIp }),
       });
-      const data = await response.json();
-      if ([ '3030', '3020', '3033' ].includes(data.error_code)) {
-        alert(data.message)
+      const json = await response.json();
+      if ([ '3030', '3020', '3033' ].includes(json.error_code)) {
+        alert(json.message)
         window.location.href = process.env.REACT_APP_FRONTEND_BASEURL + '/main'
         return;
       }
-      const wifiList = data.data;
+      const status = json.data.status;
+      console.log(status)
+      // if (status === "MULTIPLE_CANDIDATES")
+      //   어떤 와이파이에 연결돼있나요?(요청 멈추기)
+      //   고르면 전역 ssidHint 바꾸고, 등록 성공하면 (ADDED) 초기화
+      //   요청에는 ssidHint있으면 넣도록 하기
+      const wifiList = json.data.ssids;
       if (Array.isArray(wifiList)) {
         setRegisteredWifi((prev) => {
           const newWifis = wifiList.filter((wifi) => !prev.includes(wifi));
