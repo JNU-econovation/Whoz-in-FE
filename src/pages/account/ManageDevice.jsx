@@ -118,6 +118,7 @@ const ManageDevice = () => {
 
     useEffect(() => {
         fetchDevices()
+        setShowModal(false);
     }, [])
 
     const fetchDevices = async () => {
@@ -162,6 +163,7 @@ const ManageDevice = () => {
                 alert("현재 동아리방 서버가 작동하지 않습니다.....");
                 return;
             }
+
             // 기기 등록 페이지로 이동
             window.location.href = `${networkApiBody.data}/device-register?device_register_token=${tokenBody.data}`;
         } catch (error) {
