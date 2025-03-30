@@ -5,6 +5,7 @@ import {
   ContentWrapper,
   ContentContainer,
 } from "../../components/StyledComponents/LayoutStyles";
+import ActionModal from "../../components/ActionModal"
 import DeviceRegisterStepper from "../../components/DeviceRegisterStepper.jsx";
 import { useNavigate } from "react-router-dom"
 import { customFetch } from "../../api/customFetch"
@@ -43,6 +44,9 @@ export default function DeviceRegister() {
   const abortControllerRef = useRef(null);
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("device_register_token"); // 쿼리스트링에서 token 값 가져오기
+  const [ssidModalVisible, setSsidModalVisible] = useState(false);
+  const [ssidCandidates, setSsidCandidates] = useState([]);
+  const [ssidHint, setSsidHint] = useState(null); // 선택된 ssid 힌트
 
   // SSID 리스트 불러오기
   useEffect(() => {
@@ -103,7 +107,7 @@ export default function DeviceRegister() {
       const response = await customFetch(`${BASE_URL}/api/v1/device/info`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}`},
-        body: JSON.stringify({ ip: internalIp }),
+        body: JSON.stringify({ ip: internalIp, ssid_hint: ssidHint  }),
       });
       const json = await response.json();
       if ([ '3030', '3020', '3033' ].includes(json.error_code)) {
@@ -112,12 +116,15 @@ export default function DeviceRegister() {
         return;
       }
       const status = json.data.status;
-      console.log(status)
-      // if (status === "MULTIPLE_CANDIDATES")
-      //   어떤 와이파이에 연결돼있나요?(요청 멈추기)
-      //   고르면 전역 ssidHint 바꾸고, 등록 성공하면 (ADDED) 초기화
-      //   요청에는 ssidHint있으면 넣도록 하기
+      if (status === "MULTIPLE_CANDIDATES") {
+        // 모달 띄워서 ssid 고르게
+        setSsidCandidates(json.data.ssids);
+        setSsidModalVisible(true);
+        return;
+      }
       const wifiList = json.data.ssids;
+      if (status === "ADDED" && wifiList.length >= 1)
+        setSsidHint(null)
       if (Array.isArray(wifiList)) {
         setRegisteredWifi((prev) => {
           const newWifis = wifiList.filter((wifi) => !prev.includes(wifi));
@@ -303,6 +310,19 @@ export default function DeviceRegister() {
             기기 등록 완료
           </RegisterButton>
         </ContentContainer>
+        {ssidModalVisible && (
+            <ActionModal
+                title="현재 어떤 와이파이에 연결되어있나요?"
+                actions={ssidCandidates.map((ssid) => ({
+                  label: ssid,
+                  onClick: () => {
+                    setSsidHint(ssid); // 힌트 저장
+                    setSsidModalVisible(false);
+                    registerWifi(); // 다시 재요청
+                  },
+                }))}
+            />
+        )}
       </ContentWrapper>
   );
 }
