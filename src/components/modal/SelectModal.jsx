@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ModalBackground, ModalContainer } from "./StyledComponents/ModalStyles";
+import { ModalBackground, ModalContainer, ModalMessage, ModalButton } from "./ModalStyles";
 
 
 const ContentWrapper = styled.div`
@@ -11,41 +11,22 @@ const ContentWrapper = styled.div`
   justify-content: center;
 `;
 
-const Title = styled.div`
-  font-size: 1rem;
-  //font-weight: bold;
-`;
-
 const ButtonRow = styled.div`
   display: flex;
   gap: 1rem;
 `;
 
-const StyledButton = styled.div`
-  padding: 0.8rem 1.6rem;
-  border-radius: 6px;
-  background-color: #d1d1d1;
-  color: black;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #9e9e9e;
-  }
-`;
-
-const ActionModal = ({ title, actions }) => {
+const SelectModal = ({ title: message, actions }) => {
     return (
         <ModalBackground>
             <ModalContainer onClick={(e) => e.stopPropagation()}>
                 <ContentWrapper>
-                    <Title>{title}</Title>
+                    <ModalMessage>{message}</ModalMessage>
                     <ButtonRow>
                         {actions.map(({ label, onClick }, idx) => (
-                            <StyledButton key={idx} onClick={onClick}>
+                            <ModalButton key={idx} onClick={onClick}>
                                 {label}
-                            </StyledButton>
+                            </ModalButton>
                         ))}
                     </ButtonRow>
                 </ContentWrapper>
@@ -54,4 +35,4 @@ const ActionModal = ({ title, actions }) => {
     );
 };
 
-export default ActionModal;
+export default SelectModal;

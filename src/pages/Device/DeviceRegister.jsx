@@ -5,7 +5,7 @@ import {
   ContentWrapper,
   ContentContainer,
 } from "../../components/StyledComponents/LayoutStyles";
-import ActionModal from "../../components/ActionModal"
+import Modals from "../../components/modal/Modals"
 import DeviceRegisterStepper from "../../components/DeviceRegisterStepper.jsx";
 import { useNavigate } from "react-router-dom"
 import { customFetch } from "../../api/customFetch"
@@ -44,8 +44,7 @@ export default function DeviceRegister() {
   const abortControllerRef = useRef(null);
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("device_register_token"); // 쿼리스트링에서 token 값 가져오기
-  const [ssidModalVisible, setSsidModalVisible] = useState(false);
-  const [ssidCandidates, setSsidCandidates] = useState([]);
+  const [modal, setModal] = useState(null);
   const ssidHintRef = useRef(null);
 
   // SSID 리스트 불러오기
@@ -110,17 +109,33 @@ export default function DeviceRegister() {
         body: JSON.stringify({ ip: internalIp, ssid_hint: ssidHintRef.current  }),
       });
       const json = await response.json();
+
       if ([ '3030', '3020', '3033' ].includes(json.error_code)) {
-        alert(json.message)
-        window.location.href = process.env.REACT_APP_FRONTEND_BASEURL + '/main'
+        setModal({
+          type: "OK",
+          message: json.message,
+          onOk: () => {
+            setModal(null);
+            window.location.href = process.env.REACT_APP_FRONTEND_BASEURL + '/main';
+          },
+        });
         return;
       }
+
       const status = json.data.status;
       const wifiList = json.data.ssids;
       if (status === "MULTIPLE_CANDIDATES" && !wifiList.includes(ssidHintRef.current)) {
-        // 모달 띄워서 ssid 고르게
-        setSsidCandidates(json.data.ssids);
-        setSsidModalVisible(true);
+        setModal({
+          type: "SELECT",
+          message: "현재 어떤 와이파이에 연결되어있나요?",
+          actions: json.data.ssids.map((ssid) => ({
+            label: ssid,
+            onClick: () => {
+              ssidHintRef.current = ssid;
+              setModal(null);
+            },
+          })),
+        });
         return;
       }
 
@@ -156,15 +171,28 @@ export default function DeviceRegister() {
       const data = await response.json();
 
       if ([ '3031' ].includes(data.error_code)) {
-        alert(data.message)
-        window.history.back();
+        setModal({
+          type: "OK",
+          message: data.message,
+          onOk: () => {
+            setModal(null);
+            window.history.back();
+          },
+        });
         return;
       }
 
       if (response.status === 200 || response.status === 201) {
-        alert("기기 등록이 완료되었습니다!");
-        window.location.href = process.env.REACT_APP_FRONTEND_BASEURL + '/main'
+        setModal({
+          type: "OK",
+          message: "기기 등록이 완료되었습니다!",
+          onOk: () => {
+            setModal(null);
+            window.location.href = process.env.REACT_APP_FRONTEND_BASEURL + '/main';
+          },
+        });
       }
+
     } catch (error) {
       console.error("기기 등록 요청 실패:", error);
     }
@@ -179,11 +207,17 @@ export default function DeviceRegister() {
     const isInDongbang = async () => {
       try {
         timeoutId = setTimeout(() => {
-          alert("동아리방 서버에 접근할 수 없습니다. 아래 사항들을 점검해보세요.\n"
-              + "1. 로컬 네트워크 요청이 거부되어있나요? 허용하고 브라우저를 재시작해주세요.\n"
-              + "2. vpn이나 icloud 비공개 릴레이가 켜져있나요? 비활성화해주세요."
-          );
-          window.history.back()
+          setModal({
+            type: "OK",
+            message:
+                "동아리방 서버에 접근할 수 없습니다. 아래 사항들을 점검해보세요.\n" +
+                "1. 로컬 네트워크 요청이 거부되어있나요? 허용하고 브라우저를 재시작해주세요.\n" +
+                "2. vpn이나 icloud 비공개 릴레이가 켜져있나요? 비활성화해주세요.",
+            onOk: () => {
+              setModal(null);
+              window.history.back();
+            },
+          });
         }, 3000);
 
         // IP 요청을 병렬 실행하고, 가장 빠른 응답을 받음
@@ -313,19 +347,7 @@ export default function DeviceRegister() {
             기기 등록 완료
           </RegisterButton>
         </ContentContainer>
-        {ssidModalVisible && (
-            <ActionModal
-                title="현재 어떤 와이파이에 연결되어있나요?"
-                actions={ssidCandidates.map((ssid) => ({
-                  label: ssid,
-                  onClick: () => {
-                    ssidHintRef.current = ssid;
-                    console.log(ssidHintRef.current);
-                    setSsidModalVisible(false);
-                  },
-                }))}
-            />
-        )}
+        <Modals modal={modal} onClose={() => setModal(null)} />
       </ContentWrapper>
   );
 }

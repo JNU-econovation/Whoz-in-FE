@@ -21,3 +21,22 @@ export const ModalContainer = styled.div`
   max-width: 500px;
   position: relative;
 `;
+
+export const ModalMessage = styled.div`
+  font-size: 1rem;
+  white-space: pre-line;
+`;
+
+export const ModalButton = styled.div`
+  padding: 0.8rem 1.6rem;
+  border-radius: 6px;
+  background-color: #d1d1d1;
+  color: black;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #9e9e9e;
+  }
+`;

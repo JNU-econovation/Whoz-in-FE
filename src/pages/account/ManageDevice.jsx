@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
-import Modal from "../../components/Modal"
-import ActionModal from "../../components/ActionModal"
+import Modals from "../../components/modal/Modals"
+import { MODAL_TYPES } from "../../components/modal/ModalTypes"
 import { UpperMessage, UpperContainer } from "../../components/StyledComponents/LayoutStyles"
-import { ContentWrapper, ContentContainer, Input } from "../../components/StyledComponents/LayoutStyles"
+import { ContentWrapper, ContentContainer } from "../../components/StyledComponents/LayoutStyles"
 import { customFetch } from "../../api/customFetch"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPen, faTrash, faWifi } from "@fortawesome/free-solid-svg-icons"
-
 
 const AddButton = styled.button`
     background: #8b8baa;
@@ -30,32 +29,25 @@ const AddButton = styled.button`
     transition:
         background 0.3s ease,
         transform 0.2s;
-
 `
 
-
 const DeviceList = styled.div`
-    // 기기 리스트 컨테이너
     display: flex;
     flex-direction: column;
     gap: 1rem;
 `
 
 const DeviceItem = styled.div`
-    // 기기 개별 아이템
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: #ebebeb;
-    padding: 10px;
-    border-radius: 1.5rem;
-    position: relative;
     padding: 1rem;
+    border-radius: 1.5rem;
     height: 4rem;
 `
 
 const DeviceIdentifier = styled.div`
-    // 기기 정보 (이름+네트워크))
     font-size: 1rem;
     display: flex;
     flex-direction: column;
@@ -95,31 +87,17 @@ const IconButton = styled.button`
     }
 `
 
-
-// 모달 내 네트워크 정보 스타일
-const NetworkInfo = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
-    padding: 8px;
-    background: #f0f0f0;
-    border-radius: 5px;
-`
-
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
 
 const ManageDevice = () => {
     const [devices, setDevices] = useState([])
     const [selectedDevice, setSelectedDevice] = useState(null)
-    const [showModal, setShowModal] = useState(false)
-    const [confirmModalVisible, setConfirmModalVisible] = useState(false)
-    const [isChecking, setIsChecking] = useState(false) // 요청 중 여부
+    const [modal, setModal] = useState(null)
+    const [isChecking, setIsChecking] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
         fetchDevices()
-        setShowModal(false);
-        setConfirmModalVisible(false);
     }, [])
 
     const fetchDevices = async () => {
@@ -134,24 +112,47 @@ const ManageDevice = () => {
 
     const handleEditClick = (device) => {
         setSelectedDevice(device)
-        setShowModal(true)
+        setModal({
+            type: MODAL_TYPES.INFO,
+            message: (
+                <>
+                    <h3>{device.device_name}</h3>
+                    {Object.entries(device.mac_per_ssid).map(([ssid, mac]) => (
+                        <div
+                            key={ssid}
+                            style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}
+                        >
+                            <span>{ssid}</span>
+                            <span style={{ background: "#dbdbdb", padding: "5px", borderRadius: "5px" }}>{mac}</span>
+                        </div>
+                    ))}
+                </>
+            ),
+            onClose: () => setModal(null)
+        });
     }
 
     const handleDelete = (deviceId) => {
         //삭제 기능 구현하기
     }
 
-
     const redirectDeviceRegister = async () => {
         if (isChecking) return
         setIsChecking(true)
 
-        setConfirmModalVisible(true) // 모달 표시
+        setModal({
+            type: MODAL_TYPES.CONFIRM,
+            message: "현재 동아리방의 와이파이(JNU, eduroam, ECONO_5G) 중 하나에 연결되어있나요?",
+            onConfirm: proceedDeviceRegister,
+            onCancel: () => {
+                setIsChecking(false)
+                setModal(null)
+            }
+        })
     }
 
     const proceedDeviceRegister = async () => {
         try {
-            // 네트워크 API URL 요청, 기기 등록 토큰 요청
             const [networkApiUrlResponse, tokenResponse] = await Promise.all([
                 customFetch(`${BASE_URL}/api/v1/internal-access-url?room=jeonsanwon`, { method: "GET" }),
                 customFetch(`${BASE_URL}/api/v1/device-register-token`, { method: "POST" })
@@ -161,27 +162,33 @@ const ManageDevice = () => {
                 tokenResponse.json()
             ]);
             if (networkApiBody.error_code === "7001") {
-                alert("현재 동아리방 서버가 작동하지 않습니다.....");
+                setModal({
+                    type: MODAL_TYPES.OK,
+                    message: "현재 동아리방 서버가 작동하지 않습니다.....",
+                    onOk: () => setModal(null)
+                });
                 return;
             }
-            setConfirmModalVisible(false);
-            // 기기 등록 페이지로 이동
+            setModal(null);
             window.location.href = `${networkApiBody.data}/device-register?device_register_token=${tokenBody.data}`;
         } catch (error) {
             console.error("오류 발생:", error.message);
-            alert("알 수 없는 오류가 발생했습니다.")
+            setModal({
+                type: MODAL_TYPES.OK,
+                message: "알 수 없는 오류가 발생했습니다.",
+                onOk: () => setModal(null)
+            });
         } finally {
-            setIsChecking(false); // 버튼 다시 활성화
+            setIsChecking(false);
         }
     };
-
 
     return (
         <ContentWrapper>
             <UpperContainer>
                 <UpperMessage>기기 관리</UpperMessage>
                 <AddButton onClick={redirectDeviceRegister}>+</AddButton>
-</UpperContainer>
+            </UpperContainer>
             <ContentContainer>
                 <DeviceList>
                     {devices.map((device) => (
@@ -206,7 +213,7 @@ const ManageDevice = () => {
                                 <IconButton onClick={() => handleEditClick(device)}>
                                     <FontAwesomeIcon icon={faPen} />
                                 </IconButton>
-                               {} <IconButton onClick={() => handleDelete(device.device_id)}>
+                                <IconButton onClick={() => handleDelete(device.device_id)}>
                                     <FontAwesomeIcon icon={faTrash} />
                                 </IconButton>
                             </div>
@@ -215,30 +222,7 @@ const ManageDevice = () => {
                 </DeviceList>
             </ContentContainer>
 
-            {showModal && selectedDevice && (
-                <Modal onClose={() => setShowModal(false)}>
-                    <h3>{selectedDevice.device_name}</h3>
-                    {Object.entries(selectedDevice.mac_per_ssid).map(([ssid, mac]) => (
-                        <div
-                            key={ssid}
-                            style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}
-                        >
-                            <span>{ssid}</span>
-                            <span style={{ background: "#dbdbdb", padding: "5px", borderRadius: "5px" }}>{mac}</span>
-                        </div>
-                    ))}
-                </Modal>
-            )}
-
-            {confirmModalVisible && (
-                <ActionModal
-                    title="현재 동아리방의 와이파이(JNU, eduroam, ECONO_5G) 중 하나에 연결되어있나요?"
-                    actions={[
-                        { label: "취소", onClick: () => { setConfirmModalVisible(false); setIsChecking(false) } },
-                        { label: "확인", onClick: proceedDeviceRegister },
-                    ]}
-                />
-            )}
+            <Modals modal={modal} onClose={() => setModal(null)} />
         </ContentWrapper>
     )
 }

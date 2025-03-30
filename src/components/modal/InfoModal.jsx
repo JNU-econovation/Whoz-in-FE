@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ModalBackground, ModalContainer } from "./StyledComponents/ModalStyles";
+import { ModalBackground, ModalContainer} from "./ModalStyles";
 
 const CloseButton = styled.button`
   position: absolute;
@@ -12,7 +12,7 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-const Modal = ({ children, onClose }) => {
+const InfoModal = ({ children, onClose }) => {
     return (
         <ModalBackground onClick={onClose}>
             <ModalContainer onClick={(e) => e.stopPropagation()}>
@@ -23,4 +23,4 @@ const Modal = ({ children, onClose }) => {
     );
 };
 
-export default Modal;
+export default InfoModal;

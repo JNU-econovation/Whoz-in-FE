@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { ListContainer, ListItem } from "./StyledComponents/LayoutStyles"
 import ProfileCard from "./ProfileCard"
-import Modal from "./Modal"
 import BadgeContainer from "./BadgeContainer"
 
 const ClickableArea = styled.div`
@@ -105,12 +104,6 @@ const MemberStatusList = ({ members, registrationNeeded }) => {
 
                 </ListItem>
             ))}
-
-            {selectedMember && (
-                <Modal onClose={closeProfile}>
-                    <ProfileCard member={selectedMember} />
-                </Modal>
-            )}
         </MemberListContainer>
     )
 }
