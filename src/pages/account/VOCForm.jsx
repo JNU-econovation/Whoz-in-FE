@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { UpperMessage, ContentWrapper } from "../../components/StyledComponents/LayoutStyles";
 import { customFetch } from "../../api/customFetch"; // 이 부분 추가
+import Modals from "../../components/modal/Modals";
+import { MODAL_TYPES } from "../../components/modal/ModalTypes";
 
 const FormContainer = styled.div`
   max-width: 20rem;
@@ -50,11 +52,16 @@ const VOCForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false); // 중복 제출 방지
+  const [modal, setModal] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title.trim() || !content.trim()) {
-      alert("제목과 내용을 모두 입력해주세요!");
+      setModal({
+        type: MODAL_TYPES.OK,
+        message: "제목과 내용을 모두 입력해주세요!",
+        onOk: () => setModal(null),
+      });
       return;
     }
 
@@ -77,16 +84,29 @@ const VOCForm = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("서버 응답:", result);
-        alert("피드백이 제출되었습니다!");
-        setTitle("");
-        setContent("");
+        setModal({
+          type: MODAL_TYPES.OK,
+          message: "피드백이 제출되었습니다!",
+          onOk: () => {
+            setModal(null);
+            window.history.back();
+          },
+        });
       } else {
         console.error("에러 발생:", response.status);
-        alert("피드백 제출에 실패했습니다. 다시 시도해주세요.");
+        setModal({
+          type: MODAL_TYPES.OK,
+          message: "피드백 제출에 실패했습니다. 다시 시도해주세요.",
+          onOk: () => setModal(null),
+        });
       }
     } catch (error) {
       console.error("네트워크 오류:", error);
-      alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      setModal({
+        type: MODAL_TYPES.OK,
+        message: "오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+        onOk: () => setModal(null),
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -115,6 +135,7 @@ const VOCForm = () => {
           </form>
         </FormContainer>
       </div>
+      <Modals modal={modal} onClose={() => setModal(null)} />
     </ContentWrapper>
   );
 };
