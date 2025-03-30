@@ -132,20 +132,50 @@ const ManageDevice = () => {
         });
     }
 
-    const handleDelete = (deviceId) => {
-        //삭제 기능 구현하기
+    const onClickDeleteButton = (deviceId, deviceName) => {
+        setModal({
+            type: MODAL_TYPES.CONFIRM,
+            message: `'${deviceName}' 기기를 삭제하시겠어요?`,
+            onConfirm: () => {
+                setModal(null)
+                deleteDevice(deviceId)
+            },
+            onCancel: () => {
+                setModal(null)
+            }
+        })
     }
 
-    const redirectDeviceRegister = async () => {
-        if (isChecking) return
-        setIsChecking(true)
+    const deleteDevice = async (deviceId) => {
+        try {
+            const response = await customFetch(`${BASE_URL}/api/v1/device`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ device_id: deviceId }),
+            });
 
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || "기기 삭제 실패");
+            }
+
+            fetchDevices(); // 기기 목록 다시 불러오기
+
+        } catch (error) {
+            console.error("기기 삭제 에러:", error);
+        }
+    };
+
+
+    const redirectDeviceRegister = async () => {
         setModal({
             type: MODAL_TYPES.CONFIRM,
             message: "현재 동아리방의 와이파이(JNU, eduroam, ECONO_5G) 중 하나에 연결되어있나요?",
             onConfirm: proceedDeviceRegister,
             onCancel: () => {
-                setIsChecking(false)
                 setModal(null)
             }
         })
@@ -213,7 +243,7 @@ const ManageDevice = () => {
                                 <IconButton onClick={() => handleEditClick(device)}>
                                     <FontAwesomeIcon icon={faPen} />
                                 </IconButton>
-                                <IconButton onClick={() => handleDelete(device.device_id)}>
+                                <IconButton onClick={() => onClickDeleteButton(device.device_id, device.device_name)}>
                                     <FontAwesomeIcon icon={faTrash} />
                                 </IconButton>
                             </div>
