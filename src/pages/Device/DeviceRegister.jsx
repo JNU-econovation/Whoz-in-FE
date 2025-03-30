@@ -116,13 +116,13 @@ export default function DeviceRegister() {
         return;
       }
       const status = json.data.status;
-      if (status === "MULTIPLE_CANDIDATES") {
+      const wifiList = json.data.ssids;
+      if (status === "MULTIPLE_CANDIDATES" && !wifiList.includes(ssidHint)) {
         // 모달 띄워서 ssid 고르게
         setSsidCandidates(json.data.ssids);
         setSsidModalVisible(true);
         return;
       }
-      const wifiList = json.data.ssids;
       if (status === "ADDED" && wifiList.length >= 1)
         setSsidHint(null)
       if (Array.isArray(wifiList)) {
