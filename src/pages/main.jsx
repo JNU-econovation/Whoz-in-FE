@@ -72,23 +72,18 @@ const Main = () => {
             <PersistentBackground />
             <ContentWrapper>
             <UpperMessage style={{ visibility: isLoading ? "hidden" : "visible" }}>
+                현재 동방에<br />
                     {registrationNeeded ? (
                         <>
-                            현재 동방에
-                            <br />
                             누가 있을까요?
                         </>
                     ) : activeCount === 0 ? (
                         <>
-                            현재 동방에
-                            <br />
                             아무도 없습니다
                         </>
                     ) : (
                         <>
-                            현재 동방에
-                            <br />
-                            <b>{activeCount}</b>명 있습니다 
+                        <b>{activeCount}</b>명 있습니다 
                         </>
                     )}
                 </UpperMessage>
