@@ -7,7 +7,6 @@ import styled from "styled-components";
 const HeaderContainer = styled.header` // 헤더 스타일
   display: flex;
   position: fixed;
-  min-height: 2rem;
   top: 0;
   left: 0;
   right: 0;
