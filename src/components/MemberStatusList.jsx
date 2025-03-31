@@ -91,14 +91,16 @@ const MemberStatusList = ({ members, registrationNeeded }) => {
                             {member.generation}기 {member.member_name}
                         </span>
                     </div>
-                    {member.total_active_time !== "0시간 0분" ?
+                    {member.total_active_time === "0시간 0분" && !member.is_active ?
+                        <ClickableArea></ClickableArea>
+                        :
                         <ClickableArea isActive={member.is_active} onClick={() => toggleShowTime(member.member_id)}>
                             {showTime[member.member_id] ? (
                                 <ActiveTime>{member.total_active_time}</ActiveTime>
                             ) : (
                                 <ActiveStatus isActive={member.is_active} />
                             )}
-                        </ClickableArea> : <ClickableArea></ClickableArea>
+                        </ClickableArea>
                     }
                 </ListItem>
             ))}
