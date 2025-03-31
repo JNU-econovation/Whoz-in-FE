@@ -137,8 +137,8 @@ const ManageDevice = () => {
             type: MODAL_TYPES.CONFIRM,
             message: `'${deviceName}' 기기를 삭제하시겠어요?`,
             onConfirm: () => {
-                setModal(null)
                 deleteDevice(deviceId)
+                setModal(null)
             },
             onCancel: () => {
                 setModal(null)
@@ -156,13 +156,11 @@ const ManageDevice = () => {
                 body: JSON.stringify({ device_id: deviceId }),
             });
 
-            const result = await response.json();
-
-            if (!response.ok) {
-                throw new Error(result.message || "기기 삭제 실패");
+            if (response.ok) {
+                setDevices(prevDevices => prevDevices.filter(d => d.device_id !== deviceId));
+            } else {
+                throw new Error("기기 삭제 실패");
             }
-
-            fetchDevices(); // 기기 목록 다시 불러오기
 
         } catch (error) {
             console.error("기기 삭제 에러:", error);
