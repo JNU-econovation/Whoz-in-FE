@@ -145,8 +145,7 @@ const ManageDevice = () => {
             type: MODAL_TYPES.CONFIRM,
             message: `'${deviceName}' 기기를 삭제하시겠어요?`,
             onConfirm: () => {
-                deleteDevice(deviceId)
-                setModal(null)
+                deleteDevice(deviceId).finally(() => setModal(null));
             },
             onCancel: () => {
                 setModal(null)
