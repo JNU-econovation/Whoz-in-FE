@@ -87,10 +87,17 @@ const IconButton = styled.button`
     }
 `
 
+const EmptyMessage = styled.div`
+  text-align: center;
+  color: #888;
+  margin-top: 6rem;
+  font-size: 1.2rem;
+`;
+
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
 
 const ManageDevice = () => {
-    const [devices, setDevices] = useState([])
+    const [devices, setDevices] = useState(null)
     const [selectedDevice, setSelectedDevice] = useState(null)
     const [modal, setModal] = useState(null)
     const [isChecking, setIsChecking] = useState(false)
@@ -218,36 +225,41 @@ const ManageDevice = () => {
                 <AddButton onClick={redirectDeviceRegister}>+</AddButton>
             </UpperContainer>
             <ContentContainer>
-                <DeviceList>
-                    {devices.map((device) => (
-                        <DeviceItem key={device.device_id} selected={selectedDevice === device}>
-                            <DeviceIdentifier>
-                                <span>{device.device_name}</span>
-                                {device.connected_ssid && (
-                                    <span
-                                        style={{
-                                            background: "#e8f5e9",
-                                            padding: "3px 6px",
-                                            borderRadius: "8px",
-                                            color: "green",
-                                        }}
-                                    >
-                                        <FontAwesomeIcon icon={faWifi} /> {device.connected_ssid}
-                                    </span>
-                                )}
-                            </DeviceIdentifier>
-
-                            <div>
-                                <IconButton onClick={() => handleEditClick(device)}>
-                                    <FontAwesomeIcon icon={faPen} />
-                                </IconButton>
-                                <IconButton onClick={() => onClickDeleteButton(device.device_id, device.device_name)}>
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </IconButton>
-                            </div>
-                        </DeviceItem>
-                    ))}
-                </DeviceList>
+                {devices !== null && (
+                    <DeviceList>
+                        {devices.length === 0 ? (
+                            <EmptyMessage>동아리방에서 기기를 등록해보세요!</EmptyMessage>
+                        ) : (
+                            devices.map((device) => (
+                                <DeviceItem key={device.device_id} selected={selectedDevice === device}>
+                                    <DeviceIdentifier>
+                                        <span>{device.device_name}</span>
+                                        {device.connected_ssid && (
+                                            <span
+                                                style={{
+                                                    background: "#e8f5e9",
+                                                    padding: "3px 6px",
+                                                    borderRadius: "8px",
+                                                    color: "green",
+                                                }}
+                                            >
+                                            <FontAwesomeIcon icon={faWifi} /> {device.connected_ssid}
+                                            </span>
+                                        )}
+                                    </DeviceIdentifier>
+                                    <div>
+                                        <IconButton onClick={() => handleEditClick(device)}>
+                                            <FontAwesomeIcon icon={faPen} />
+                                        </IconButton>
+                                        <IconButton onClick={() => onClickDeleteButton(device.device_id, device.device_name)}>
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </IconButton>
+                                    </div>
+                                </DeviceItem>
+                            ))
+                        )}
+                    </DeviceList>
+                )}
             </ContentContainer>
 
             <Modals modal={modal} onClose={() => setModal(null)} />
