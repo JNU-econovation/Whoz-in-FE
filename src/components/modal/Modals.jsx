@@ -9,6 +9,8 @@ const Modals = ({ modal, onClose }) => {
     useEffect(() => {
         if (!modal) return;
 
+        document.body.style.overflow = "hidden";
+
         const handleKeyDown = (e) => {
             const tag = e.target.tagName;
             if (["INPUT", "TEXTAREA"].includes(tag)) return;
@@ -33,9 +35,13 @@ const Modals = ({ modal, onClose }) => {
         };
 
         window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.body.style.overflow = "";
+            window.removeEventListener("keydown", handleKeyDown);
+        };
     }, [modal, onClose]);
-    
+
     if (!modal) return null;
 
     const MODAL_COMPONENTS = {
