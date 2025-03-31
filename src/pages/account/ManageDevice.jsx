@@ -20,6 +20,7 @@ const AddButton = styled.button`
     margin-right: 1rem;
     font-size: 1.8rem;
     font-weight: bold;
+    font-family: Arial, sans-serif;
     margin:2rem;
     margin-top:4rem;
     display: flex;
