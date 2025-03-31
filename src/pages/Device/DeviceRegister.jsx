@@ -110,13 +110,13 @@ export default function DeviceRegister() {
       });
       const json = await response.json();
 
-      if ([ '3030', '3020', '3033' ].includes(json.error_code)) {
+      if ([ '3030', '3020', '3033', '2001' ].includes(json.error_code)) {
         setModal({
           type: "OK",
           message: json.message,
           onOk: () => {
             setModal(null);
-            window.location.href = process.env.REACT_APP_FRONTEND_BASEURL + '/main';
+            window.history.back();
           },
         });
         return;
@@ -170,7 +170,7 @@ export default function DeviceRegister() {
       });
       const data = await response.json();
 
-      if ([ '3031' ].includes(data.error_code)) {
+      if ([ '2001', '3031' ].includes(data.error_code)) {
         setModal({
           type: "OK",
           message: data.message,
