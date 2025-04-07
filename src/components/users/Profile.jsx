@@ -119,10 +119,12 @@ const Profile = ({ profileInfo = {}, isEditable = false, onClose }) => {
                         <ImageManageButton onClick={() => setMenuOpen(!menuOpen)}>+</ImageManageButton>
                         {menuOpen && (
                             <Menu ref={menuRef}>
-                                <label>
+                                <label> 프로필 업로드 준비 중입니다.
+                                    {/*
                                     <MenuItem as="span">이미지 업로드</MenuItem>
                                     <FileInput type="file" accept="image/*" onChange={handleImageChange} />
-                                </label>
+                                    */}
+                                </label>    
                             </Menu>
                         )}
                     </>
