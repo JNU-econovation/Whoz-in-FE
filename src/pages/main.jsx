@@ -78,9 +78,7 @@ const Main = () => {
             </UpperMessage>
                 <MemberStatusList members={members} registrationNeeded={registrationNeeded} />
                 </ContentWrapper>
-            <a href="/mypage/voc">
-                <FloatingBanner src={VOCBanner} alt="VOC 배너" />
-            </a>
+
         </>
     )
 }
