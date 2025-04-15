@@ -141,16 +141,16 @@ const ManageDevice = () => {
     }
 
     const onClickDeleteButton = (deviceId, deviceName) => {
-        setModal({
-            type: MODAL_TYPES.CONFIRM,
-            message: `'${deviceName}' 기기를 삭제하시겠어요?`,
-            onConfirm: () => {
-                deleteDevice(deviceId).finally(() => setModal(null));
-            },
-            onCancel: () => {
-                setModal(null)
-            }
-        })
+        // setModal({
+        //     type: MODAL_TYPES.CONFIRM,
+        //     message: `'${deviceName}' 기기를 삭제하시겠어요?`,
+        //     onConfirm: () => {
+        //         deleteDevice(deviceId).finally(() => setModal(null));
+        //     },
+        //     onCancel: () => {
+        //         setModal(null)
+        //     }
+        // })
     }
 
     const deleteDevice = async (deviceId) => {
