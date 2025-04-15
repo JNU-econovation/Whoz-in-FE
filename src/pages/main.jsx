@@ -31,10 +31,10 @@ const FloatingBanner = styled.img`
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
 
 const Main = () => {
-    const [members, setMembers] = useState([]) // 멤버 리스트 상태
-    const [activeCount, setActiveCount] = useState()
-    const [registrationNeeded, setRegistrationNeeded] = useState(false) // 기기 등록 여부
-    const [isLoading, setIsLoading] = useState(true) // 멤버 리스트 요청 중인지 여부
+    const [members, setMembers] = useState([])                          // 멤버 리스트 상태
+    const [activeCount, setActiveCount] = useState()                    // 현재 동방에 있는 사람 수
+    const [registrationNeeded, setRegistrationNeeded] = useState(false) // 기기 등록 '필요' 여부
+    const [isLoading, setIsLoading] = useState(true)                    // 로딩 상태 (멤버 리스트 요청 중인지 여부)
 
     const fetchMembers = async () => {
         try {
@@ -47,7 +47,6 @@ const Main = () => {
                 setRegistrationNeeded(true)
                 return
             }
-
             setRegistrationNeeded(false)
 
             const members = data.data.members
@@ -72,31 +71,14 @@ const Main = () => {
             <PersistentBackground />
             <ContentWrapper>
             <UpperMessage style={{ visibility: isLoading ? "hidden" : "visible" }}>
-                    {registrationNeeded ? (
-                        <>
-                            현재 동방에
-                            <br />
-                            누가 있을까요?
-                        </>
-                    ) : activeCount === 0 ? (
-                        <>
-                            현재 동방에
-                            <br />
-                            아무도 없습니다
-                        </>
-                    ) : (
-                        <>
-                            현재 동방에
-                            <br />
-                            <b>{activeCount}</b>명 있습니다 
-                        </>
-                    )}
-                </UpperMessage>
+                현재 동방에<br />
+                {registrationNeeded ? "누가 있을까요?" : 
+                 activeCount === 0 ? "아무도 없습니다" : 
+                 <><b>{activeCount}</b>명 있습니다</>}
+            </UpperMessage>
                 <MemberStatusList members={members} registrationNeeded={registrationNeeded} />
                 </ContentWrapper>
-            <a href="/mypage/voc">
-                <FloatingBanner src={VOCBanner} alt="VOC 배너" />
-            </a>
+
         </>
     )
 }

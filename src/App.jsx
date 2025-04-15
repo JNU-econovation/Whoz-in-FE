@@ -24,7 +24,6 @@ import BottomNav from "./components/LayoutComponent/BottomNav";
 import Main from "./pages/main";
 import MyPage from "./pages/mypage";
 import ManageDevice from "./pages/account/ManageDevice";
-import MyProfile from "./pages/account/MyProfile";
 import Setting from "./pages/account/setting";
 import VOCForm from "./pages/account/VOCForm";
 
@@ -54,7 +53,6 @@ const App = () => {
         
           <Route path="/main" element={<Main />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/mypage/profile" element={<MyProfile />} />
           <Route path="/mypage/device-management" element={<ManageDevice />} />
           <Route path="/mypage/setting" element={<Setting />} />
           <Route path="/mypage/voc" element={<VOCForm />} />
