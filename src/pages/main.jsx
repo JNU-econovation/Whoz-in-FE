@@ -6,8 +6,6 @@ import { ContentContainer, ContentWrapper } from "../components/StyledComponents
 import { customFetch } from "../api/customFetch"
 import { UpperMessage } from "../components/StyledComponents/LayoutStyles"
 import VOCBanner from "../components/VOC배너.png"
-import Profile from '../components/users/Profile';
-import Block from "../components/users/Block"
 import ProfileOverlay from "../components/ProfileOverlay"
 
 const MainContainer = styled.div`
@@ -27,6 +25,12 @@ const Background = styled.div`
     z-index: -1;
 `
 
+const WhitePanelContainer = styled.div`
+  position: relative;
+  height: calc(100vh - 200px); // ← ScrollArea 높이와 맞춰야 함
+  overflow: hidden;
+`;
+
 const WhitePanel = styled.div`
   background-color: white;
   border-radius: 30px 30px 0 0;
@@ -34,9 +38,9 @@ const WhitePanel = styled.div`
 `;
 
 const ScrollArea = styled(WhitePanel)`
+  position: relative;
   height: calc(100vh - 300px);
   overflow-y: auto;
-  padding-bottom: 60rem;
 `;
 
 const FloatingBanner = styled.img`
@@ -57,7 +61,6 @@ const Main = () => {
     const [registrationNeeded, setRegistrationNeeded] = useState(false) // 기기 등록 '필요' 여부
     const [isLoading, setIsLoading] = useState(true)                    // 로딩 상태 (멤버 리스트 요청 중인지 여부)
     const [selectedMemberId, setSelectedMemberId] = useState(null);     // 프로필을 보기 위해 선택된 멤버
-    const scrollRef = useRef(null);
 
     const fetchMembers = async () => {
         try {
@@ -100,17 +103,18 @@ const Main = () => {
                      <><b>{activeCount}</b>명 있습니다</>}
                 </UpperMessage>
 
-                <ScrollArea ref={scrollRef}>
-                    <MemberStatusList members={members} registrationNeeded={registrationNeeded} onSelectMember={setSelectedMemberId} />
-                </ScrollArea>
+                <WhitePanelContainer>
+                    <ScrollArea>
+                        <MemberStatusList members={members} registrationNeeded={registrationNeeded} onSelectMember={setSelectedMemberId} />
+                    </ScrollArea>
 
-                {selectedMemberId && (
-                    <ProfileOverlay
-                        memberId={selectedMemberId}
-                        topOffset={scrollRef.current?.getBoundingClientRect().top || 300}
-                        onClose={() => setSelectedMemberId(null)}
-                    />
-                )}
+                    {selectedMemberId && (
+                        <ProfileOverlay
+                            memberId={selectedMemberId}
+                            onClose={() => setSelectedMemberId(null)}
+                        />
+                    )}
+                </WhitePanelContainer>
             </ContentWrapper>
         </MainContainer>
     )
