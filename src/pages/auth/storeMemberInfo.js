@@ -9,11 +9,12 @@ export const storeMemberInfo = async () => {
 
         if (json.data) {
             const memberInfo = {
+                id: json.data.member_id,
                 name: json.data.name,
                 generation: json.data.generation,
                 position: json.data.position,
                 // statusMessage: json.data.statusMessage,
-                profilePic: json.data.profilePic || null,
+                // profilePic: json.data.profilePic || null,
             };
 
             localStorage.setItem('memberInfo', JSON.stringify(memberInfo));

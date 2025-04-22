@@ -9,6 +9,7 @@ import Block from '../components/users/Block';
 
 const MyPageContainer = styled.div`
     padding-top: 4rem;
+    padding-bottom: 6rem; 
 `;
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
@@ -18,7 +19,10 @@ const MyPage = () => {
     const [myProfile, setMyProfile] = useState(null);
 
     useEffect(() => {
-        setMyProfile(getMemberInfo())
+        const fetchProfile = async () => {
+            setMyProfile(await getMemberInfo());
+        };
+        fetchProfile();
     }, []);
 
     return (
@@ -27,7 +31,7 @@ const MyPage = () => {
                 {myProfile && (
                     <>
                         <Profile profileInfo={myProfile} isEditable={true} />
-                        <Block memberId={myProfile.member_id} />
+                        <Block memberId={myProfile.id} />
                     </>
                 )}
                 <ListContainer>
