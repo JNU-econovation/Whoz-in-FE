@@ -129,6 +129,8 @@ const Block = ({ memberId }) => {
         const lastDate = new Date(year, month, 0).getDate();
         const blocks = [];
 
+        const isCurrentMonth = year === today.getFullYear() && month === today.getMonth() + 1;
+
         for (let i = 0; i < firstDay; i++) {
             blocks.push(<div key={`empty-${i}`} />);
         }
@@ -140,19 +142,27 @@ const Block = ({ memberId }) => {
             const isSaturday = dayIndex === 6;
 
             let color = 'black';
-            if (isSunday) color = '#E53E3E';     // 빨간색
-            else if (isSaturday) color = '#3182CE'; // 파란색
+            if (isSunday) color = '#E53E3E';
+            else if (isSaturday) color = '#3182CE';
+
+            const isFuture = isCurrentMonth && day > today.getDate();
 
             blocks.push(
-                <DayBlock key={day} hasTime={!!time} loading={loading}>
-                    <DayNumber style={{ color }}>{day}</DayNumber>
-                    {time && <ActiveTime>{time}</ActiveTime>}
+                <DayBlock
+                    key={day}
+                    hasTime={!!time && !isFuture}  // 오늘 이후면 색 빼기
+                    loading={loading}
+                    style={{ opacity: isFuture ? 0.5 : 1 }} // 흐리게 처리
+                >
+                    <DayNumber style={{ color: isFuture ? '#CBD5E0' : color }}>{day}</DayNumber>
+                    {!isFuture && time && <ActiveTime>{time}</ActiveTime>}
                 </DayBlock>
             );
         }
 
         return blocks;
     };
+
 
     const canGoNext = year < today.getFullYear() || (year === today.getFullYear() && month < today.getMonth() + 1);
 
@@ -183,7 +193,7 @@ const Block = ({ memberId }) => {
             <BlockHeader>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <NavButton onClick={goPrevMonth}>{'‹'}</NavButton>
-                    <MonthLabel>{month}월 블록</MonthLabel>
+                    <MonthLabel>{month}월</MonthLabel>
                     <NavButton onClick={goNextMonth} disabled={!canGoNext}>{'›'}</NavButton>
                 </div>
 
