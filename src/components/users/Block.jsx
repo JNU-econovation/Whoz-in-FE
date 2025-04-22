@@ -20,7 +20,7 @@ const BlockHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.3rem;
 `;
 
 
