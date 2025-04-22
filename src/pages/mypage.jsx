@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { ListContainer, ListItem } from '../components/StyledComponents/LayoutStyles';
 import styled from 'styled-components';
-import Profile from '../components/users/Profile';  
 import { customFetch } from '../api/customFetch';
 import {getMemberInfo} from './auth/getMemberInfo';
+import Profile from '../components/users/Profile';
 import Block from '../components/users/Block';
 
 const MyPageContainer = styled.div`

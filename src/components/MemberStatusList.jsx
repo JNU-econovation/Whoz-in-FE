@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from "react"
-import styled from "styled-components"
+import {styled, createGlobalStyle} from "styled-components"
 import { ListContainer, ListItem } from "./StyledComponents/LayoutStyles"
-import ProfileCard from "./ProfileCard"
 import BadgeContainer from "./BadgeContainer"
 
 const ClickableArea = styled.div`
     display: flex;
+    position: relative;
     align-items: center;
-    width: 5rem;
     min-height: 1rem;
     height: 1rem;
-    padding: 0.5rem 1rem;
     cursor: ${({ isActive }) => (isActive ? "pointer" : "default")};
+    &::before {
+      content: "";
+      position: absolute;
+      top: -1rem;
+      bottom: -1rem;
+      left: -1rem;
+      right: -1rem;
+      user-select: none;
+    }
 `
 
 const ActiveStatus = styled.div`
@@ -34,6 +41,7 @@ const MemberListContainer = styled(ListContainer)`
     border-radius: 30px 30px 0 0;
     min-height: 35rem;
     margin-bottom: 2.5rem;
+    padding: 2.5rem 2rem;
 `
 
 const RegisterNotice = styled.div`
@@ -43,7 +51,7 @@ const RegisterNotice = styled.div`
     padding-top: 3rem;
 `
 
-const MemberStatusList = ({ members, registrationNeeded }) => {
+const MemberStatusList = ({ members, registrationNeeded, onSelectMember }) => {
     const [showTime, setShowTime] = useState([])
     const [selectedMember, setSelectedMember] = useState(null)
 
@@ -64,10 +72,9 @@ const MemberStatusList = ({ members, registrationNeeded }) => {
         }))
     }
 
-    const openProfile = (member) => {
-        console.log(member) // 잘 되는디 ..
-        setSelectedMember(member)
-    }
+    const openProfile = (memberId) => {
+        onSelectMember(memberId);
+    };
 
     const closeProfile = () => {
         setSelectedMember(null)
@@ -86,7 +93,7 @@ const MemberStatusList = ({ members, registrationNeeded }) => {
             {members.map((member, index) => (
                 <ListItem key={index}>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <span onClick={() => openProfile(member)} style={{ cursor: "pointer" }}>
+                        <span onClick={() => openProfile(member.member_id)} style={{ cursor: "pointer" }}>
                             {member.generation}기 {member.member_name}
                         </span>
                     </div>

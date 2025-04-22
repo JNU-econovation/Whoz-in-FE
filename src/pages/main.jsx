@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import MemberStatusList from "../components/MemberStatusList"
 import styled from "styled-components"
 import SnowAnimation from "../components/StyledComponents/SnowyEffect"
@@ -6,18 +6,39 @@ import { ContentContainer, ContentWrapper } from "../components/StyledComponents
 import { customFetch } from "../api/customFetch"
 import { UpperMessage } from "../components/StyledComponents/LayoutStyles"
 import VOCBanner from "../components/VOC배너.png"
+import Profile from '../components/users/Profile';
+import Block from "../components/users/Block"
+import ProfileOverlay from "../components/ProfileOverlay"
+
+const MainContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`
 
 const Background = styled.div`
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 150vh;
+    height: 100vh;
     background: linear-gradient(80deg, #b5d8f6 0%, #85a5ea 100%);
-    
-
     z-index: -1;
 `
+
+const WhitePanel = styled.div`
+  background-color: white;
+  border-radius: 30px 30px 0 0;
+  padding: 1rem;
+`;
+
+const ScrollArea = styled(WhitePanel)`
+  height: calc(100vh - 300px);
+  overflow-y: auto;
+  padding-bottom: 60rem;
+`;
+
 const FloatingBanner = styled.img`
     position: fixed;
     bottom: 7.1rem;
@@ -35,6 +56,8 @@ const Main = () => {
     const [activeCount, setActiveCount] = useState()                    // 현재 동방에 있는 사람 수
     const [registrationNeeded, setRegistrationNeeded] = useState(false) // 기기 등록 '필요' 여부
     const [isLoading, setIsLoading] = useState(true)                    // 로딩 상태 (멤버 리스트 요청 중인지 여부)
+    const [selectedMemberId, setSelectedMemberId] = useState(null);     // 프로필을 보기 위해 선택된 멤버
+    const scrollRef = useRef(null);
 
     const fetchMembers = async () => {
         try {
@@ -67,19 +90,29 @@ const Main = () => {
     }, [])
 
     return (
-        <>
+        <MainContainer>
             <PersistentBackground />
             <ContentWrapper>
-            <UpperMessage style={{ visibility: isLoading ? "hidden" : "visible" }}>
-                현재 동방에<br />
-                {registrationNeeded ? "누가 있을까요?" : 
-                 activeCount === 0 ? "아무도 없습니다 " :
-                 <><b>{activeCount}</b>명 있습니다</>}
-            </UpperMessage>
-                <MemberStatusList members={members} registrationNeeded={registrationNeeded} />
-                </ContentWrapper>
+                <UpperMessage style={{ visibility: isLoading ? "hidden" : "visible" }}>
+                    현재 동방에<br />
+                    {registrationNeeded ? "누가 있을까요?" :
+                     activeCount === 0 ? "아무도 없습니다 " :
+                     <><b>{activeCount}</b>명 있습니다</>}
+                </UpperMessage>
 
-        </>
+                <ScrollArea ref={scrollRef}>
+                    <MemberStatusList members={members} registrationNeeded={registrationNeeded} onSelectMember={setSelectedMemberId} />
+                </ScrollArea>
+
+                {selectedMemberId && (
+                    <ProfileOverlay
+                        memberId={selectedMemberId}
+                        topOffset={scrollRef.current?.getBoundingClientRect().top || 300}
+                        onClose={() => setSelectedMemberId(null)}
+                    />
+                )}
+            </ContentWrapper>
+        </MainContainer>
     )
 }
 
