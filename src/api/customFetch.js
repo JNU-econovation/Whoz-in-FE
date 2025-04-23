@@ -1,27 +1,56 @@
-export function customFetch(url, options = {}) {
+let isRefreshing = false;
+let reissuePromise = null;
+let requestQueue = [];
 
-    return fetch(url, {
-        ...options,
-        credentials: "include" // withCredentials 옵션 추가
-    })
-    .then(async (response) => {
-        const clone = response.clone(); // 응답 복사
-        let data = null;
-        try {
-            data = await clone.json();
-        } catch (jsonError) {
-            // console.log("응답 바디가 JSON이 아님");
+const reissue = () => {
+    return fetch(`${process.env.REACT_APP_BACKEND_BASEURL}/api/v1/reissue`, {
+        method: "POST",
+        credentials: "include",
+    }).then((res) => {
+        if (!res.ok) {
+            throw new Error("리이슈 실패");
         }
-
-        // 인증 필요하면 로그인 페이지로 리디렉션
-        if (data?.error_code === "2000") {
-            window.location.href = "/beta-login";
-        }
-
-        return response;
-    })
-    .catch((error) => {
-        console.error("API 요청 실패:", error);
-        throw error;
     });
+};
+
+export async function customFetch(url, options = {}) {
+    const fetchWithCookie = () =>
+        fetch(url, {
+            ...options,
+            credentials: "include",
+        });
+
+    // reissue 중이면 기다림
+    if (isRefreshing) {
+        await reissuePromise;
+    }
+
+    let response = await fetchWithCookie();
+
+    const clone = response.clone();
+    let data = null;
+    try {
+        data = await clone.json();
+    } catch {}
+
+    if (data?.error_code === "2000") {
+        if (!isRefreshing) {
+            isRefreshing = true;
+            reissuePromise = reissue();
+        }
+
+        try {
+            await reissuePromise;
+        } catch {
+            window.location.href = "/beta-login";
+            return;
+        } finally {
+            isRefreshing = false;
+            reissuePromise = null;
+        }
+
+        return await customFetch(url, options); // 이전 요청 다시 시도
+    }
+
+    return response;
 }
