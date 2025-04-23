@@ -32,12 +32,20 @@ const DimmedBackground = styled.div`
 const WhitePanel = styled.div`
   background-color: #ffffff;
   border-radius: 30px 30px 0 0;
-  padding: 3rem;
   padding-bottom: 9rem;
   height: calc(100vh - 200px);
   overflow-y: auto;
   overscroll-behavior: contain;
 `;
+
+const DragIndicator = styled.div`
+  width: 3.5rem;
+  height: 5px;
+  background-color: #ccc;
+  border-radius: 3px;
+  margin: 0.5rem auto 0.5rem;
+`;
+
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 
@@ -124,6 +132,7 @@ const ProfileOverlay = ({ memberId, onClose }) => {
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
           >
+            <DragIndicator />
             {profileInfo && <Profile profileInfo={profileInfo} isEditable={false} />}
             <Block memberId={memberId} />
           </WhitePanel>
