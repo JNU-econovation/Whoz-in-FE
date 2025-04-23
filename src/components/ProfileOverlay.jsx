@@ -36,7 +36,7 @@ const WhitePanel = styled.div`
   border-radius: 30px 30px 0 0;
   box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.10);
   padding-bottom: 9rem;
-  height: calc(100vh - 350px);
+  height: calc(100dvh - 350px);
   overflow-y: auto;
   overscroll-behavior: contain;
 `;
@@ -176,8 +176,6 @@ const ProfileOverlay = ({ memberId, onClose }) => {
             {profileInfo && (
                 <Profile profileInfo={profileInfo} isEditable={false} />
             )}
-            <Block memberId={memberId} />
-            <Block memberId={memberId} />
             <Block memberId={memberId} />
           </WhitePanel>
         </OverlayWrapper>
