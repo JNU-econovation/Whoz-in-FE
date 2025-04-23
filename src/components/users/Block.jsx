@@ -91,8 +91,19 @@ const ActiveTime = styled.span`
   color: #5e5e5e;
 `;
 
+// 오전 6시 이전은 어제, 오전 6시 이후가 오늘
+const getWhozinToday = () => {
+    const now = new Date();
+    const adjusted = new Date(now);
+    if (now.getHours() < 6) {
+        adjusted.setDate(now.getDate() - 1);
+    }
+    return adjusted;
+};
+
+
 const Block = ({ memberId }) => {
-    const today = new Date();
+    const today = getWhozinToday();
     const [year, setYear] = useState(today.getFullYear());
     const [month, setMonth] = useState(today.getMonth() + 1);
     const [data, setData] = useState([]);
