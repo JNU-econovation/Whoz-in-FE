@@ -3,6 +3,7 @@ import styled from "styled-components"
 import Block from "./users/Block"
 import Profile from "./users/Profile"
 import { customFetch } from '../api/customFetch';
+import { useMainActions } from "../hooks/useMainActions";
 
 const OverlayWrapper = styled.div`
   position: absolute;
@@ -94,6 +95,14 @@ const ProfileOverlay = ({ memberId, onClose }) => {
     setDragOffset(0);
     setVisible(false);
   };
+
+  useEffect(() => {
+    useMainActions.getState().setTriggerOverlayClose(() => handleClose());
+
+    return () => {
+      useMainActions.getState().setTriggerOverlayClose(() => {});
+    };
+  }, []);
 
   const handleTransitionEnd = () => {
     if (!visible) {

@@ -3,6 +3,8 @@ import { AuthProvider } from "./context/AuthContext";
 import { LoadingProvider } from "./context/LoadingContext";
 import { useLoading } from "./context/LoadingContext";
 import Spinner from './components/Spinner';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import {
   Routes,
   Route,
@@ -29,6 +31,8 @@ import MyPage from "./pages/mypage";
 import ManageDevice from "./pages/account/ManageDevice";
 import Setting from "./pages/account/setting";
 import VOCForm from "./pages/account/VOCForm";
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const location = useLocation();  // 현재 경로를 확인
@@ -74,11 +78,13 @@ const App = () => {
 
 const Root = () => (
   <BrowserRouter>
-    <AuthProvider>
-      <LoadingProvider>
-        <App />
-      </LoadingProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <LoadingProvider>
+          <App />
+        </LoadingProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   </BrowserRouter>
 );
 

@@ -7,7 +7,8 @@ import { customFetch } from "../api/customFetch"
 import { UpperMessage } from "../components/StyledComponents/LayoutStyles"
 import VOCBanner from "../components/VOC배너.png"
 import ProfileOverlay from "../components/ProfileOverlay"
-import { useLoading } from "../context/LoadingContext";
+import { useMembers } from '../hooks/useMembers';
+
 
 const MainContainer = styled.div`
   height: 100dvh;
@@ -56,45 +57,11 @@ const FloatingBanner = styled.img`
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
 
 const Main = () => {
-    const {setLoading} = useLoading();
-    const [members, setMembers] = useState([])                          // 멤버 리스트 상태
-    const [activeCount, setActiveCount] = useState()                    // 현재 동방에 있는 사람 수
-    const [registrationNeeded, setRegistrationNeeded] = useState(false) // 기기 등록 '필요' 여부
-    const [isLoading, setIsLoading] = useState(true)                    // 로딩 상태 (멤버 리스트 요청 중인지 여부)
-    const [selectedMemberId, setSelectedMemberId] = useState(null);     // 프로필을 보기 위해 선택된 멤버
+    const { data: members, isLoading, error } = useMembers();
+    const [selectedMemberId, setSelectedMemberId] = useState(null);
 
-    const fetchMembers = async () => {
-        try {
-            setLoading(true);
-            const response = await customFetch(`${BASE_URL}/api/v1/members?page=1&size=100&sortType=asc`)
-            const data = await response.json()
-            setIsLoading(false)
-
-            if (data.error_code === "3060") {
-                // 기기 등록 필요할 때 3060
-                setRegistrationNeeded(true)
-                return
-            }
-            setRegistrationNeeded(false)
-
-            const members = data.data.members
-            if (members) {
-                setMembers(members)
-                const activeMembers = members.filter((member) => member.is_active).length
-                setActiveCount(activeMembers)
-            }
-        } catch (error) {
-            console.error("멤버 목록 불러오기 실패:", error)
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        fetchMembers() // 최초 데이터 요청
-        const interval = setInterval(fetchMembers, 60000)
-        return () => clearInterval(interval)
-    }, [])
+    const activeCount = members?.filter((m) => m.is_active).length ?? 0;
+    const registrationNeeded = error?.message === 'NEED_REGISTRATION';
 
     return (
         <MainContainer>
@@ -109,7 +76,7 @@ const Main = () => {
 
                 <WhitePanelContainer>
                     <ScrollArea>
-                        <MemberStatusList members={members} registrationNeeded={registrationNeeded} onSelectMember={setSelectedMemberId} />
+                        <MemberStatusList members={members ?? []} registrationNeeded={registrationNeeded} onSelectMember={setSelectedMemberId} />
                     </ScrollArea>
 
                     {selectedMemberId && (
