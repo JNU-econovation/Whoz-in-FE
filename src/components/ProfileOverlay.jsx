@@ -1,4 +1,3 @@
-// ProfileOverlay 컴포넌트 구현
 import React, { useEffect, useState, useRef } from "react"
 import styled from "styled-components"
 import Block from "./users/Block"
@@ -173,9 +172,7 @@ const ProfileOverlay = ({ memberId, onClose }) => {
               onTouchEnd={handleTouchEnd}
           >
             <DragIndicator />
-            {profileInfo && (
-                <Profile profileInfo={profileInfo} isEditable={false} />
-            )}
+            <Profile profileInfo={profileInfo} isEditable={false} />
             <Block memberId={memberId} />
           </WhitePanel>
         </OverlayWrapper>
