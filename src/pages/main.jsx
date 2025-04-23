@@ -7,6 +7,7 @@ import { customFetch } from "../api/customFetch"
 import { UpperMessage } from "../components/StyledComponents/LayoutStyles"
 import VOCBanner from "../components/VOC배너.png"
 import ProfileOverlay from "../components/ProfileOverlay"
+import { useLoading } from "../context/LoadingContext";
 
 const MainContainer = styled.div`
   height: 100dvh;
@@ -55,6 +56,7 @@ const FloatingBanner = styled.img`
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
 
 const Main = () => {
+    const {setLoading} = useLoading();
     const [members, setMembers] = useState([])                          // 멤버 리스트 상태
     const [activeCount, setActiveCount] = useState()                    // 현재 동방에 있는 사람 수
     const [registrationNeeded, setRegistrationNeeded] = useState(false) // 기기 등록 '필요' 여부
@@ -63,6 +65,7 @@ const Main = () => {
 
     const fetchMembers = async () => {
         try {
+            setLoading(true);
             const response = await customFetch(`${BASE_URL}/api/v1/members?page=1&size=100&sortType=asc`)
             const data = await response.json()
             setIsLoading(false)
@@ -82,6 +85,8 @@ const Main = () => {
             }
         } catch (error) {
             console.error("멤버 목록 불러오기 실패:", error)
+        } finally {
+            setLoading(false);
         }
     }
 
