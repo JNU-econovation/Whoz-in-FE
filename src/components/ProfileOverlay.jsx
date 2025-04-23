@@ -16,7 +16,7 @@ const OverlayWrapper = styled.div`
   flex-direction: column;
   pointer-events: auto;
   transform: ${({ visible }) => (visible ? "translateY(0%)" : "translateY(100%)")};
-  transition: transform 0.15s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 `;
 
 const DimmedBackground = styled.div`
