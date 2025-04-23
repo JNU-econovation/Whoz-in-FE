@@ -1,6 +1,7 @@
 html, body {
     height: 100dvh;
     padding: 0;
+    overflow: hidden;              /* 이거 빠지면 iOS는 당김 허용함 */
     overscroll-behavior: none; /* 당김 방지 */
 }
 body {
