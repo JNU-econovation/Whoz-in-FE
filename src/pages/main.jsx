@@ -9,7 +9,7 @@ import VOCBanner from "../components/VOC배너.png"
 import ProfileOverlay from "../components/ProfileOverlay"
 
 const MainContainer = styled.div`
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -27,7 +27,7 @@ const Background = styled.div`
 
 const WhitePanelContainer = styled.div`
   position: relative;
-  height: calc(100vh - 200px); // ← ScrollArea 높이와 맞춰야 함
+  height: calc(100vh);
   overflow: hidden;
 `;
 
