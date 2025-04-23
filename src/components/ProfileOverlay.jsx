@@ -15,25 +15,28 @@ const OverlayWrapper = styled.div`
   display: flex;
   flex-direction: column;
   pointer-events: auto;
-  transform: ${({ visible }) => (visible ? "translateY(0%)" : "translateY(100%)")};
-  transition: transform 0.2s ease-in-out;
+  overflow: visible;
+  transform: ${({ visible, dragOffset }) =>
+      visible
+          ? `translateY(${dragOffset}px)`
+          : "translateY(100%)"};
+  transition: ${({ isDragging }) =>
+      isDragging ? "none" : "transform 0.2s ease-in-out"};
 `;
 
 const DimmedBackground = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   z-index: 99;
   background: transparent;
 `;
 
 const WhitePanel = styled.div`
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 30px 30px 0 0;
+  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.10);
   padding-bottom: 9rem;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 350px);
   overflow-y: auto;
   overscroll-behavior: contain;
 `;
@@ -41,9 +44,9 @@ const WhitePanel = styled.div`
 const DragIndicator = styled.div`
   width: 3.5rem;
   height: 5px;
-  background-color: #ccc;
+  background-color: #dadada;
   border-radius: 3px;
-  margin: 0.5rem auto 0.5rem;
+  margin: 0.5rem auto;
 `;
 
 
@@ -53,41 +56,43 @@ const ProfileOverlay = ({ memberId, onClose }) => {
   const [visible, setVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
   const [profileInfo, setProfileInfo] = useState(null);
+
   const contentRef = useRef(null);
+  const dragStartYRef = useRef(null);
   const [touchStartY, setTouchStartY] = useState(null);
-  const [touchMoveY, setTouchMoveY] = useState(null);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
-  // 멤버 프로필 정보 불러오기
-  const fetchProfile = async () => {
-    try {
-      const response = await customFetch(`${BASE_URL}/api/v1/members/${memberId}/profile`);
-      const result = await response.json();
-      if (result.data) {
-        setProfileInfo({
-          generation: result.data.generation,
-          name: result.data.member_name,
-          position: result.data.position,
-        });
-      }
-    } catch (err) {
-      console.error("프로필 로드 실패:", err);
-    }
-  };
-
+  // 프로필 조회
   useEffect(() => {
-    if (memberId) {
-      setShouldRender(true);
-      fetchProfile(); // 프로필 조회
-      setTimeout(() => {
-        setVisible(true);
-        contentRef.current?.scrollTo({ top: 0 });
-      }, 10);
-    } else {
+    if (!memberId) {
       setVisible(false);
+      return;
     }
+    setShouldRender(true);
+    fetch(`${BASE_URL}/api/v1/members/${memberId}/profile`, { credentials: 'include' })
+    .then(r => r.json())
+    .then(json => {
+      const d = json.data;
+      setProfileInfo({
+        generation: d.generation,
+        name: d.member_name,
+        position: d.position
+      });
+    });
+
+    // 살짝 딜레이 줘야 트랜지션 먹음
+    setTimeout(() => {
+      setVisible(true);
+      // 항상 맨 위로 스크롤
+      contentRef.current?.scrollTo(0, 0);
+    }, 10);
   }, [memberId]);
 
   const handleClose = () => {
+    // 닫힐 때 overflow 복구
+    if (contentRef.current) contentRef.current.style.overflow = 'auto';
+    setDragOffset(0);
     setVisible(false);
   };
 
@@ -98,24 +103,56 @@ const ProfileOverlay = ({ memberId, onClose }) => {
     }
   };
 
+  // 터치 시작: Y좌표만 기억
   const handleTouchStart = (e) => {
     setTouchStartY(e.touches[0].clientY);
+    setIsDragging(false);
+    setDragOffset(0);
   };
 
+  // 터치 이동: 스크롤 -> 드래그 자연 전환
   const handleTouchMove = (e) => {
-    setTouchMoveY(e.touches[0].clientY);
-  };
+    const moveY = e.touches[0].clientY;
+    const panel = contentRef.current;
+    if (!panel) return;
 
-  const handleTouchEnd = () => {
-    if (touchStartY !== null && touchMoveY !== null) {
-      const deltaY = touchMoveY - touchStartY;
-      const scrollTop = contentRef.current?.scrollTop || 0;
-      if (deltaY > 50 && scrollTop <= 0) {
-        handleClose();
+    // 현재 스크롤 위치
+    const scrollTop = panel.scrollTop;
+
+    // 아직 드래그 시작 안했을 때
+    if (!isDragging) {
+      if (scrollTop > 0) return;
+
+      // 아래로 당기기 시작한 경우
+      if (moveY > touchStartY) {
+        setIsDragging(true);
+        dragStartYRef.current = moveY; // 기준점 새로 설정!
+        panel.style.overflow = 'hidden';
+      } else {
+        return;
       }
     }
+
+    // 드래그 중일 때
+    e.preventDefault();
+    const delta = moveY - dragStartYRef.current;
+    setDragOffset(delta > 0 ? delta : 0);
+  };
+
+
+  // 터치 종료: 기준치 이상이면 닫기, 아니면 복구
+  const handleTouchEnd = () => {
+    const THRESHOLD = 80;
+    if (isDragging) {
+      if (dragOffset > THRESHOLD) {
+        handleClose();
+      } else {
+        setDragOffset(0);
+        if (contentRef.current) contentRef.current.style.overflow = 'auto';
+      }
+    }
+    setIsDragging(false);
     setTouchStartY(null);
-    setTouchMoveY(null);
   };
 
   if (!shouldRender) return null;
@@ -125,15 +162,22 @@ const ProfileOverlay = ({ memberId, onClose }) => {
         <DimmedBackground onClick={handleClose} />
         <OverlayWrapper
             visible={visible}
+            dragOffset={dragOffset}
+            isDragging={isDragging}
             onTransitionEnd={handleTransitionEnd}
         >
           <WhitePanel
+              ref={contentRef}
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
           >
             <DragIndicator />
-            {profileInfo && <Profile profileInfo={profileInfo} isEditable={false} />}
+            {profileInfo && (
+                <Profile profileInfo={profileInfo} isEditable={false} />
+            )}
+            <Block memberId={memberId} />
+            <Block memberId={memberId} />
             <Block memberId={memberId} />
           </WhitePanel>
         </OverlayWrapper>

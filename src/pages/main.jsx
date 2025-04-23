@@ -28,7 +28,6 @@ const Background = styled.div`
 const WhitePanelContainer = styled.div`
   position: relative;
   height: calc(100vh);
-  overflow: hidden;
 `;
 
 const WhitePanel = styled.div`
