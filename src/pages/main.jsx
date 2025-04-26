@@ -8,7 +8,7 @@ import { UpperMessage } from "../components/StyledComponents/LayoutStyles"
 import VOCBanner from "../components/VOC배너.png"
 import ProfileOverlay from "../components/ProfileOverlay"
 import { useMembers } from '../hooks/useMembers';
-
+import { useQueryClient } from '@tanstack/react-query';
 
 const MainContainer = styled.div`
   height: 100dvh;
@@ -58,10 +58,38 @@ const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
 
 const Main = () => {
     const { data: members, isLoading, error } = useMembers();
+    const queryClient = useQueryClient();
     const [selectedMemberId, setSelectedMemberId] = useState(null);
+
+    useEffect(() => {
+        const refetchMembers = () => {
+            queryClient.refetchQueries({ queryKey: ['members'] });
+        };
+
+        const onVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                refetchMembers();
+            }
+        };
+
+        const onPageshow = (event) => {
+            if (event.persisted || document.visibilityState === 'visible') {
+                refetchMembers();
+            }
+        };
+
+        document.addEventListener('visibilitychange', onVisibilityChange);
+        window.addEventListener('pageshow', onPageshow);
+
+        return () => {
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+            window.removeEventListener('pageshow', onPageshow);
+        };
+    }, [queryClient]);
 
     const activeCount = members?.filter((m) => m.is_active).length ?? 0;
     const registrationNeeded = error?.message === 'NEED_REGISTRATION';
+
 
     return (
         <MainContainer>
