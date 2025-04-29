@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useMainActions } from "../../hooks/useMainActions";
 
 const NavContainer = styled.nav`
   position: fixed;
@@ -38,8 +40,12 @@ const NavIcon = styled.div`
 `;
 
 function BottomNav() {
+  const mainActions = useMainActions();
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
+  // const triggerOverlayClose = useMainActions.getState().triggerOverlayClose;
+  const triggerOverlayClose = useMainActions((s) => s.triggerOverlayClose);
 
   // 현재 경로에 맞춰 활성화된 탭을 결정
   const isMainActive = location.pathname === "/main";
@@ -49,7 +55,14 @@ function BottomNav() {
 
   return (
     <NavContainer>
-      <NavButton onClick={() => navigate("/main")} isActive={isMainActive}>
+      <NavButton onClick={() => {
+          if (location.pathname === "/main") {
+              triggerOverlayClose();
+              queryClient.refetchQueries({ queryKey: ['members'] }); // 즉시 refetch
+          } else {
+              navigate("/main");
+          }
+      }} isActive={isMainActive}>
         <NavIcon isActive={isMainActive} />
         동방 현황
       </NavButton>

@@ -131,8 +131,8 @@ const Profile = ({ profileInfo = {}, isEditable = false, onClose }) => {
                 )}
             </ProfileImageContainer>
             <div>
-                <b>{profileInfo?.generation ? `${profileInfo.generation}기 ` : ''}{profileInfo?.name || '이름 없음'}</b>
-                <p>{profileInfo?.position ? `분야: ${profileInfo.position}` : '분야 없음'}</p>
+                <b>{profileInfo?.generation ? `${profileInfo.generation}기 ` : ''}{profileInfo?.name || ''}</b>
+                <p>{profileInfo?.position ? `분야: ${profileInfo.position}` : ''}</p>
                 <div>{profileInfo?.statusMessage && <p>{profileInfo.statusMessage}</p>}</div>
             </div>
             {onClose && <button onClick={onClose}>닫기</button>}

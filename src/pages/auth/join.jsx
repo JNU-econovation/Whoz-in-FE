@@ -4,6 +4,7 @@ import AuthInfo from "./AuthInfo";
 import MemberInfo from "./MemberInfo";
 import axios from 'axios';
 import { customFetch } from "../../api/customFetch"
+import { storeMemberInfo } from './storeMemberInfo';
 
 const Join = () => {
     const navigate = useNavigate();
@@ -18,30 +19,7 @@ const Join = () => {
     const [generation, setGeneration] = useState("");
     const [position, setPosition] = useState("");
 
-    const handleNext = () => {
-        if (password !== confirmPassword) {
-            alert("비밀번호가 일치하지 않습니다.");
-            return;
-        }
-        // setStep(2);
-        navigate("/join?step=2"); // step=2로 쿼리 파라미터 바꿔봐
 
-    };
-
-    const handleJoin = () => {
-        const newMember = {
-            loginid,
-            password,
-            name,
-            generation,
-            position,
-        };
-
-        // TODO: newMember로 회원가입 요청 전송하기
-
-        alert("회원가입이 완료되었습니다!");
-        navigate("/login");
-    };
 
     const handleSocialJoin = async () => {
         const newMember = {
@@ -67,6 +45,7 @@ const Join = () => {
             );
             if (response.ok) {
                 alert("회원가입이 완료되었습니다!");
+                storeMemberInfo();
                 navigate("/main");
             } else {
                 alert("회원가입에 실패했습니다. 다시 시도해주세요.");
@@ -76,22 +55,10 @@ const Join = () => {
         }
     };
 
-    const step = query.get("step");
     const social = query.get("social");
 
     return (
         <div>
-            {step === "1" ? (
-                <AuthInfo
-                    loginid={loginid}
-                    setLoginId={setLoginId}
-                    password={password}
-                    setPassword={setPassword}
-                    confirmPassword={confirmPassword}
-                    setConfirmPassword={setConfirmPassword}
-                    onNext={handleNext}
-                />
-            ) : step === "2" ? (
                 <MemberInfo
                     name={name}
                     setName={setName}
@@ -99,11 +66,8 @@ const Join = () => {
                     setGeneration={setGeneration}
                     position={position}
                     setPosition={setPosition}
-                    onJoin={social === "true" ? handleSocialJoin : handleJoin}
+                    onJoin={handleSocialJoin}
                 />
-            ) : (
-                <div>잘못된 접근입니다.</div>
-            )}
         </div>
     );
 };

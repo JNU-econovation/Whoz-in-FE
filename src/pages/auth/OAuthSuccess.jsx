@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { storeMemberInfo } from './storeMemberInfo';
 
 const OAuthSuccess = () => {
     const navigate = useNavigate();
@@ -16,7 +17,8 @@ const OAuthSuccess = () => {
         } else {
             // 이미 가입된 경우 메인 페이지로 이동
             navigate("/main");
-        }           
+            storeMemberInfo();
+        }
 
     }, [navigate]);
 

@@ -1,5 +1,10 @@
 import React from "react";
 import { AuthProvider } from "./context/AuthContext";
+import { LoadingProvider } from "./context/LoadingContext";
+import { useLoading } from "./context/LoadingContext";
+import Spinner from './components/Spinner';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import {
   Routes,
   Route,
@@ -27,8 +32,11 @@ import ManageDevice from "./pages/account/ManageDevice";
 import Setting from "./pages/account/setting";
 import VOCForm from "./pages/account/VOCForm";
 
+const queryClient = new QueryClient();
+
 const App = () => {
   const location = useLocation();  // 현재 경로를 확인
+  const { loading } = useLoading();  // 여기서 불러옴
 
   // 로그인 또는 회원가입 페이지일 때 BottomNav를 숨기기
   const authRoutes = ['/login', '/join', '/beta-login', '/device-register'];
@@ -37,6 +45,7 @@ const App = () => {
   return (
 
     <div className="root-wrap">
+      {loading && <Spinner />}
       <Header />
       <div className="content-wrap">
         <Routes>
@@ -69,9 +78,13 @@ const App = () => {
 
 const Root = () => (
   <BrowserRouter>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <LoadingProvider>
+          <App />
+        </LoadingProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   </BrowserRouter>
 );
 
