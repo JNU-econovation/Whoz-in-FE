@@ -115,6 +115,9 @@ const Block = ({ memberId }) => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
+            setActiveTimeMap({});
+            setTotalActiveTime('');
+            setData([]);
             try {
                 const res = await customFetch(`${BASE_URL}/api/v1/members/${memberId}/block?year=${year}&month=${month}`);
                 const json = await res.json();
