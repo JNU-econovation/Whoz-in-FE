@@ -4,6 +4,7 @@ import Block from "./users/Block"
 import Profile from "./users/Profile"
 import { customFetch } from '../api/customFetch';
 import { useMainActions } from "../hooks/useMainActions";
+import { useMemberInfo } from '../hooks/useMemberInfo';
 
 const OverlayWrapper = styled.div`
   position: absolute;
@@ -55,7 +56,8 @@ const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 const ProfileOverlay = ({ memberId, onClose }) => {
   const [visible, setVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
-  const [profileInfo, setProfileInfo] = useState(null);
+  // const [profileInfo, setProfileInfo] = useState(null);
+  const { memberInfo } = useMemberInfo(memberId);
 
   const contentRef = useRef(null);
   const dragStartYRef = useRef(null);
@@ -70,16 +72,19 @@ const ProfileOverlay = ({ memberId, onClose }) => {
       return;
     }
     setShouldRender(true);
-    fetch(`${BASE_URL}/api/v1/members/${memberId}/profile`, { credentials: 'include' })
-    .then(r => r.json())
-    .then(json => {
-      const d = json.data;
-      setProfileInfo({
-        generation: d.generation,
-        name: d.member_name,
-        position: d.position
-      });
-    });
+
+
+    // fetch(`${BASE_URL}/api/v1/members/${memberId}/profile`, { credentials: 'include' })
+    // .then(r => r.json())
+    // .then(json => {
+    //   const d = json.data;
+    //   setProfileInfo({
+    //     generation: d.generation,
+    //     name: d.member_name,
+    //     position: d.position,
+    //     profile_image_url: d.profile_image_url,
+    //   });
+    // });
 
     // 살짝 딜레이 줘야 트랜지션 먹음
     setTimeout(() => {
@@ -181,7 +186,9 @@ const ProfileOverlay = ({ memberId, onClose }) => {
               onTouchEnd={handleTouchEnd}
           >
             <DragIndicator />
-            <Profile profileInfo={profileInfo} isEditable={false} />
+            {memberInfo && (
+                  <Profile profileInfo={memberInfo} isEditable={true} />
+            )}
             <Block memberId={memberId} />
           </WhitePanel>
         </OverlayWrapper>

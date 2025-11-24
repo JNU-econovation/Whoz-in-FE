@@ -4,7 +4,6 @@ import AuthInfo from "./AuthInfo";
 import MemberInfo from "./MemberInfo";
 import axios from 'axios';
 import { customFetch } from "../../api/customFetch"
-import { storeMemberInfo } from './storeMemberInfo';
 
 const Join = () => {
     const navigate = useNavigate();
@@ -45,7 +44,6 @@ const Join = () => {
             );
             if (response.ok) {
                 alert("회원가입이 완료되었습니다!");
-                storeMemberInfo();
                 navigate("/main");
             } else {
                 alert("회원가입에 실패했습니다. 다시 시도해주세요.");

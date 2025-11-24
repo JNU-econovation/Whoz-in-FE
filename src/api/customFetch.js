@@ -1,6 +1,5 @@
 let isRefreshing = false;
 let reissuePromise = null;
-let requestQueue = [];
 
 const reissue = () => {
     return fetch(`${process.env.REACT_APP_BACKEND_BASEURL}/api/v1/reissue`, {
@@ -8,7 +7,8 @@ const reissue = () => {
         credentials: "include",
     }).then((res) => {
         if (!res.ok) {
-            throw new Error("리이슈 실패");
+            window.location.href = "/beta-login";
+            throw new Error("토큰 재발급에 실패했습니다.");
         }
     });
 };
@@ -20,7 +20,6 @@ export async function customFetch(url, options = {}) {
             credentials: "include",
         });
 
-    // reissue 중이면 기다림
     if (isRefreshing) {
         await reissuePromise;
     }
@@ -31,7 +30,8 @@ export async function customFetch(url, options = {}) {
     let data = null;
     try {
         data = await clone.json();
-    } catch {}
+    } catch {
+    }
 
     if (data?.error_code === "2000") {
         if (!isRefreshing) {
@@ -41,15 +41,20 @@ export async function customFetch(url, options = {}) {
 
         try {
             await reissuePromise;
-        } catch {
-            window.location.href = "/beta-login";
-            return;
         } finally {
             isRefreshing = false;
             reissuePromise = null;
         }
 
-        return await customFetch(url, options); // 이전 요청 다시 시도
+        return await customFetch(url, options);
+    }
+
+    if (!response.ok) {
+        if (data && data.error_code) {
+            throw new Error(data.message);
+        }
+
+        throw new Error(`알 수 없는 오류가 발생했습니다.`);
     }
 
     return response;

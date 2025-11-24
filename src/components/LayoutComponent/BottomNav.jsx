@@ -49,12 +49,17 @@ function BottomNav() {
 
   // 현재 경로에 맞춰 활성화된 탭을 결정
   const isMainActive = location.pathname === "/main";
+  const isCommunityActive = location.pathname === "/community";
   const isMypageActive = location.pathname === "/mypage";
   const isBetaLoginActive = location.pathname === "/beta-login";
 
 
   return (
     <NavContainer>
+      <NavButton onClick={() => navigate("/community")} isActive={isCommunityActive}>
+            <NavIcon isActive={isCommunityActive} />
+            커뮤니티
+      </NavButton>
       <NavButton onClick={() => {
           if (location.pathname === "/main") {
               triggerOverlayClose();

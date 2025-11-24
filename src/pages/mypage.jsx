@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { ListContainer, ListItem } from '../components/StyledComponents/LayoutStyles';
 import styled from 'styled-components';
-import { customFetch } from '../api/customFetch';
-import {getMemberInfo} from './auth/getMemberInfo';
+import { useMemberInfo } from '../hooks/useMemberInfo';
 import Profile from '../components/users/Profile';
 import Block from '../components/users/Block';
 
@@ -12,26 +11,19 @@ const MyPageContainer = styled.div`
     padding-bottom: 6rem; 
 `;
 
-const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 
 const MyPage = () => {
     const navigate = useNavigate();
-    const [myProfile, setMyProfile] = useState(null);
-
-    useEffect(() => {
-        const fetchProfile = async () => {
-            setMyProfile(await getMemberInfo());
-        };
-        fetchProfile();
-    }, []);
+    const memberId = localStorage.getItem('member_id');
+    const { memberInfo } = useMemberInfo(memberId);
 
     return (
         <div>
             <MyPageContainer>
-                {myProfile && (
+                {memberInfo && (
                     <>
-                        <Profile profileInfo={myProfile} isEditable={true} />
-                        <Block memberId={myProfile.id} />
+                        <Profile profileInfo={memberInfo} isEditable={true} />
+                        <Block memberId={memberInfo.id} />
                     </>
                 )}
                 <ListContainer>

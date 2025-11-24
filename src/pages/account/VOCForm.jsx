@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { UpperMessage, ContentWrapper } from "../../components/StyledComponents/LayoutStyles";
-import { customFetch } from "../../api/customFetch"; // 이 부분 추가
+import { customFetch } from "../../api/customFetch";
 import Modals from "../../components/modal/Modals";
 import { MODAL_TYPES } from "../../components/modal/ModalTypes";
+import { toast } from 'react-toastify';
 
 const FormContainer = styled.div`
   max-width: 20rem;
@@ -83,30 +84,11 @@ const VOCForm = () => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("서버 응답:", result);
-        setModal({
-          type: MODAL_TYPES.OK,
-          message: "피드백이 제출되었습니다!",
-          onOk: () => {
-            setModal(null);
-            window.history.back();
-          },
-        });
-      } else {
-        console.error("에러 발생:", response.status);
-        setModal({
-          type: MODAL_TYPES.OK,
-          message: "피드백 제출에 실패했습니다. 다시 시도해주세요.",
-          onOk: () => setModal(null),
-        });
+        window.history.back();
+        toast.success("피드백이 제출되었습니다!");
       }
     } catch (error) {
-      console.error("네트워크 오류:", error);
-      setModal({
-        type: MODAL_TYPES.OK,
-        message: "오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
-        onOk: () => setModal(null),
-      });
+      toast.error(error.message);
     } finally {
       setIsSubmitting(false);
     }
