@@ -62,6 +62,7 @@ const ContentWrapper = styled(OriginalContentWrapper)`
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-height: 0;
 `;
 
 const Background = styled.div`
@@ -119,9 +120,7 @@ const WhitePanelContainer = styled.div`
 const ScrollArea = styled.div`
   padding: 0.5rem;
   position: relative;
-  height: calc(100vh - 300px);
-  overflow-y: auto;
-  overflow-x: hidden; /* 가로 스크롤 방지 */
+  overflow-x: hidden;
   
   &::-webkit-scrollbar {
     width: 6px;
@@ -139,6 +138,7 @@ const HallOfFameContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
+  padding-bottom: 3rem; //하단 네비바 고려
 `;
 
 const RankingSection = styled.div`
