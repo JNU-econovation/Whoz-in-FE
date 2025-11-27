@@ -28,6 +28,7 @@ import Header from "./components/LayoutComponent/Header";
 import BottomNav from "./components/LayoutComponent/BottomNav";
 
 import Main from "./pages/main";
+import Community from "./pages/community";
 import MyPage from "./pages/mypage";
 import ManageDevice from "./pages/account/ManageDevice";
 import Setting from "./pages/account/setting";
@@ -85,6 +86,7 @@ const App = () => {
             <Route path="/device-register" element={<DeviceRegister />} />
 
             <Route path="/main" element={<Main />} />
+            <Route path="/community" element={<Community />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/mypage/device-management" element={<ManageDevice />} />
             <Route path="/mypage/setting" element={<Setting />} />

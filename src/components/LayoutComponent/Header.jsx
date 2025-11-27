@@ -55,7 +55,7 @@ function Header() {
   const navigate = useNavigate();
 
   // 뒤로가기 버튼 초기 로그인 페이지에서 숨기기
-  const showBackButton = location.pathname !== "/" && location.pathname !== "/main";
+  const showBackButton = location.pathname !== "/" && location.pathname !== "/main" && location.pathname !== "/community";
 
   return (
     <HeaderContainer>

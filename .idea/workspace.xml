@@ -6,19 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a8741356-36a4-45e2-845d-3121f4bdc121" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/customFetch.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/customFetch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LayoutComponent/BottomNav.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LayoutComponent/BottomNav.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LayoutComponent/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LayoutComponent/Header.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ProfileOverlay.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProfileOverlay.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/users/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/Profile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/account/VOCForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/account/VOCForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/auth/OAuthSuccess.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth/OAuthSuccess.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/auth/getMemberInfo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/auth/join.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth/join.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/auth/storeMemberInfo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/mypage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/mypage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +42,7 @@
     "jdk.selected.JAVA_MODULE": "corretto-21",
     "js.last.introduce.type": "CONST",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/coco/dev/project/Whoz-in-FE/src/api",
+    "last_opened_file_path": "/Users/coco/dev/project/Whoz-in-FE/src/pages",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -69,6 +59,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages" />
       <recent name="$PROJECT_DIR$/src/api" />
       <recent name="$PROJECT_DIR$/src/pages/auth" />
       <recent name="$PROJECT_DIR$/src/hooks" />
@@ -119,7 +110,7 @@
       <workItem from="1747988242107" duration="417000" />
       <workItem from="1757161418428" duration="1309000" />
       <workItem from="1758946490523" duration="688000" />
-      <workItem from="1763995391258" duration="23534000" />
+      <workItem from="1763995391258" duration="54863000" />
     </task>
     <servers />
   </component>
