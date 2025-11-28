@@ -69,7 +69,24 @@ const Main = () => {
     const { data: members, isLoading, error } = useMembers();
     const queryClient = useQueryClient();
     const [selectedMemberId, setSelectedMemberId] = useState(null);
+    useEffect(() => {
+        const checkAndFetchMemberId = async () => {
+            const storedMemberId = localStorage.getItem('member_id');
+            console.log(storedMemberId);
+            if (!storedMemberId) {
+                try {
+                    const response = await customFetch(`${BASE_URL}/api/v1/member`);
+                    const data = await response.json();
+                    if (data.data.member_id) {
+                        localStorage.setItem('member_id', data.data.member_id);
+                    }
+                } catch (error) {
+                }
+            }
+        };
 
+        checkAndFetchMemberId();
+    }, []);
     useEffect(() => {
         const refetchMembers = () => {
             queryClient.refetchQueries({ queryKey: ['members'] });
