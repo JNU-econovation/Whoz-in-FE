@@ -92,7 +92,7 @@ const DropdownList = styled.ul`
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   z-index: 100;
   min-width: 100px;
-  max-height: 200px;
+  max-height: 100px;
   overflow-y: auto;
   
   &::-webkit-scrollbar {
