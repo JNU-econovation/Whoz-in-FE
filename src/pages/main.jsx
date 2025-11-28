@@ -54,6 +54,15 @@ const FloatingBanner = styled.img`
     z-index: 1000;
 `
 
+const FixedHeaderArea = styled.div`
+  height: 10rem; // Main.js와 동일한 값이어야 함
+  min-height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-shrink: 0;
+`;
+
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
 
 const Main = () => {
@@ -95,12 +104,14 @@ const Main = () => {
         <MainContainer>
             <PersistentBackground />
             <ContentWrapper>
-                <UpperMessage style={{ visibility: isLoading ? "hidden" : "visible" }}>
-                    현재 동방에<br />
-                    {registrationNeeded ? "누가 있을까요?" :
-                     activeCount === 0 ? "아무도 없습니다 " :
-                     <><b>{activeCount}</b>명 있습니다</>}
-                </UpperMessage>
+                <FixedHeaderArea>
+                    <UpperMessage style={{ visibility: isLoading ? "hidden" : "visible" }}>
+                        현재 동방에<br />
+                        {registrationNeeded ? "누가 있을까요?" :
+                         activeCount === 0 ? "아무도 없습니다 " :
+                         <><b>{activeCount}</b>명 있습니다</>}
+                    </UpperMessage>
+                </FixedHeaderArea>
 
                 <WhitePanelContainer>
                     <ScrollArea>

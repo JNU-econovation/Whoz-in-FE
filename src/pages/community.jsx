@@ -6,6 +6,7 @@ import FeedWriteOverlay from "../components/FeedWriteOverlay";
 import { ContentWrapper as OriginalContentWrapper } from "../components/StyledComponents/LayoutStyles";
 import { customFetch } from '../api/customFetch';
 import RankingView, { RANKING_CONFIG } from "./RankingView";
+import { UpperMessage } from "../components/StyledComponents/LayoutStyles"
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 
@@ -16,7 +17,7 @@ const dummyPosts = [
         timestamp: '5분 전',
         content: '샐러드 드실 분? 6시까지 받습니다. hh님이 머슬커피 샐러드의 함께주문에 초대했어요.',
         participants: 5,
-        participantNames: ['김민준', '이서연', '박도윤', '최아린', '정하준'],
+        participantNames: ['김김김', '김김김', '김김김', '김김김', '김김김'],
         isNew: true,
     },
 ];
@@ -106,6 +107,16 @@ const ScrollArea = styled.div`
     background-color: #f0f2f5;
   }
 `;
+
+const FixedHeaderArea = styled.div`
+  height: 10rem; // Main.js와 동일한 값이어야 함
+  min-height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-shrink: 0;
+`;
+
 
 const AnnouncementsContent = () => (
     <div>
@@ -210,12 +221,17 @@ const Community = () => {
         <CommunityContainer>
             <PersistentBackground />
             <ContentWrapper>
-                <Feed
-                    posts={posts}
-                    onSelectFeed={setSelectedFeed}
-                    onAddFeedClick={handleAddFeedClick}
-                    onHandClick={handleHandClick}
-                />
+                <FixedHeaderArea>
+                    <UpperMessage>
+                        커뮤니티
+                    </UpperMessage>
+                    {/*<Feed*/}
+                    {/*    posts={posts}*/}
+                    {/*    onSelectFeed={setSelectedFeed}*/}
+                    {/*    onAddFeedClick={handleAddFeedClick}*/}
+                    {/*    onHandClick={handleHandClick}*/}
+                    {/*/>*/}
+                </FixedHeaderArea>
                 <WhitePanelContainer>
                     <TabController>
                         <TabButton
@@ -225,10 +241,10 @@ const Community = () => {
                             랭킹
                         </TabButton>
                         <TabButton
-                            isActive={activeTab === 'announcements'}
-                            onClick={() => setActiveTab('announcements')}
+                            // isActive={activeTab === 'announcements'}
+                            // onClick={() => setActiveTab('announcements')}
                         >
-                            공지
+                            준비중
                         </TabButton>
                     </TabController>
                     <ScrollArea>{renderTabContent()}</ScrollArea>
