@@ -310,8 +310,10 @@ const RankingCard = ({ title, type, rankingData, generations, currentUser, onFil
             <RankingList>
                 {rankingData.map((user) => {
                     const isMe = user.is_me;
+                    const uniqueKey = user.member_id;
+
                     return (
-                        <RankItem key={user.rank} isMe={isMe}>
+                        <RankItem key={uniqueKey} isMe={isMe}>
                             <div className="rank-badge-container">
                                 <Medal rank={user.rank} />
                             </div>
