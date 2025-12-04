@@ -25,6 +25,11 @@ const ProfileImageContainer = styled.div`
   -webkit-tap-highlight-color: transparent;
 `;
 
+const ProfileInfoContainer = styled.div`
+    margin-top: 1rem;
+`;
+
+
 const ProfileImage = styled.img`
     width: 100%;
     height: 100%;
@@ -181,11 +186,14 @@ const Profile = ({ profileInfo = {}, isEditable = false, onClose }) => {
                     </ImageOverlay>
                 )}
             </ProfileImageContainer>
-            <div>
-                <b>{profileInfo?.generation ? `${profileInfo.generation}기 ` : ''}{profileInfo?.name || ''}</b>
-                <p>{profileInfo?.position ? `분야: ${profileInfo.position}` : ''}</p>
-                <div>{profileInfo?.statusMessage && <p>{profileInfo.statusMessage}</p>}</div>
-            </div>
+            <ProfileInfoContainer>
+                <div>
+                    <b>{profileInfo?.generation ? `${profileInfo.generation}기 ` : ''}{profileInfo?.name || ''}</b>
+                    <p>{profileInfo?.position ? `분야: ${profileInfo.position}` : ''}</p>
+                    <div>{profileInfo?.statusMessage && <p>{profileInfo.statusMessage}</p>}</div>
+                </div>
+            </ProfileInfoContainer>
+
             {onClose && <button onClick={onClose}>닫기</button>}
         </ProfileContainer>
     );
