@@ -11,7 +11,7 @@ const ProfileOverlay = ({ memberId, onClose }) => {
       <Overlay isOpen={!!memberId} onClose={onClose}>
         {memberInfo && (
             <>
-              <Profile profileInfo={memberInfo} isEditable={true} />
+              <Profile profileInfo={memberInfo} isEditable={false} />
               <Block memberId={memberId} />
             </>
         )}
