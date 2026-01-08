@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const BadgeWrapper = styled.span`
-  background-color: ${({ color }) => (color && color !== "FF0000" ? `${color}4D` : "#ddd")}; // FF0000(빨간색) 제외하고 투명도 30% 적용
-  color: ${({ color }) => (color ? (color === "FF0000" ? "white" : color) : "#666")}; // 글자색은 원본색 (빨간색은 흰색글자)
+  background-color: ${({ color }) => (color ? `${color}4D` : "#eee")}; // 30% 투명도 배경
+  color: ${({ color }) => (color ? `color-mix(in srgb, ${color}, black 35%)` : "#444")}; // 글자색을 35% 더 진하게 조정
+  border: 1px solid ${({ color }) => (color ? `${color}33` : "#ccc")}; // 20% 투명도 테두리 추가로 배경과 구분
   font-size: 0.75rem;
   font-weight: 700;
   padding: 0.2rem 0.6rem;
