@@ -4,16 +4,15 @@ import { customFetch } from '../../api/customFetch';
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 
+const START_YEAR = 2025;
+const START_MONTH = 4;
+const START_DAY = 14;
+
 const BlockContainer = styled.div`
   width: fit-content;
-  //padding: 1rem;
-  //border: 2.5px solid #d9dee4;
-  //border-radius: 2rem;
-  //box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.05);
   margin-left: auto;
   margin-right: auto;
 `;
-
 
 const BlockHeader = styled.div`
   display: flex;
@@ -23,7 +22,6 @@ const BlockHeader = styled.div`
   margin-bottom: 0.3rem;
 `;
 
-
 const NavButton = styled.button`
   font-size: 1.25rem;
   padding: 0 0.5rem;
@@ -31,7 +29,6 @@ const NavButton = styled.button`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   background: none;
   border: none;
-  //font-weight: bold;
 `;
 
 const MonthLabel = styled.span`
@@ -43,7 +40,6 @@ const CalendarWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding: 0.3rem;
-  //border: 1px solid #eaedef;
   border-radius: 1.2rem;
 `;
 
@@ -53,25 +49,13 @@ const CalendarGrid = styled.div`
   gap: 0.25rem;
 `;
 
-const DayLabel = styled.div`
-  width: 2.3rem;
-  height: 1.15rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #718096;
-`;
-
 const DayBlock = styled.div`
   width: 2.3rem;
   height: 2.3rem;
-  //border: 1px solid #E2E8F0;
   border-radius: 0.8rem;
-  background-color: ${({ hasTime }) => (hasTime ? 
-      '#b5d8f6' : 
-      '#F7FAFC')
+  background-color: ${({ hasTime }) => (hasTime ?
+    '#b5d8f6' :
+    '#F7FAFC')
 };
   display: flex;
   flex-direction: column;
@@ -91,6 +75,14 @@ const ActiveTime = styled.span`
   color: #5e5e5e;
 `;
 
+const StartText = styled.span`
+  font-size: 0.6rem;
+  font-weight: bold;
+  color: #718096;
+  text-align: center;
+  line-height: 1.3;
+`;
+
 // 오전 6시 이전은 어제, 오전 6시 이후가 오늘
 const getWhozinToday = () => {
     const now = new Date();
@@ -101,7 +93,6 @@ const getWhozinToday = () => {
     return adjusted;
 };
 
-
 const Block = ({ memberId }) => {
     const today = getWhozinToday();
     const [year, setYear] = useState(today.getFullYear());
@@ -110,7 +101,6 @@ const Block = ({ memberId }) => {
     const [activeTimeMap, setActiveTimeMap] = useState({});
     const [loading, setLoading] = useState(false);
     const [totalActiveTime, setTotalActiveTime] = useState('');
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -122,12 +112,16 @@ const Block = ({ memberId }) => {
                 const res = await customFetch(`${BASE_URL}/api/v1/members/${memberId}/block?year=${year}&month=${month}`);
                 const json = await res.json();
                 const map = {};
-                json.data.days.forEach(day => {
-                    map[day.day] = day.active_time;
-                });
+                if (json.data && json.data.days) {
+                    json.data.days.forEach(day => {
+                        map[day.day] = day.active_time;
+                    });
+                }
                 setActiveTimeMap(map);
                 setData(json);
-                setTotalActiveTime(json.data.total_active_time);
+                if (json.data) {
+                    setTotalActiveTime(json.data.total_active_time);
+                }
             } catch (err) {
                 console.error('데이터 로딩 실패:', err);
             } finally {
@@ -144,12 +138,35 @@ const Block = ({ memberId }) => {
         const blocks = [];
 
         const isCurrentMonth = year === today.getFullYear() && month === today.getMonth() + 1;
+        const isStartMonth = year === START_YEAR && month === START_MONTH;
 
         for (let i = 0; i < firstDay; i++) {
             blocks.push(<div key={`empty-${i}`} />);
         }
 
         for (let day = 1; day <= lastDate; day++) {
+            if (isStartMonth && day < START_DAY) {
+                blocks.push(
+                    <DayBlock
+                        key={day}
+                        hasTime={false}
+                        style={{ opacity: 0.2 }}
+                    >
+                        <DayNumber>{day}</DayNumber>
+                    </DayBlock>
+                );
+                continue;
+            }
+
+            if (isStartMonth && day === START_DAY) {
+                blocks.push(
+                    <DayBlock key={day} hasTime={false} loading={loading}>
+                        <StartText>기록<br />시작</StartText>
+                    </DayBlock>
+                );
+                continue;
+            }
+
             const time = activeTimeMap[day];
             const dayIndex = (firstDay + day - 1) % 7;
             const isSunday = dayIndex === 0;
@@ -164,9 +181,9 @@ const Block = ({ memberId }) => {
             blocks.push(
                 <DayBlock
                     key={day}
-                    hasTime={!!time && !isFuture}  // 오늘 이후면 색 빼기
+                    hasTime={!!time && !isFuture}
                     loading={loading}
-                    style={{ opacity: isFuture ? 0.5 : 1 }} // 흐리게 처리
+                    style={{ opacity: isFuture ? 0.5 : 1 }}
                 >
                     <DayNumber style={{ color: isFuture ? '#CBD5E0' : color }}>{day}</DayNumber>
                     {!isFuture && time && <ActiveTime>{time}</ActiveTime>}
@@ -177,10 +194,11 @@ const Block = ({ memberId }) => {
         return blocks;
     };
 
-
     const canGoNext = year < today.getFullYear() || (year === today.getFullYear() && month < today.getMonth() + 1);
+    const canGoPrev = year > START_YEAR || (year === START_YEAR && month > START_MONTH);
 
     const goPrevMonth = () => {
+        if (!canGoPrev) return;
         setMonth(prev => {
             if (prev === 1) {
                 setYear(y => y - 1);
@@ -206,7 +224,7 @@ const Block = ({ memberId }) => {
         <BlockContainer>
             <BlockHeader>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <NavButton onClick={goPrevMonth}>{'‹'}</NavButton>
+                    <NavButton onClick={goPrevMonth} disabled={!canGoPrev}>{'‹'}</NavButton>
                     <MonthLabel>{month}월</MonthLabel>
                     <NavButton onClick={goNextMonth} disabled={!canGoNext}>{'›'}</NavButton>
                 </div>

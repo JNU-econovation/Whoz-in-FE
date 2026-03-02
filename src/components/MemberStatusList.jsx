@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
-import {styled, createGlobalStyle} from "styled-components"
+import { styled, createGlobalStyle } from "styled-components"
 import { ListContainer, ListItem } from "./StyledComponents/LayoutStyles"
 import BadgeContainer from "./BadgeContainer"
+import Badge from "./Badge"
 
 const ClickableArea = styled.div`
     display: flex;
@@ -92,10 +93,13 @@ const MemberStatusList = ({ members, registrationNeeded, onSelectMember }) => {
         <MemberListContainer>
             {members.map((member, index) => (
                 <ListItem key={index}>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <span onClick={() => openProfile(member.member_id)} style={{ cursor: "pointer" }}>
+                    <div onClick={() => openProfile(member.member_id)} style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+                        <span>
                             {member.generation}기 {member.member_name}
                         </span>
+                        {member.main_badge_name && (
+                            <Badge text={member.main_badge_name} color={member.main_badge_color} />
+                        )}
                     </div>
                     {!member.is_active && !member.has_been_active ?
                         <ClickableArea></ClickableArea>
