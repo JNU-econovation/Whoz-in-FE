@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import Badge from "./Badge";
-import { useBadges } from "../hooks/useBadges";
+import React from "react"
+import styled from "styled-components"
+import Badge from "./Badge"
+import { useBadges } from "../hooks/useBadges"
 
 const Container = styled.div`
   display: flex;

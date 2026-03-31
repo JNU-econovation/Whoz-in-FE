@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import styled from "styled-components"
 import {
-  Container as BasicContainer,
-  KakaoButton as KakaoButtonBasic,
-} from "../../components/StyledComponents/AuthStyles";
+    Container as BasicContainer,
+    KakaoButton as KakaoButtonBasic,
+} from "../../components/StyledComponents/AuthStyles"
 
 const Container = styled(BasicContainer)`
 

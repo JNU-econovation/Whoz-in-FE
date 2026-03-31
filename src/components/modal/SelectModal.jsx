@@ -1,7 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import { ModalBackground, ModalContainer, ModalMessage, ModalButton } from "./ModalStyles";
-
+import React from "react"
+import styled from "styled-components"
+import {
+    ModalBackground,
+    ModalButton,
+    ModalContainer,
+    ModalMessage,
+} from "./ModalStyles"
 
 const ContentWrapper = styled.div`
   display: flex;

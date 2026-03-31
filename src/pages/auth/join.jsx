@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import AuthInfo from "./AuthInfo";
-import MemberInfo from "./MemberInfo";
-import axios from 'axios';
+import React, { useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import MemberInfo from "./MemberInfo"
+import axios from "axios"
 import { customFetch } from "../../api/customFetch"
 
 const Join = () => {

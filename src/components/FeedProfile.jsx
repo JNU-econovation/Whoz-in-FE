@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import basicProfilePic from './기본프로필.png';
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
+import basicProfilePic from "./기본프로필.png"
 
 const AuthorInfo = styled.div`
   display: flex;

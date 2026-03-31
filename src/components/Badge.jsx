@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from "react"
+import styled from "styled-components"
 
 const BadgeWrapper = styled.span`
   background-color: ${({ color }) => (color ? `${color}4D` : "#eee")}; // 30% 투명도 배경

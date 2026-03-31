@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { fetchAndUpdateMemberCache } from '../../api/storeMemberInfo';
-import { customFetch } from '../../api/customFetch';
-import { useAuth } from '../../context/AuthContext';
-
+import React, { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { fetchAndUpdateMemberCache } from "../../api/storeMemberInfo"
+import { customFetch } from "../../api/customFetch"
+import { useAuth } from "../../context/AuthContext"
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 

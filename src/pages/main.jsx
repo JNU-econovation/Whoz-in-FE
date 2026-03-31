@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react"
 import MemberStatusList from "../components/MemberStatusList"
 import styled from "styled-components"
-import { ContentWrapper } from "../components/StyledComponents/LayoutStyles"
-import { UpperMessage } from "../components/StyledComponents/LayoutStyles"
+import {
+    ContentWrapper,
+    UpperMessage,
+} from "../components/StyledComponents/LayoutStyles"
 import ProfileOverlay from "../components/ProfileOverlay"
-import { useMembers } from '../hooks/useMembers';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMembers } from "../hooks/useMembers"
+import { useQueryClient } from "@tanstack/react-query"
 
 const MainContainer = styled.div`
   height: 100dvh;

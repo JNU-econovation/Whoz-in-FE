@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import FeedCard from './FeedCard';
+import React from "react"
+import styled from "styled-components"
+import FeedCard from "./FeedCard"
 
 const FeedContainer = styled.section`
   padding: 1rem 0;

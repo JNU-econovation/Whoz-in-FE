@@ -1,6 +1,12 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Container, Input, Button, KakaoButton, JoinButton } from "../../components/StyledComponents/AuthStyles"
+import {
+    Button,
+    Container,
+    Input,
+    JoinButton,
+    KakaoButton,
+} from "../../components/StyledComponents/AuthStyles"
 import styled from "styled-components"
 
 const LoginButtonContainer = styled.div`

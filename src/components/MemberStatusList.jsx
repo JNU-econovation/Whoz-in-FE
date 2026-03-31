@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { styled, createGlobalStyle } from "styled-components"
+import { styled } from "styled-components"
 import { ListContainer, ListItem } from "./StyledComponents/LayoutStyles"
-import BadgeContainer from "./BadgeContainer"
 import Badge from "./Badge"
 
 const ClickableArea = styled.div`

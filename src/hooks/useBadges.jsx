@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { customFetch } from "../api/customFetch";
+import { useEffect, useState } from "react"
+import { customFetch } from "../api/customFetch"
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
 

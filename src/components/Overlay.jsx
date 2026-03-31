@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
-import styled from "styled-components";
-import { useMainActions } from "../hooks/useMainActions";
+import React, { useEffect, useRef, useState } from "react"
+import styled from "styled-components"
+import { useMainActions } from "../hooks/useMainActions"
 
 const OverlayWrapper = styled.div`
   position: absolute;

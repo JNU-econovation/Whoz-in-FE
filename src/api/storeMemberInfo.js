@@ -1,4 +1,4 @@
-import { customFetch } from '../api/customFetch';
+import { customFetch } from "../api/customFetch"
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 const CACHE_KEY = 'memberCache'; // 여러 멤버 정보를 저장할 키 이름 변경

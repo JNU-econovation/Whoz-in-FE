@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { ModalBackground, ModalContainer} from "./ModalStyles";
+import React from "react"
+import styled from "styled-components"
+import { ModalBackground, ModalContainer } from "./ModalStyles"
 
 const CloseButton = styled.button`
   position: absolute;

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { UpperMessage, ContentWrapper } from "../../components/StyledComponents/LayoutStyles";
-import { customFetch } from "../../api/customFetch";
-import Modals from "../../components/modal/Modals";
-import { MODAL_TYPES } from "../../components/modal/ModalTypes";
-import { toast } from 'react-toastify';
+import React, { useState } from "react"
+import styled from "styled-components"
+import {
+  ContentWrapper,
+  UpperMessage,
+} from "../../components/StyledComponents/LayoutStyles"
+import { customFetch } from "../../api/customFetch"
+import Modals from "../../components/modal/Modals"
+import { MODAL_TYPES } from "../../components/modal/ModalTypes"
+import { toast } from "react-toastify"
 
 const FormContainer = styled.div`
   max-width: 20rem;

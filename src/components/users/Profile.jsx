@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import basicProfilepic from '../../components/기본프로필.png';
-import { customFetch } from '../../api/customFetch';
-import { FaCamera, FaTrashAlt } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import React, { useEffect, useRef, useState } from "react"
+import styled from "styled-components"
+import basicProfilepic from "../../components/기본프로필.png"
+import { customFetch } from "../../api/customFetch"
+import { FaCamera, FaTrashAlt } from "react-icons/fa"
+import { toast } from "react-toastify"
 
 const ProfileContainer = styled.div`
     display: flex;

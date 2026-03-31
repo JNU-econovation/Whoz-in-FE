@@ -1,8 +1,7 @@
-import { FaAngleLeft } from "react-icons/fa";
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-
+import { FaAngleLeft } from "react-icons/fa"
+import React from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import styled from "styled-components"
 
 const HeaderContainer = styled.header` // 헤더 스타일
   display: flex;

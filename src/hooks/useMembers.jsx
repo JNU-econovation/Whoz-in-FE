@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import { customFetch } from '../api/customFetch';
-import { useLoading } from '../context/LoadingContext';
+import { useQuery } from "@tanstack/react-query"
+import { customFetch } from "../api/customFetch"
+import { useLoading } from "../context/LoadingContext"
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 

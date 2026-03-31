@@ -1,6 +1,11 @@
-
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import { customFetch } from '../api/customFetch';
+import React, {
+    createContext,
+    useCallback,
+    useContext,
+    useMemo,
+    useState,
+} from "react"
+import { customFetch } from "../api/customFetch"
 
 const AuthContext = createContext();
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;

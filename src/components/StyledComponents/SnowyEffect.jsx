@@ -1,5 +1,5 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import React from "react"
+import styled, { keyframes } from "styled-components"
 
 // 눈송이 떨어지는 애니메이션 
 const FallingAnimation = keyframes`

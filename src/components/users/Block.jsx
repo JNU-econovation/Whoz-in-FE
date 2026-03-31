@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { customFetch } from '../../api/customFetch';
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
+import { customFetch } from "../../api/customFetch"
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 

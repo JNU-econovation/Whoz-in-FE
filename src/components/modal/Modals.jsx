@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import InfoModal from "./InfoModal";
-import ConfirmModal from "./ConfirmModal";
-import SelectModal from "./SelectModal";
-import OkModal from "./OkModal";
-import { MODAL_TYPES } from "./ModalTypes";
+import React, { useEffect } from "react"
+import InfoModal from "./InfoModal"
+import ConfirmModal from "./ConfirmModal"
+import SelectModal from "./SelectModal"
+import OkModal from "./OkModal"
+import { MODAL_TYPES } from "./ModalTypes"
 
 const Modals = ({ modal, onClose }) => {
     useEffect(() => {

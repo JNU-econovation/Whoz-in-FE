@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import FeedProfile from './FeedProfile';
+import React from "react"
+import styled from "styled-components"
+import FeedProfile from "./FeedProfile"
 
 const StyledCard = styled.div`
   flex-shrink: 0;

@@ -1,8 +1,8 @@
-import React from "react";
-import Overlay from "./Overlay";
-import Block from "./users/Block";
-import Profile from "./users/Profile";
-import { useMemberInfo } from '../hooks/useMemberInfo';
+import React from "react"
+import Overlay from "./Overlay"
+import Block from "./users/Block"
+import Profile from "./users/Profile"
+import { useMemberInfo } from "../hooks/useMemberInfo"
 
 const ProfileOverlay = ({ memberId, onClose }) => {
   const { memberInfo } = useMemberInfo(memberId);

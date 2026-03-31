@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import styled, { css } from "styled-components";
+import React, { useEffect, useRef, useState } from "react"
+import styled, { css } from "styled-components"
 
 export const RANKING_CONFIG = [
     { type: 'MONTHLY_TIME', title: '월간 재실 시간' },

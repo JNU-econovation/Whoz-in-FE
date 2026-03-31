@@ -1,39 +1,37 @@
-import React from "react";
-import { AuthProvider } from "./context/AuthContext";
-import { useAuth } from "./context/AuthContext";
-import { LoadingProvider } from "./context/LoadingContext";
-import { useLoading } from "./context/LoadingContext";
-import Spinner from './components/Spinner';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import styled from "styled-components";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React from "react"
+import { AuthProvider, useAuth } from "./context/AuthContext"
+import { LoadingProvider, useLoading } from "./context/LoadingContext"
+import Spinner from "./components/Spinner"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import styled from "styled-components"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 import {
-  Routes,
-  Route,
-  BrowserRouter,
-  useLocation,
-  Navigate,
+    BrowserRouter,
+    Navigate,
+    Route,
+    Routes,
+    useLocation,
 } from "react-router-dom"
 
-import Login from "./pages/auth/login";
-import Join from "./pages/auth/join";
-import KakaoRedirect from "./pages/auth/KakaoRedirect";
-import BetaLogin from "./pages/auth/BetaLogin";
-import OAuthSuccess from "./pages/auth/OAuthSuccess";
+import Login from "./pages/auth/login"
+import Join from "./pages/auth/join"
+import KakaoRedirect from "./pages/auth/KakaoRedirect"
+import BetaLogin from "./pages/auth/BetaLogin"
+import OAuthSuccess from "./pages/auth/OAuthSuccess"
 
-import DeviceRegister from "./pages/Device/DeviceRegister";
+import DeviceRegister from "./pages/Device/DeviceRegister"
 
-import Header from "./components/LayoutComponent/Header";
-import BottomNav from "./components/LayoutComponent/BottomNav";
+import Header from "./components/LayoutComponent/Header"
+import BottomNav from "./components/LayoutComponent/BottomNav"
 
-import Main from "./pages/main";
-import Community from "./pages/community";
-import MyPage from "./pages/mypage";
-import ManageDevice from "./pages/account/ManageDevice";
-import Setting from "./pages/account/setting";
-import VOCForm from "./pages/account/VOCForm";
+import Main from "./pages/main"
+import Community from "./pages/community"
+import MyPage from "./pages/mypage"
+import ManageDevice from "./pages/account/ManageDevice"
+import Setting from "./pages/account/setting"
+import VOCForm from "./pages/account/VOCForm"
 
 const queryClient = new QueryClient();
 

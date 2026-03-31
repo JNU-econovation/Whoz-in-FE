@@ -3,8 +3,12 @@ import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import Modals from "../../components/modal/Modals"
 import { MODAL_TYPES } from "../../components/modal/ModalTypes"
-import { UpperMessage, UpperContainer } from "../../components/StyledComponents/LayoutStyles"
-import { ContentWrapper, ContentContainer } from "../../components/StyledComponents/LayoutStyles"
+import {
+    ContentContainer,
+    ContentWrapper,
+    UpperContainer,
+    UpperMessage,
+} from "../../components/StyledComponents/LayoutStyles"
 import { customFetch } from "../../api/customFetch"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

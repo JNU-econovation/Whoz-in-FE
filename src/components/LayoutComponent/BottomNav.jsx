@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { useQueryClient } from "@tanstack/react-query";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useMainActions } from "../../hooks/useMainActions";
+import React from "react"
+import styled from "styled-components"
+import { useQueryClient } from "@tanstack/react-query"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useMainActions } from "../../hooks/useMainActions"
 
 const NavContainer = styled.nav`
   position: fixed;

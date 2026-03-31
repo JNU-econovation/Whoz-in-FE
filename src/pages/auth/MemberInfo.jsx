@@ -1,6 +1,12 @@
-import React from "react";
-import { Input, Button, Container } from "../../components/StyledComponents/AuthStyles";
-import GenerationsDropdown, { StyledSelect } from "../../components/GenerationSelect";
+import React from "react"
+import {
+    Button,
+    Container,
+    Input,
+} from "../../components/StyledComponents/AuthStyles"
+import GenerationsDropdown, {
+    StyledSelect,
+} from "../../components/GenerationSelect"
 
 const MemberInfo = ({ name, setName, generation, setGeneration, position, setPosition, onJoin }) => {
     return (

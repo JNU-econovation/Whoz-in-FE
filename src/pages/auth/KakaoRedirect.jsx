@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 const KakaoRedirect = () => {
     const navigate = useNavigate();

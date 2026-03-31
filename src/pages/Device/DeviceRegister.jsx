@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from "react"
-import { styled } from "styled-components";
-import { UpperMessage } from "../../components/StyledComponents/LayoutStyles";
+import React, { useEffect, useRef, useState } from "react"
+import { styled } from "styled-components"
 import {
-  ContentWrapper,
   ContentContainer,
-} from "../../components/StyledComponents/LayoutStyles";
+  ContentWrapper,
+  UpperMessage,
+} from "../../components/StyledComponents/LayoutStyles"
 import Modals from "../../components/modal/Modals"
-import DeviceRegisterStepper from "../../components/DeviceRegisterStepper.jsx";
+import DeviceRegisterStepper from "../../components/DeviceRegisterStepper.jsx"
 import { useNavigate } from "react-router-dom"
 import { customFetch } from "../../api/customFetch"
 

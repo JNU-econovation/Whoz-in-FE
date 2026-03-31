@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
-import Feed from "../components/Feed";
-import FeedOverlay from "../components/FeedOverlay";
-import FeedWriteOverlay from "../components/FeedWriteOverlay";
-import { ContentWrapper as OriginalContentWrapper } from "../components/StyledComponents/LayoutStyles";
-import { customFetch } from '../api/customFetch';
-import RankingView, { RANKING_CONFIG } from "./RankingView";
-import { UpperMessage } from "../components/StyledComponents/LayoutStyles"
+import React, { useEffect, useState } from "react"
+import styled, { css } from "styled-components"
+import FeedOverlay from "../components/FeedOverlay"
+import FeedWriteOverlay from "../components/FeedWriteOverlay"
+import {
+    ContentWrapper as OriginalContentWrapper,
+    UpperMessage,
+} from "../components/StyledComponents/LayoutStyles"
+import { customFetch } from "../api/customFetch"
+import RankingView, { RANKING_CONFIG } from "./RankingView"
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 

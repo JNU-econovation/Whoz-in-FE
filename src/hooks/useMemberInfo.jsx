@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
-import { getMemberFromCache, fetchAndUpdateMemberCache } from '../api/storeMemberInfo';
-import { useAuth } from '../context/AuthContext';
+import { useEffect, useState } from "react"
+import {
+    fetchAndUpdateMemberCache,
+    getMemberFromCache,
+} from "../api/storeMemberInfo"
+import { useAuth } from "../context/AuthContext"
 
 export const useMemberInfo = (memberId) => {
     const { userInfo, ensureCurrentMember } = useAuth();

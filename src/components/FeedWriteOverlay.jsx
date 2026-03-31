@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import Overlay from './Overlay';
-import FeedProfile from './FeedProfile';
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
+import Overlay from "./Overlay"
 
 const WriteContainer = styled.div`
   display: flex;

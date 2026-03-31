@@ -1,6 +1,10 @@
-import React, { useState } from "react";
-import { Input, Button, Container } from "../../components/StyledComponents/AuthStyles";
-import MemberInfo from "./MemberInfo";
+import React, { useState } from "react"
+import {
+    Button,
+    Container,
+    Input,
+} from "../../components/StyledComponents/AuthStyles"
+
 const AuthInfo = ({ loginid, setLoginId, password, setPassword, confirmPassword, setConfirmPassword, onNext }) => {
     const [error, setError] = useState("");
 
