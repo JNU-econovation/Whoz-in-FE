@@ -23,7 +23,6 @@ export const StyledSelect = styled.select`
 
 // ✅ 고정 배열 + 날짜 기준으로 추가
 const getGenerations = () => {
-    const baseGenerations = Array.from({ length: 28 - 11 + 1 }, (_, i) => 11 + i); // 11~28기
     const today = new Date();
     const currentYear = today.getFullYear();
 

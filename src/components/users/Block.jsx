@@ -97,7 +97,6 @@ const Block = ({ memberId }) => {
     const today = getWhozinToday();
     const [year, setYear] = useState(today.getFullYear());
     const [month, setMonth] = useState(today.getMonth() + 1);
-    const [data, setData] = useState([]);
     const [activeTimeMap, setActiveTimeMap] = useState({});
     const [loading, setLoading] = useState(false);
     const [totalActiveTime, setTotalActiveTime] = useState('');
@@ -107,7 +106,6 @@ const Block = ({ memberId }) => {
             setLoading(true);
             setActiveTimeMap({});
             setTotalActiveTime('');
-            setData([]);
             try {
                 const res = await customFetch(`${BASE_URL}/api/v1/members/${memberId}/block?year=${year}&month=${month}`);
                 const json = await res.json();
@@ -118,7 +116,6 @@ const Block = ({ memberId }) => {
                     });
                 }
                 setActiveTimeMap(map);
-                setData(json);
                 if (json.data) {
                     setTotalActiveTime(json.data.total_active_time);
                 }

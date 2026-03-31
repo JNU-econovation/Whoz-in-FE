@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { useNavigate } from "react-router-dom"
 import Modals from "../../components/modal/Modals"
 import { MODAL_TYPES } from "../../components/modal/ModalTypes"
 import {
@@ -105,8 +104,6 @@ const ManageDevice = () => {
     const [devices, setDevices] = useState(null)
     const [selectedDevice, setSelectedDevice] = useState(null)
     const [modal, setModal] = useState(null)
-    const [isChecking, setIsChecking] = useState(false)
-    const navigate = useNavigate()
 
     useEffect(() => {
         fetchDevices()
@@ -144,38 +141,12 @@ const ManageDevice = () => {
         });
     }
 
-    const onClickDeleteButton = (deviceId, deviceName) => {
-        // setModal({
-        //     type: MODAL_TYPES.CONFIRM,
-        //     message: `'${deviceName}' 기기를 삭제하시겠어요?`,
-        //     onConfirm: () => {
-        //         deleteDevice(deviceId).finally(() => setModal(null));
-        //     },
-        //     onCancel: () => {
-        //         setModal(null)
-        //     }
-        // })
-    }
-
-    const deleteDevice = async (deviceId) => {
-        try {
-            const response = await customFetch(`${BASE_URL}/api/v1/device`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ device_id: deviceId }),
-            });
-
-            if (response.ok) {
-                setDevices(prevDevices => prevDevices.filter(d => d.device_id !== deviceId));
-            } else {
-                throw new Error("기기 삭제 실패");
-            }
-
-        } catch (error) {
-            console.error("기기 삭제 에러:", error);
-        }
+    const onClickDeleteButton = () => {
+        setModal({
+            type: MODAL_TYPES.OK,
+            message: "기기 삭제 기능은 아직 준비 중입니다.",
+            onOk: () => setModal(null),
+        });
     };
 
 
@@ -217,8 +188,6 @@ const ManageDevice = () => {
                 message: "알 수 없는 오류가 발생했습니다.",
                 onOk: () => setModal(null)
             });
-        } finally {
-            setIsChecking(false);
         }
     };
 

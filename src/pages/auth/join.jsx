@@ -1,18 +1,11 @@
 import React, { useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import MemberInfo from "./MemberInfo"
 import axios from "axios"
 import { customFetch } from "../../api/customFetch"
 
 const Join = () => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const query = new URLSearchParams(location.search);
-
-    //const [step, setStep] = useState(initialStep);
-    const [loginid, setLoginId] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [name, setName] = useState("");
     const [generation, setGeneration] = useState("");
     const [position, setPosition] = useState("");
@@ -51,8 +44,6 @@ const Join = () => {
             alert("회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
         }
     };
-
-    const social = query.get("social");
 
     return (
         <div>

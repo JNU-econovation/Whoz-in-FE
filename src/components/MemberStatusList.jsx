@@ -53,7 +53,6 @@ const RegisterNotice = styled.div`
 
 const MemberStatusList = ({ members, registrationNeeded, onSelectMember }) => {
     const [showTime, setShowTime] = useState([])
-    const [selectedMember, setSelectedMember] = useState(null)
 
     useEffect(() => {
         setShowTime((prevShowTime) => {
@@ -75,10 +74,6 @@ const MemberStatusList = ({ members, registrationNeeded, onSelectMember }) => {
     const openProfile = (memberId) => {
         onSelectMember(memberId);
     };
-
-    const closeProfile = () => {
-        setSelectedMember(null)
-    }
 
     if (registrationNeeded) {
         return (

@@ -7,7 +7,6 @@ import {
 } from "../../components/StyledComponents/LayoutStyles"
 import Modals from "../../components/modal/Modals"
 import DeviceRegisterStepper from "../../components/DeviceRegisterStepper.jsx"
-import { useNavigate } from "react-router-dom"
 import { customFetch } from "../../api/customFetch"
 
 // ❗️TODO: 이 페이지 백엔드에서 템플릿 엔진으로 제공해야 함 network-api와 너무 많이 묶여있음!!!!!
@@ -40,7 +39,6 @@ export default function DeviceRegister() {
   const [registeredWifi, setRegisteredWifi] = useState([]); // 등록된 SSID 목록
   const [currentStep, setCurrentStep] = useState(0); // 현재 단계
   const [deviceName, setDeviceName] = useState(""); // 기기 이름
-  const navigate = useNavigate();
   const abortControllerRef = useRef(null);
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("device_register_token"); // 쿼리스트링에서 token 값 가져오기
@@ -60,7 +58,7 @@ export default function DeviceRegister() {
       }
     })
     .catch((err) => console.error("SSID 불러오기 실패:", err));
-  }, []);
+  }, [token]);
 
   // 가장 빠른 IP 응답을 받기 위한 함수
   const fetchFastestIP = async () => {
@@ -71,7 +69,7 @@ export default function DeviceRegister() {
     abortControllerRef.current = new AbortController();
 
     try {
-      const fetchPromises = IP_LIST.map((ip, index) =>
+      const fetchPromises = IP_LIST.map((ip) =>
           customFetch(`${ip}/api/v1/my-ip`, { signal: abortControllerRef.current.signal})
           .then((res) => {
             if (!res.ok) {

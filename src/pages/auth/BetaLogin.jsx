@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import {
     Container as BasicContainer,
@@ -48,22 +47,8 @@ const KakaoButton = styled(KakaoButtonBasic)`
   opacity: ${({ isClicked }) => (isClicked ? 0.8 : 1)};
 `;
 
-const Footer = styled.footer`
-  font-size: 0.75rem;
-  color: #aaa;
-
-  a {
-    color: #aaa;
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
 const BetaLogin = () => {
   const [isClicked, setIsClicked] = useState(false);
-  const navigate = useNavigate();
 
   const handleKakaoLogin = () => {
     setIsClicked(true); // 애니메이션 시작

@@ -86,7 +86,7 @@ const VOCForm = () => {
       );
 
       if (response.ok) {
-        const result = await response.json();
+        await response.json();
         window.history.back();
         toast.success("피드백이 제출되었습니다!");
       }

@@ -163,7 +163,6 @@ const Community = () => {
         }
     }, [activeTab]);
 
-    const handleAddFeedClick = () => setWriteOverlayOpen(true);
     const handlePostSubmit = (newContent) => {
         const newPost = {
             id: Date.now(),
@@ -175,11 +174,6 @@ const Community = () => {
             isNew: true,
         };
         setPosts([newPost, ...posts]);
-    };
-    const handleHandClick = (postId) => {
-        setPosts(posts.map(p =>
-            p.id === postId ? { ...p, participants: p.participants + 1, participantNames: [...p.participantNames, '나'] } : p
-        ));
     };
 
     const handleRankingFilterChange = async (type, generation) => {

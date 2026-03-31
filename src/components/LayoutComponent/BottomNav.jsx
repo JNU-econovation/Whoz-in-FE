@@ -40,7 +40,6 @@ const NavIcon = styled.div`
 `;
 
 function BottomNav() {
-  const mainActions = useMainActions();
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
@@ -51,7 +50,6 @@ function BottomNav() {
   const isMainActive = location.pathname === "/main";
   const isCommunityActive = location.pathname === "/community";
   const isMypageActive = location.pathname === "/mypage";
-  const isBetaLoginActive = location.pathname === "/beta-login";
 
 
   return (

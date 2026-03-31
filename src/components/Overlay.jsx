@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import { useMainActions } from "../hooks/useMainActions"
 
@@ -58,6 +58,12 @@ const Overlay = ({ isOpen, onClose, children }) => {
     const [dragOffset, setDragOffset] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
 
+    const handleClose = useCallback(() => {
+        if (contentRef.current) contentRef.current.style.overflow = 'auto';
+        setDragOffset(0);
+        setVisible(false);
+    }, []);
+
     useEffect(() => {
         if (isOpen) {
             setShouldRender(true);
@@ -71,20 +77,14 @@ const Overlay = ({ isOpen, onClose, children }) => {
                 handleClose();
             }
         }
-    }, [isOpen]);
-
-    const handleClose = () => {
-        if (contentRef.current) contentRef.current.style.overflow = 'auto';
-        setDragOffset(0);
-        setVisible(false);
-    };
+    }, [handleClose, isOpen, shouldRender]);
 
     useEffect(() => {
         useMainActions.getState().setTriggerOverlayClose(() => handleClose());
         return () => {
             useMainActions.getState().setTriggerOverlayClose(() => {});
         };
-    }, []);
+    }, [handleClose]);
 
     const handleTransitionEnd = () => {
         if (!visible) {
