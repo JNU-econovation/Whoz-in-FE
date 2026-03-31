@@ -1,5 +1,6 @@
 import React from "react";
 import { AuthProvider } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 import { LoadingProvider } from "./context/LoadingContext";
 import { useLoading } from "./context/LoadingContext";
 import Spinner from './components/Spinner';
@@ -49,15 +50,32 @@ const StyledToastContainer = styled(ToastContainer)`
   }
 `;
 
+const authRoutes = ['/login', '/join', '/beta-login', '/device-register', '/oauth/kakao', '/oauth/success'];
+
+const AuthBootstrap = () => {
+  const location = useLocation();
+  const { ensureCurrentMember } = useAuth();
+
+  React.useEffect(() => {
+    if (authRoutes.includes(location.pathname)) {
+      return;
+    }
+
+    ensureCurrentMember().catch(() => {});
+  }, [location.pathname, ensureCurrentMember]);
+
+  return null;
+};
+
 const App = () => {
   const location = useLocation();
   const { loading } = useLoading();
 
-  const authRoutes = ['/login', '/join', '/beta-login', '/device-register'];
   const isAuthPage = authRoutes.includes(location.pathname);
 
   return (
       <div className="root-wrap">
+        <AuthBootstrap />
         <StyledToastContainer
             position="bottom-center"
             autoClose={2000}

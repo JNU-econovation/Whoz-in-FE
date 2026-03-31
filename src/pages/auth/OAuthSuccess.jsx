@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchAndUpdateMemberCache } from '../../api/storeMemberInfo';
 import { customFetch } from '../../api/customFetch';
+import { useAuth } from '../../context/AuthContext';
 
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 
 const OAuthSuccess = () => {
     const navigate = useNavigate();
+    const { syncMemberId } = useAuth();
 
     useEffect(() => {
         //is_registered 추출
@@ -18,13 +20,12 @@ const OAuthSuccess = () => {
                 const apiUrl = `${BASE_URL}/api/v1/member`;
                 const response = await customFetch(apiUrl);
                 const json = await response.json();
+                const memberId = json?.data?.member_id;
 
-                if (json.data && json.data.member_id) {
-                    localStorage.setItem('member_id', json.data.member_id);
+                if (memberId) {
+                    syncMemberId(memberId);
+                    await fetchAndUpdateMemberCache(memberId);
                 }
-
-                // 내 정보 캐시에 업데이트
-                fetchAndUpdateMemberCache();
 
             } catch (error) {
                 console.error("로그인 후 사용자 정보를 처리하는 중 오류 발생:", error);
@@ -43,7 +44,7 @@ const OAuthSuccess = () => {
             handleLoginSuccess();
         }
 
-    }, [navigate]);
+    }, [navigate, syncMemberId]);
 
     return <div>로그인 상태 확인 중...</div>;
 };

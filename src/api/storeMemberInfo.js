@@ -2,9 +2,17 @@ import { customFetch } from '../api/customFetch';
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
 const CACHE_KEY = 'memberCache'; // 여러 멤버 정보를 저장할 키 이름 변경
+const UUID_REGEX =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+const isValidMemberId = (memberId) => Boolean(memberId && UUID_REGEX.test(memberId));
 
 // 서버에서 특정 멤버의 정보를 가져오는 역할
 const fetchMemberFromServer = async (memberId) => {
+    if (!isValidMemberId(memberId)) {
+        return null;
+    }
+
     try {
         const apiUrl = `${BASE_URL}/api/v1/members/${memberId}/profile`;
         const response = await customFetch(apiUrl);
@@ -38,13 +46,17 @@ const getCache = () => {
 
 // 특정 멤버의 정보를 로컬 스토리지에서 읽어옴
 export const getMemberFromCache = (memberId) => {
-    if (!memberId) return null;
+    if (!isValidMemberId(memberId)) return null;
     const cache = getCache();
     return cache[memberId] || null;
 };
 
 // 특정 멤버의 정보를 서버에서 가져와 캐시를 업데이트
 export const fetchAndUpdateMemberCache = async (memberId) => {
+    if (!isValidMemberId(memberId)) {
+        return null;
+    }
+
     try {
         const freshData = await fetchMemberFromServer(memberId);
         if (freshData && freshData.id) {

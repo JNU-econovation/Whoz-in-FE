@@ -1,11 +1,8 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState } from "react"
 import MemberStatusList from "../components/MemberStatusList"
 import styled from "styled-components"
-import SnowAnimation from "../components/StyledComponents/SnowyEffect"
-import { ContentContainer, ContentWrapper } from "../components/StyledComponents/LayoutStyles"
-import { customFetch } from "../api/customFetch"
+import { ContentWrapper } from "../components/StyledComponents/LayoutStyles"
 import { UpperMessage } from "../components/StyledComponents/LayoutStyles"
-import VOCBanner from "../components/VOC배너.png"
 import ProfileOverlay from "../components/ProfileOverlay"
 import { useMembers } from '../hooks/useMembers';
 import { useQueryClient } from '@tanstack/react-query';
@@ -44,16 +41,6 @@ const ScrollArea = styled(WhitePanel)`
   overflow-y: auto;
 `;
 
-const FloatingBanner = styled.img`
-    position: fixed;
-    bottom: 7.1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 800px;
-    z-index: 1000;
-`
-
 const FixedHeaderArea = styled.div`
   height: 10rem; // Main.js와 동일한 값이어야 함
   min-height: 10rem;
@@ -63,30 +50,10 @@ const FixedHeaderArea = styled.div`
   flex-shrink: 0;
 `;
 
-const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
-
 const Main = () => {
     const { data: members, isLoading, error } = useMembers();
     const queryClient = useQueryClient();
     const [selectedMemberId, setSelectedMemberId] = useState(null);
-    useEffect(() => {
-        const checkAndFetchMemberId = async () => {
-            const storedMemberId = localStorage.getItem('member_id');
-            console.log(storedMemberId);
-            if (!storedMemberId) {
-                try {
-                    const response = await customFetch(`${BASE_URL}/api/v1/member`);
-                    const data = await response.json();
-                    if (data.data.member_id) {
-                        localStorage.setItem('member_id', data.data.member_id);
-                    }
-                } catch (error) {
-                }
-            }
-        };
-
-        checkAndFetchMemberId();
-    }, []);
     useEffect(() => {
         const refetchMembers = () => {
             queryClient.refetchQueries({ queryKey: ['members'] });

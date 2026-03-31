@@ -7,6 +7,7 @@ const reissue = () => {
         credentials: "include",
     }).then((res) => {
         if (!res.ok) {
+            localStorage.removeItem("member_id");
             window.location.href = "/beta-login";
             throw new Error("토큰 재발급에 실패했습니다.");
         }

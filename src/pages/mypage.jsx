@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { ListContainer, ListItem } from '../components/StyledComponents/LayoutStyles';
 import styled from 'styled-components';
 import { useMemberInfo } from '../hooks/useMemberInfo';
+import { useAuth } from '../context/AuthContext';
 import Profile from '../components/users/Profile';
 import Block from '../components/users/Block';
 
@@ -14,7 +15,8 @@ const MyPageContainer = styled.div`
 
 const MyPage = () => {
     const navigate = useNavigate();
-    const memberId = localStorage.getItem('member_id');
+    const { userInfo } = useAuth();
+    const memberId = userInfo.memberId;
     const { memberInfo } = useMemberInfo(memberId);
 
     return (
