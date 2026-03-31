@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { styled } from "styled-components"
 import {
   ContentContainer,
@@ -61,7 +61,7 @@ export default function DeviceRegister() {
   }, [token]);
 
   // 가장 빠른 IP 응답을 받기 위한 함수
-  const fetchFastestIP = async () => {
+  const fetchFastestIP = useCallback(async () => {
     // const abortControllers = IP_LIST.map(() => new AbortController());
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -93,10 +93,10 @@ export default function DeviceRegister() {
       console.error("IP 요청 실패:", error);
       return null;
     }
-  };
+  }, []);
 
   // 내부 IP를 기반으로 기기 등록 요청
-  const registerWifi = async () => {
+  const registerWifi = useCallback(async () => {
     const internalIp = await fetchFastestIP(abortControllerRef);
     if (!internalIp) return;
 
@@ -154,7 +154,7 @@ export default function DeviceRegister() {
     } catch (error) {
       console.error("기기 맥 등록 실패:", error);
     }
-  };
+  }, [fetchFastestIP, token]);
 
   // 기기 최종 등록 요청
   const registerDevice = async () => {
@@ -284,7 +284,7 @@ export default function DeviceRegister() {
       clearInterval(mdnsIntervalId);
       clearInterval(ipIntervalId);
     };
-  }, [registeredWifi, ssids]);
+  }, [registeredWifi, registerWifi, ssids]);
 
 
   const steps = [];
