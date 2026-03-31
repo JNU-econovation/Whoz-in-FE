@@ -21,14 +21,16 @@ const getStoredMemberId = () => {
     return memberId;
 };
 
+const createInitialUserInfo = () => ({
+    memberId: getStoredMemberId(),
+    loginid: '',
+    name: '',
+    generation: '',
+    position: '',
+});
+
 export const AuthProvider = ({ children }) => {
-    const [userInfo, setUserInfo] = useState({
-        memberId: getStoredMemberId(),
-        loginid: '',
-        name: '',
-        generation: '',
-        position: '',
-    });
+    const [userInfo, setUserInfo] = useState(createInitialUserInfo);
     const [isAuthInitialized, setIsAuthInitialized] = useState(false);
 
     const syncMemberId = useCallback((memberId) => {
@@ -63,7 +65,14 @@ export const AuthProvider = ({ children }) => {
 
     const clearCurrentMember = useCallback(() => {
         localStorage.removeItem('member_id');
-        setUserInfo((prev) => ({ ...prev, memberId: null }));
+        localStorage.removeItem('memberCache');
+        setUserInfo({
+            memberId: null,
+            loginid: '',
+            name: '',
+            generation: '',
+            position: '',
+        });
         setIsAuthInitialized(false);
     }, []);
 
