@@ -40,23 +40,29 @@ const KakaoButton = styled(KakaoButtonBasic)`
   width: 100%;
   max-width: 300px;
   font-size: 1.2rem;
-  padding: 1rem;
-  margin-top: 0.4rem;
+  padding: 0.6rem;
+  margin: 0.7rem 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
   transform: ${({ isClicked }) => (isClicked ? "scale(0.95)" : "scale(1)")};
   opacity: ${({ isClicked }) => (isClicked ? 0.8 : 1)};
 `;
 
 const BetaLogin = () => {
-  const [isClicked, setIsClicked] = useState(false);
+  const [clickedAction, setClickedAction] = useState(null);
 
-  const handleKakaoLogin = () => {
-    setIsClicked(true); // 애니메이션 시작
+  const handleKakaoLogin = (forceLoginPrompt = false) => {
+    setClickedAction(forceLoginPrompt ? "prompt" : "default");
 
     setTimeout(() => {
-      const KauthLink =
-        process.env.REACT_APP_BACKEND_BASEURL + "/oauth2/authorization/kakao";
-      window.location.href = KauthLink; // 0.4초 후 로그인 진행
+      const authUrl = new URL(
+        `${process.env.REACT_APP_BACKEND_BASEURL}/oauth2/authorization/kakao`
+      );
+
+      if (forceLoginPrompt) {
+        authUrl.searchParams.set("prompt", "login");
+      }
+
+      window.location.href = authUrl.toString();
     }, 500); // 버튼 애니메이션 시간 + 지연 시간
   };
 
@@ -66,8 +72,17 @@ const BetaLogin = () => {
       <SubHeader>by Team gyu.jar</SubHeader>
 
       <Logo src="/logocartoon.png" alt="Logo" />
-      <KakaoButton onClick={handleKakaoLogin} isClicked={isClicked}>
+      <KakaoButton
+        onClick={() => handleKakaoLogin(false)}
+        isClicked={clickedAction === "default"}
+      >
         카카오로 시작하기
+      </KakaoButton>
+      <KakaoButton
+        onClick={() => handleKakaoLogin(true)}
+        isClicked={clickedAction === "prompt"}
+      >
+        다른 카카오계정으로 로그인
       </KakaoButton>
       {/*}
       <Footer>
