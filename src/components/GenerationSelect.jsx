@@ -21,20 +21,21 @@ export const StyledSelect = styled.select`
     }
 `;
 
-// ✅ 고정 배열 + 날짜 기준으로 추가
+const BASE_GENERATION = 31;
+const BASE_YEAR = 2026;
+
+const getHalfYearIndex = (date) => {
+    const month = date.getMonth();
+    const day = date.getDate();
+    const isSecondHalf = month > 6 || (month === 6 && day >= 1);
+    return date.getFullYear() * 2 + (isSecondHalf ? 1 : 0);
+};
+
 const getGenerations = () => {
     const today = new Date();
-    const currentYear = today.getFullYear();
-
-    // 기준 날짜들
-    const march20 = new Date(currentYear, 2, 20); // 3월 20일
-    const september20 = new Date(currentYear, 8, 20); // 9월 20일
-
-    let extraCount = 0;
-    if (today >= march20) extraCount++;
-    if (today >= september20) extraCount++;
-
-    const latestGeneration = 28 + extraCount;
+    const baseDate = new Date(BASE_YEAR, 0, 1);
+    const halfYearOffset = getHalfYearIndex(today) - getHalfYearIndex(baseDate);
+    const latestGeneration = BASE_GENERATION + halfYearOffset;
 
     const generations = [];
     for (let i = latestGeneration; i >= 11; i--) {
