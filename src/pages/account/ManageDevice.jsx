@@ -99,6 +99,14 @@ const EmptyMessage = styled.div`
 `;
 
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL
+const isMobile = () => {
+    if (navigator.userAgentData && typeof navigator.userAgentData.mobile === "boolean") {
+        return navigator.userAgentData.mobile;
+    }
+
+    const userAgent = navigator.userAgent || navigator.vendor || "";
+    return /Android.*Mobile|iPhone|iPod|Windows Phone|webOS|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+};
 
 const ManageDevice = () => {
     const [devices, setDevices] = useState(null)
@@ -151,6 +159,15 @@ const ManageDevice = () => {
 
 
     const redirectDeviceRegister = async () => {
+        if (devices?.length === 0 && isMobile()) {
+            setModal({
+                type: MODAL_TYPES.OK,
+                message: "노트북이나 태블릿으로 먼저 등록해주세요.",
+                onOk: () => setModal(null),
+            });
+            return;
+        }
+
         setModal({
             type: MODAL_TYPES.CONFIRM,
             message: "현재 동아리방의 와이파이(JNU, eduroam, ECONO_5G) 중 하나에 연결되어있나요?",
