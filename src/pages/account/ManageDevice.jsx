@@ -9,6 +9,7 @@ import {
     UpperMessage,
 } from "../../components/StyledComponents/LayoutStyles"
 import { customFetch } from "../../api/customFetch"
+import { toast } from "react-toastify"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPen, faTrash, faWifi } from "@fortawesome/free-solid-svg-icons"
@@ -149,11 +150,33 @@ const ManageDevice = () => {
         });
     }
 
-    const onClickDeleteButton = () => {
+    const deleteDevice = async (deviceId) => {
+        try {
+            await customFetch(`${BASE_URL}/api/v1/device`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ device_id: deviceId }),
+            });
+
+            setDevices((prevDevices) =>
+                prevDevices.filter((device) => device.device_id !== deviceId)
+            );
+            setModal(null);
+            toast.success("기기가 삭제되었습니다.");
+        } catch (error) {
+            setModal(null);
+            toast.error(error.message);
+        }
+    };
+
+    const onClickDeleteButton = (deviceId, deviceName) => {
         setModal({
-            type: MODAL_TYPES.OK,
-            message: "기기 삭제 기능은 아직 준비 중입니다.",
-            onOk: () => setModal(null),
+            type: MODAL_TYPES.CONFIRM,
+            message: `'${deviceName}' 기기를 삭제하시겠어요?`,
+            onConfirm: () => deleteDevice(deviceId),
+            onCancel: () => setModal(null),
         });
     };
 
