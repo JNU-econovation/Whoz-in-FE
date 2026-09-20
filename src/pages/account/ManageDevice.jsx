@@ -204,7 +204,7 @@ const ManageDevice = () => {
     const proceedDeviceRegister = async () => {
         try {
             const [networkApiUrlResponse, tokenResponse] = await Promise.all([
-                customFetch(`${BASE_URL}/api/v1/internal-access-url?room=jeonsanwon`, { method: "GET" }),
+                customFetch(`${BASE_URL}/api/v1/room-access-url?room=jeonsanwon`, { method: "GET" }),
                 customFetch(`${BASE_URL}/api/v1/device-register-token`, { method: "POST" })
             ]);
             const [networkApiBody, tokenBody] = await Promise.all([
