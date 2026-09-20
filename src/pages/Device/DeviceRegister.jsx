@@ -14,7 +14,35 @@ import { customFetch } from "../../api/customFetch"
 
 // 환경 변수에서 API 기본 URL 가져오기
 const BASE_URL = process.env.REACT_APP_BACKEND_BASEURL;
-const IP_LIST = process.env.REACT_APP_IP_LIST.split(",");
+const NETWORK_API_ORIGIN = (() => {
+  const u = new URL(window.location.origin);
+  u.port = "2471";
+  return u.origin;
+})();
+
+let hostsPromise = null;
+function getMyIpHosts() {
+  if (hostsPromise) return hostsPromise;
+  hostsPromise = fetch(`${NETWORK_API_ORIGIN}/api/v1/my-ip-hosts`)
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then((hosts) => {
+      if (!Array.isArray(hosts) || hosts.length === 0) throw new Error("빈 목록");
+      return hosts.map((h) => h.trim());
+    })
+    .catch((err) => {
+      console.warn("my-ip-hosts 조회 실패, 환경변수로 폴백:", err);
+      return (process.env.REACT_APP_IP_LIST ?? "")
+        .split(",")
+        .map((h) => h.trim())
+        .filter(Boolean);
+    });
+  return hostsPromise;
+}
+
+getMyIpHosts();
 
 // const UpperMessage = styled.div`
 //   font-size: 1.5rem;
@@ -69,7 +97,8 @@ export default function DeviceRegister() {
     abortControllerRef.current = new AbortController();
 
     try {
-      const fetchPromises = IP_LIST.map((ip) =>
+      const hosts = await getMyIpHosts();
+      const fetchPromises = hosts.map((ip) =>
           customFetch(`${ip}/api/v1/my-ip`, { signal: abortControllerRef.current.signal})
           .then((res) => {
             if (!res.ok) {
@@ -219,7 +248,8 @@ export default function DeviceRegister() {
         }, 3000);
 
         // IP 요청을 병렬 실행하고, 가장 빠른 응답을 받음
-        const fetchPromises = IP_LIST.map((ip) =>
+        const hosts = await getMyIpHosts();
+        const fetchPromises = hosts.map((ip) =>
             customFetch(`${ip}/api/v1/my-ip`)
             .then((res) => {
               if (!res.ok) throw new Error(`Error fetching from ${ip}`);
